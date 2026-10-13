@@ -9,9 +9,10 @@
 			enableRootTrustAnchor = true;
 			
 			settings = {
+
 				server = {
 					interface = [ "127.0.0.1" "100.118.213.98" ]; # . , talescale
-					#port = 53;
+					port = 5335;
 					access-control = [ "127.0.0.0/8 allow" "100.64.0.0/10 allow" ];
 					
 					do-ip4 = true;
@@ -27,12 +28,23 @@
 					qname-minimisation-strict = true;
 
 					do-not-query-localhost = false;
+
+					module-config = "'respip validator iterator'";
 				};
 
-				forward-zone = [{
-					name = ".";
-					forward-addr = [ "127.0.0.1@5300" ];
-				}];
+				rpz = [ # Response Policy Zones
+					{
+						name = "threat-intel-feed";
+						url = "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/rpz/pro.txt";
+      				}
+				];
+
+				forward-zone = [
+					{
+						name = ".";
+						forward-addr = [ "127.0.0.1@5300" ];
+					}
+				];
 			};
 		};
 

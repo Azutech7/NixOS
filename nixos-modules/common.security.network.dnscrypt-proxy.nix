@@ -25,5 +25,7 @@
 			networkmanager.dns = lib.mkForce "none";
 		};
 
+		services.resolved.enable = lib.mkForce false;
+
 	};
 }

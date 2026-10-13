@@ -18,22 +18,25 @@
         ./common.network.network-manager.nix
         ./common.network.openssh.nix
         ./common.network.printing.nix
-        ./common.security.network.dnscrypt-proxy.nix
-        ./common.security.network.firewall.nix
-        ./common.security.network.unbound.nix
+        ./common.security.auditd.nix
         ./common.security.gnupg.nix
+        ./common.security.network.adguard-home.nix
+        ./common.security.network.crowdsec.nix
+        ./common.security.network.dnscrypt-proxy.nix
+        ./common.security.network.fail2ban.nix
+        ./common.security.network.firewall.nix
+        ./common.security.network.tailscale.nix
+        ./common.security.network.unbound.nix
         ./common.security.pam.nix
         ./common.nixpkgs.allow-unfree.nix
         ./common.storage.space-optimizations.nix
         ./flatpak.nix
         ./hyprland.nix
         ./ly.nix
-        #./services.adguard.nix
         ./services.aiostreams.nix
         ./services.caddy.nix
-        ./services.mc-server.nix
-        ./services.tailscale.nix
-        ./services.trakt.nix
+        ./services.mcserver.nix
+        #./services.trakt.nix
         ./steam.nix
     ];
 }

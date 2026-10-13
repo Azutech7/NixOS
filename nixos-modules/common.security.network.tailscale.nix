@@ -1,8 +1,8 @@
 { inputs, config, pkgs, lib, host, ... }: {
 
-    options.modules.services.tailscale.enable = lib.mkEnableOption "services.tailscale";
+    options.modules.commom.security.network.tailscale.enable = lib.mkEnableOption "commom.security.network.tailscale";
 
-    config = lib.mkIf config.modules.services.tailscale.enable {
+    config = lib.mkIf config.modules.commom.security.network.tailscale.enable {
 
         services.tailscale.enable = true;
         networking.firewall.trustedInterfaces = [ "tailscale0" ];

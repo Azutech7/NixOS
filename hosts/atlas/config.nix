@@ -1,7 +1,7 @@
 { inputs, pkgs, lib, host, config, ... }: {
     
     imports = [
-        ./fileSystems.nix
+        ./file-systems.nix
     ];
 
     modules = {
@@ -23,12 +23,13 @@
             security.network.dnscrypt-proxy.enable = true;
             security.network.unbound.enable = true;
             network.anti-panic.enable = true;
+            security.network.tailscale.enable = true;
+            security.network.adguard-home.enable = true;
         };
 
         services.aiostreams.enable = true;
         services.caddy.enable = true;
         #services.trakt.enable = true; #DOES NOT WORK CURRENTLY
-        services.tailscale.enable = true;
     };
 
     environment.systemPackages = with pkgs; [

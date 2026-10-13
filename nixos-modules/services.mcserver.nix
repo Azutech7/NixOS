@@ -1,8 +1,8 @@
 { inputs, config, pkgs, lib, host, ... }: {
 
-    options.modules.services.mc-server.enable = lib.mkEnableOption "services.mc-server";
+    options.modules.services.mcserver.enable = lib.mkEnableOption "services.mcserver";
 
-    config = lib.mkIf config.modules.services.mc-server.enable {
+    config = lib.mkIf config.modules.services.mcserver.enable {
 
         virtualisation.oci-containers.backend = "docker";
 
@@ -44,6 +44,17 @@
                 "/var/lib/minecraft:/data"
             ];
         };
+
+        /*
+        services.caddy.virtualHosts = {
+            
+            "mcserver.azutech.cc".extraConfig = ''
+                tls internal
+                reverse_proxy http://localhost:25565
+            '';
+
+        };
+        */
 
     };
 }

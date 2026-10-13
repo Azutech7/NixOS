@@ -36,5 +36,23 @@
 
         #networking.firewall.allowedTCPPorts = [ 3000 ]; #tailscale instead
 
+        services.caddy.virtualHosts = {
+            
+            "aiostreams.azutech.cc".extraConfig = ''
+                tls internal
+                reverse_proxy http://localhost:3000
+            '';
+
+            "jellyfin.azutech.cc".extraConfig = ''
+                tls internal
+                handle / { redir * /jellyfin 302 }
+                handle { reverse_proxy localhost:3000 {
+                    header_up X-Forwarded-Prefix /jellyfin
+                }}
+            '';
+
+        };
+
+
     };
 }
