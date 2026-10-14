@@ -11,7 +11,6 @@
 - [ ] disko integration (alongside NixOS fileSystems)
 - [ ] satty (screenshot editing)
 - [x] mako (notification daemon; w/ theme module integration)
-- [ ] Genymotion (android emulation)
 - [ ] grlim+slurp (instead of hyprshot)
 - [ ] Automatic updates from GitHub
 - [ ] Seperate Client & Host Tailscale modules better
