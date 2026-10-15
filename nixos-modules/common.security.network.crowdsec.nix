@@ -4,37 +4,34 @@
 
     config = lib.mkIf config.modules.common.security.network.crowdsec.enable {
 
-        # 1. Enable CrowdSec Security Engine
+        # 1. Enable Native CrowdSec Security Engine
         services.crowdsec = {
             enable = true;
 
-            # Allow CrowdSec to read systemd-journal logs (for SSH, Caddy, etc.)
-            allowLocalJournalAccess = true;
-
-            # Install standard detection collections from the CrowdSec Hub
-            hub = {
-                collections = [
-                    "crowdsecurity/linux"   # Basic Linux OS protection (SSH, sudo failures)
-                    "crowdsecurity/caddy"   # Caddy reverse proxy protections
-                    "crowdsecurity/auditd" # Adds parsing rules for auditd logs
-                ];
-            };
-
-            # Define log acquisitions (what logs CrowdSec should scan)
-            settings = {
-                acquisitions = [
-                    {
+            # The native nixpkgs module requires manual localConfig configuration for journalctl
+            localConfig.acquisitions = [
+                {
+                    source = "journalctl";
+                    journalctl_filter = [ "_SYSTEMD_UNIT=sshd.service" ];
+                    labels.type = "syslog";
+                }
+                {
+                    source = "journalctl";
+                    journalctl_filter = [ "_SYSTEMD_UNIT=caddy.service" ];
+                    labels.type = "caddy";
+                }
+                {
                     source = "file";
                     filenames = [ "/var/log/audit/audit.log" ];
                     labels.type = "auditd";
-                    }
-                    # Journal logs (SSH, system services) are handled automatically 
-                    # via allowLocalJournalAccess = true
-                ];
-            };
+                }
+            ];
         };
 
-        # 2. Enable Firewall Bouncer (Enforces blocks via nftables)
+        # Explicitly grant crowdsec permissions to read systemd logs 
+        users.users.crowdsec.extraGroups = [ "systemd-journal" ];
+
+        # 2. Enable Firewall Bouncer
         services.crowdsec-firewall-bouncer = {
             enable = true;
         };
