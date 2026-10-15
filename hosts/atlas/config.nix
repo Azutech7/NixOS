@@ -9,6 +9,7 @@
             boot.enable = true;
             extra-experimental-features.enable = true;
             hardware.automatic-compatability.enable = true;
+            hardware.disable-intel-amt.enable = true;
             hardware.graphics.intel-mesa.enable = true;
             home-manager.backup.enable = true;
             network.avahi.enable = true;
