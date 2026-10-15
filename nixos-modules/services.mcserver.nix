@@ -45,16 +45,14 @@
             ];
         };
 
-        /*
         services.caddy.virtualHosts = {
             
             "mcserver.azutech.cc".extraConfig = ''
                 tls internal
-                reverse_proxy http://localhost:25565
+                reverse_proxy localhost:25565
             '';
 
         };
-        */
 
     };
 }

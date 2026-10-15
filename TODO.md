@@ -14,5 +14,5 @@
 - [ ] grlim+slurp (instead of hyprshot)
 - [ ] Automatic updates from GitHub
 - [ ] Seperate Client & Host Tailscale modules better
-- [ ] services.mcserver caddy integration
+- [x] services.mcserver caddy integration
 - [ ] Automated integration between modules
