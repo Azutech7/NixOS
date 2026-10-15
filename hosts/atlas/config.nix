@@ -30,6 +30,7 @@
 
         services.aiostreams.enable = true;
         services.caddy.enable = true;
+        services.docker.enable = true;
         #services.trakt.enable = true; #DOES NOT WORK CURRENTLY
     };
 
@@ -50,7 +51,7 @@
     users.users.server-manager = {
         isNormalUser = true;
         group = "server-manager";
-        extraGroups = [ "wheel" "networkmanager" ];
+        extraGroups = [ "wheel" "networkmanager" "docker" ];
     };
 
     users.groups.server-manager = {};

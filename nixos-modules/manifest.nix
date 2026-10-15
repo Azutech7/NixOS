@@ -36,6 +36,7 @@
         ./ly.nix
         ./services.aiostreams.nix
         ./services.caddy.nix
+        ./services.docker.nix
         ./services.mcserver.nix
         #./services.trakt.nix
         ./steam.nix
