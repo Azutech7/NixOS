@@ -4,7 +4,7 @@
 - [x] fail2ban
 - [ ] usbguard
 - [ ] sops-nix (secrets management)
-- [ ] auditd
+- [x] auditd
 - [ ] java integration (cli runner w/ System.in tracking)
 - [ ] custom image
 - [x] plymouth (boot screens)
@@ -15,5 +15,4 @@
 - [ ] Automatic updates from GitHub
 - [ ] Seperate Client & Host Tailscale modules better
 - [x] services.mcserver caddy integration
-- [ ] Automated integration between modules
 - [x] Lenovo ThinkCentre Tiny series crash fix by disabling Intel AMT
