@@ -1,6 +1,6 @@
 { inputs, config, pkgs, lib, host, ... }: {
 
-    options.modules.commom.security.network.tailscale.enable = lib.mkEnableOption "commom.security.network.tailscale";
+    options.modules.common.security.network.tailscale.enable = lib.mkEnableOption "commom.security.network.tailscale";
 
     config = lib.mkIf config.modules.commom.security.network.tailscale.enable {
 
