@@ -6,7 +6,7 @@
         ./common.boot.plymouth.nix
         ./common.extra-experimental-features.nix
         ./common.hardware.automatic-compatability.nix
-        ./common.harddware.disable-intel-amt.nix
+        ./common.hardware.disable-intel-amt.nix
         ./common.hardware.graphics.intel-mesa.nix
         ./common.hardware.graphics.nix
         ./common.hardware.graphics.nvidia.nix
