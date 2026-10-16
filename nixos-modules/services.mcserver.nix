@@ -46,11 +46,11 @@
                 # Whitelist
                 WHITE_LIST = "true";
                 WHITELIST = ''
-                    baf06ef8-2bfb-4dd9-b63b-8c3062934692 # Azutech
-                    79cc72c7-cf43-4b8f-9174-2b7389cd6a25 # felhig82
-                    1e520973-d267-43bc-94f9-7dde66124bac # BruceAwesomeVos
-                    3776d8c7-fbab-4615-86af-fd9c5b738d98 # Eaten6191
-                    797b59ab-def3-497d-947d-92785771fcd1 # LeLlama
+                    baf06ef8-2bfb-4dd9-b63b-8c3062934692
+                    79cc72c7-cf43-4b8f-9174-2b7389cd6a25
+                    1e520973-d267-43bc-94f9-7dde66124bac
+                    3776d8c7-fbab-4615-86af-fd9c5b738d98
+                    797b59ab-def3-497d-947d-92785771fcd1
                 '';
 
                 # Admin / Security
