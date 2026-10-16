@@ -38,6 +38,7 @@
         ./services.caddy.nix
         ./services.docker.nix
         ./services.mcserver.nix
+        ./services.mcserver.backups.nix
         #./services.trakt.nix
         ./steam.nix
     ];
