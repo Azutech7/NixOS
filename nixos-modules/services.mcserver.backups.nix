@@ -4,7 +4,7 @@
 
     config = lib.mkIf config.modules.services.mcserver.backups.enable {
 
-        virtualisation.oci-containers.containers.minecraft-backup = {
+        virtualisation.oci-containers.containers.mcserver-backups = {
             image = "itzg/mc-backup";
             autoStart = true;
 

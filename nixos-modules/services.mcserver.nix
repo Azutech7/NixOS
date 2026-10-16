@@ -6,7 +6,7 @@
 
         virtualisation.oci-containers.backend = "docker";
 
-        virtualisation.oci-containers.containers.minecraft = {
+        virtualisation.oci-containers.containers.mcserver = {
             image = "itzg/minecraft-server";
             autoStart = true;
 
