@@ -62,7 +62,7 @@
 
                 # World Information
                 LEVEL_SEED = "2026-10-16T20:00:00-0700"; # Time the server starts
-                GENERIC_PACK = "/modpacks/Modpak_prism-launcher_v1.0.1.zip";
+                #GENERIC_PACK = "/modpacks/Modpak_prism-launcher_v1.0.1.zip";
 
                 # Stopping
                 STOP_SERVER_ANNOUNCE_DELAY = "20";
@@ -77,40 +77,56 @@
 
         systemd.services."docker-minecraft" = {
             preStart = lib.mkBefore ''
+                MODPACK_ZIP="/var/lib/mcserver/modpacks/Modpak_prism-launcher_v1.0.1.zip"
                 SERVER_MODS="/var/lib/mcserver/data/mods"
                 CLIENT_MODS_DIR="/var/lib/mcserver/data/automodpack/host-modpack/mods"
 
                 mkdir -p "$SERVER_MODS"
                 mkdir -p "$CLIENT_MODS_DIR"
 
-                echo "Scanning and sorting mods for dedicated server..."
-                if [ -d "$SERVER_MODS" ]; then
-                    for jar in "$SERVER_MODS"/*.jar; do
-                        [ -f "$jar" ] || continue
-                        
-                        FILENAME=$(basename "$jar" | tr '[:upper:]' '[:lower:]')
-                        IS_CLIENT=false
+                # Only extract and sort if the server mods folder hasn't been populated yet 
+                # (or if you want it to refresh every time the container restarts)
+                if [ -f "$MODPACK_ZIP" ]; then
+                    echo "Extracting modpack zip..."
+                    
+                    # Create a temporary staging directory to extract the zip contents
+                    TMP_DIR=$(mktemp -d)
+                    ${pkgs.unzip}/bin/unzip -q "$MODPACK_ZIP" -d "$TMP_DIR"
 
-                        # 1. Filename-based failsafe for common client-only optimization/rendering mods
-                        if [[ "$FILENAME" =~ (sodium|embeddium|iris|oculus|entityculling|reeses-sodium-options|distanthorizons|minihud|xaero) ]]; then
-                            IS_CLIENT=true
-                        fi
+                    # Assuming your Prism zip contains a 'mods/' folder inside it:
+                    if [ -d "$TMP_DIR/mods" ]; then
+                        echo "Sorting mods from extracted pack..."
+                        for jar in "$TMP_DIR/mods"/*.jar; do
+                            [ -f "$jar" ] || continue
+                            
+                            FILENAME=$(basename "$jar" | tr '[:upper:]' '[:lower:]')
+                            IS_CLIENT=false
 
-                        # 2. Deep metadata check inside the jar's TOML configurations
-                        if [ "$IS_CLIENT" = false ]; then
-                            if ${pkgs.unzip}/bin/unzip -p "$jar" META-INF/neoforge.mods.toml 2>/dev/null | grep -qi 'side\s*=\s*"client"'; then
+                            # Filename check for known client-only optimization/rendering mods
+                            if [[ "$FILENAME" =~ (sodium|embeddium|iris|oculus|entityculling|reeses-sodium-options|distanthorizons|minihud|xaero) ]]; then
+                                IS_CLIENT=true
+                            # Metadata check for NeoForge/Forge client side markers
+                            elif ${pkgs.unzip}/bin/unzip -p "$jar" META-INF/neoforge.mods.toml 2>/dev/null | grep -qi 'side\s*=\s*"client"'; then
                                 IS_CLIENT=true
                             elif ${pkgs.unzip}/bin/unzip -p "$jar" META-INF/mods.toml 2>/dev/null | grep -qi 'side\s*=\s*"client"'; then
                                 IS_CLIENT=true
                             fi
-                        fi
 
-                        # Move to automodpack if it's a client mod
-                        if [ "$IS_CLIENT" = true ]; then
-                            echo "Moving client-only mod to host-modpack: $(basename "$jar")"
-                            mv "$jar" "$CLIENT_MODS_DIR/"
-                        fi
-                    done
+                            # Route to the correct destination
+                            if [ "$IS_CLIENT" = true ]; then
+                                echo "Client mod -> Automodpack: $(basename "$jar")"
+                                mv "$jar" "$CLIENT_MODS_DIR/"
+                            else
+                                echo "Server mod -> Data mods: $(basename "$jar")"
+                                mv "$jar" "$SERVER_MODS/"
+                            fi
+                        done
+                    fi
+
+                    # Cleanup temporary extraction folder
+                    rm -rf "$TMP_DIR"
+                else
+                    echo "Warning: Modpack zip not found at $MODPACK_ZIP"
                 fi
             '';
         };
