@@ -10,8 +10,6 @@
             image = "itzg/minecraft-server";
             autoStart = true;
 
-            stopGracePeriod = "90s";
-
             ports = [ 
                 "25565:25565"
                 #"25575:25575"
