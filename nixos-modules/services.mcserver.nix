@@ -12,6 +12,10 @@
 
             stopGracePeriod = "60s";
 
+            serviceConfig = {
+                TimeoutStopSec = "120s";
+            };
+
             ports = [ 
                 "25565:25565"
                 #"25575:25575"
