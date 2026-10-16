@@ -33,8 +33,8 @@
         services.docker.enable = true;
         #services.trakt.enable = true; #DOES NOT WORK CURRENTLY
 
-        #services.mcserver.enable = true;
-        #services.mcserver.backups.enable = true;
+        services.mcserver.enable = true;
+        services.mcserver.backups.enable = true;
     };
 
     environment.systemPackages = with pkgs; [
