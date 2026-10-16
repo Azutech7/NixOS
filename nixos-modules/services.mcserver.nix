@@ -68,7 +68,7 @@
 
                 # World Information
                 LEVEL_SEED = "2026-10-16T20:00:00-0700"; # Time the server starts
-                GENERIC_PACK = "/modpaks/Modpak_prism-launcher_v1.0.0.zip";
+                GENERIC_PACK = "/modpacks/Modpak_prism-launcher_v1.0.0.zip";
 
                 # Stopping
                 STOP_SERVER_ANNOUNCE_DELAY = "20";
@@ -77,7 +77,7 @@
 
             volumes = [
                 "/var/lib/mcserver/data:/data"
-                "/var/lib/mcserver/modpaks:/modpaks:ro"
+                "/var/lib/mcserver/modpacks:/modpacks:ro"
             ];
         };
 
