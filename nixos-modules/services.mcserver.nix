@@ -10,11 +10,7 @@
             image = "itzg/minecraft-server";
             autoStart = true;
 
-            stopGracePeriod = "60s";
-
-            serviceConfig = {
-                TimeoutStopSec = "120s";
-            };
+            stopGracePeriod = "90s";
 
             ports = [ 
                 "25565:25565"
@@ -79,6 +75,12 @@
                 "/var/lib/mcserver/data:/data"
                 "/var/lib/mcserver/modpacks:/modpacks:ro"
             ];
+        };
+
+        systemd.services."docker-minecraft" = {
+            serviceConfig = {
+                TimeoutStopSec = "120s";
+            };
         };
 
 #        services.caddy.virtualHosts = {
