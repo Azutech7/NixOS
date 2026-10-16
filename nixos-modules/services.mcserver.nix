@@ -57,7 +57,7 @@
 
                 # Admin / Security
                 OPS = ''
-                    <MY_UUID_GOES_HERE>
+                    baf06ef8-2bfb-4dd9-b63b-8c3062934692
                 '';
                 ENABLE_RCON = "true";
                 RCON_PASSWORD = "syt3aBEyt8fHXXeVEAznL4KkC2pR752n";
