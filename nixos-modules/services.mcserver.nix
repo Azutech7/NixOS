@@ -75,12 +75,6 @@
             ];
         };
 
-        systemd.services."docker-minecraft" = {
-            serviceConfig = {
-                TimeoutStopSec = "120s";
-            };
-        };
-
 #        services.caddy.virtualHosts = {
 #            
 #            "mcserver.azutech.cc".extraConfig = ''
