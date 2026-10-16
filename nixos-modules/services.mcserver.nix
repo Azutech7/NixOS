@@ -71,8 +71,8 @@
                 GENERIC_PACK = "/modpaks/Modpak_prism-launcher_v1.0.0.zip";
 
                 # Stopping
-                #STOP_SERVER_ANNOUNCE_DELAY = "20";
-                STOP_SERVER_DELAY_COMMAND = "say Server is shutting down in 20 seconds! Saving world...";
+                STOP_SERVER_ANNOUNCE_DELAY = "20";
+                #STOP_SERVER_DELAY_COMMAND = "say Server is shutting down in 20 seconds! Saving world...";
             };
 
             volumes = [
