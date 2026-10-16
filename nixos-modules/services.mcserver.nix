@@ -52,12 +52,12 @@
                 # Whitelist
                 WHITE_LIST = "true";
                 WHITELIST = ''
-                    <PLAYERS_GO_HERE>
+                    baf06ef8-2bfb-4dd9-b63b-8c3062934692 # Azutech
                 '';
 
                 # Admin / Security
                 OPS = ''
-                    baf06ef8-2bfb-4dd9-b63b-8c3062934692
+                    baf06ef8-2bfb-4dd9-b63b-8c3062934692 # Azutech
                 '';
                 ENABLE_RCON = "true";
                 RCON_PASSWORD = "syt3aBEyt8fHXXeVEAznL4KkC2pR752n";
