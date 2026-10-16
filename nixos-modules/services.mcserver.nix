@@ -8,11 +8,13 @@
 
         virtualisation.oci-containers.containers.minecraft = {
             image = "itzg/minecraft-server";
-
             autoStart = true;
+
+            stopGracePeriod = "60s";
+
             ports = [ 
                 "25565:25565"
-                "25575:25575"
+                #"25575:25575"
             ];
 
             environment = {
@@ -27,32 +29,58 @@
                 GID = "1000";
 
                 # Server Properties
-                MOTD = "Private";
-                DIFFICULTY = "hard";
-                MAX_PLAYERS = "10";
-                PVP = "true";
+                MOTD = "bello.";
+                MAX_PLAYERS = "5";
                 ENABLE_COMMAND_BLOCK = "true";
-                #VIEW_DISTANCE = "12";
+                ONLINE_MODE = "true";
+
+                # Gameplay
+                DIFFICULTY = "hard";
+                PVP = "true";
+                GAMEMODE = "survival";
+                SPAWN_PROTECTION = "0";
+                ALLOW_NETHER = "true";
+
+                # Distances (3-32 inclusive)
+                VIEW_DISTANCE = "32";
+                SIMULATION_DISTANCE = "32";
+
+                # Whitelist
+                WHITE_LIST = "true";
+                WHITELIST = ''
+                    <PLAYERS_GO_HERE>
+                '';
 
                 # Admin / Security
-                OPS = "Azutech";
+                OPS = ''
+                    <MY_UUID_GOES_HERE>
+                '';
                 ENABLE_RCON = "true";
-                RCON_PASSWORD = "super-secret-rcon-password";
+                RCON_PASSWORD = "syt3aBEyt8fHXXeVEAznL4KkC2pR752n";
+
+                # World Information
+                LEVEL_SEED = "2026-10-16T20:00:00-0700"; # Time the server starts
+                GENERIC_PACK = "/modpaks/Modpak_prism-launcher_v1.0.0.zip";
+
+                # Stopping
+                #STOP_SERVER_ANNOUNCE_DELAY = "20";
+                STOP_SERVER_DELAY_COMMAND = "say Server is shutting down in 20 seconds! Saving world...";
             };
 
             volumes = [
-                "/var/lib/minecraft:/data"
+                "/var/lib/mcserver/data:/data"
+                "/var/lib/mcserver/modpaks:/modpaks:ro"
             ];
         };
 
-        services.caddy.virtualHosts = {
-            
-            "mcserver.azutech.cc".extraConfig = ''
-                tls internal
-                reverse_proxy localhost:25565
-            '';
-
-        };
+#        services.caddy.virtualHosts = {
+#            
+#            "mcserver.azutech.cc".extraConfig = ''
+#                tls internal
+#                reverse_proxy localhost:25565
+#            '';
+#
+#        };
 
     };
 }

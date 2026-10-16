@@ -1,4 +1,5 @@
 # TODO LIST:
+
 - [ ] systemd hardening (ProtectSystem, ProtectHome, PrivateTmp, NoNewPrivileges)
 - [ ] sudo restrictions
 - [x] fail2ban
