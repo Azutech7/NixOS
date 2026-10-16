@@ -76,7 +76,7 @@
         };
 
         systemd.services."docker-minecraft" = {
-            preStart = ''
+            preStart = lib.mkBefore ''
                 SERVER_MODS="/var/lib/mcserver/data/mods"
                 CLIENT_MODS_DIR="/var/lib/mcserver/data/automodpack/host-modpack/mods"
 
