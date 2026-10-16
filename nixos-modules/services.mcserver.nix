@@ -80,35 +80,32 @@
                 SERVER_MODS="/var/lib/mcserver/data/mods"
                 CLIENT_MODS_DIR="/var/lib/mcserver/data/automodpack/host-modpack/mods"
 
-                # Ensure directories exist
                 mkdir -p "$SERVER_MODS"
                 mkdir -p "$CLIENT_MODS_DIR"
 
-                # 1. Purge/clean both folders to start fresh
-                echo "Purging existing mod directories..."
-                rm -rf "$SERVER_MODS"/*
-                rm -rf "$CLIENT_MODS_DIR"/*
-
-                # Note: If your zip extracts into $SERVER_MODS during container startup, 
-                # you can adjust this script to run as a container entrypoint hook or 
-                # ensure your source mods are placed where this script can evaluate them.
-                # Assuming mods are present in $SERVER_MODS for sorting:
-
+                echo "Scanning and sorting mods for dedicated server..."
                 if [ -d "$SERVER_MODS" ]; then
-                    echo "Sorting NeoForge mods (Server vs Client)..."
                     for jar in "$SERVER_MODS"/*.jar; do
                         [ -f "$jar" ] || continue
                         
+                        FILENAME=$(basename "$jar" | tr '[:upper:]' '[:lower:]')
                         IS_CLIENT=false
 
-                        # Check NeoForge metadata for client-side restriction
-                        if ${pkgs.unzip}/bin/unzip -p "$jar" META-INF/neoforge.mods.toml 2>/dev/null | grep -q 'side\s*=\s*"client"'; then
-                            IS_CLIENT=true
-                        elif ${pkgs.unzip}/bin/unzip -p "$jar" META-INF/mods.toml 2>/dev/null | grep -q 'side\s*=\s*"client"'; then
+                        # 1. Filename-based failsafe for common client-only optimization/rendering mods
+                        if [[ "$FILENAME" =~ (sodium|embeddium|iris|oculus|entityculling|reeses-sodium-options|distanthorizons|minihud|xaero) ]]; then
                             IS_CLIENT=true
                         fi
 
-                        # 2. MOVE client mods to the host-modpack folder instead of copying
+                        # 2. Deep metadata check inside the jar's TOML configurations
+                        if [ "$IS_CLIENT" = false ]; then
+                            if ${pkgs.unzip}/bin/unzip -p "$jar" META-INF/neoforge.mods.toml 2>/dev/null | grep -qi 'side\s*=\s*"client"'; then
+                                IS_CLIENT=true
+                            elif ${pkgs.unzip}/bin/unzip -p "$jar" META-INF/mods.toml 2>/dev/null | grep -qi 'side\s*=\s*"client"'; then
+                                IS_CLIENT=true
+                            fi
+                        fi
+
+                        # Move to automodpack if it's a client mod
                         if [ "$IS_CLIENT" = true ]; then
                             echo "Moving client-only mod to host-modpack: $(basename "$jar")"
                             mv "$jar" "$CLIENT_MODS_DIR/"
