@@ -17,3 +17,4 @@
 - [ ] Seperate Client & Host Tailscale modules better
 - [x] services.mcserver caddy integration
 - [x] Lenovo ThinkCentre Tiny series crash fix by disabling Intel AMT
+- [x] services.mcserver.backups aka backups for services.mcserver
