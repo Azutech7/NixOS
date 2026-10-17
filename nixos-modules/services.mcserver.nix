@@ -77,7 +77,7 @@
         };
 
         systemd.services.minecraft-mod-sorter = {
-            description = "Smart Packwiz modpack parser, downloader, and incremental sorter";
+            description = "Smart Prism Launcher modpack extractor and incremental sorter";
             before = [ "docker-mcserver.service" ];
             requiredBy = [ "docker-mcserver.service" ];
             wantedBy = [ "docker-mcserver.service" ];
@@ -94,104 +94,61 @@
                 mkdir -p "$CLIENT_MODS_DIR"
 
                 if [ -f "$MODPACK_ZIP" ]; then
-                    echo "Extracting Packwiz modpack zip..."
+                    echo "Extracting modpack zip..."
                     TMP_DIR=$(mktemp -d)
                     ${pkgs.unzip}/bin/unzip -q "$MODPACK_ZIP" -d "$TMP_DIR"
 
-                    INDEX_DIR=$(find "$TMP_DIR" -type d -name ".index" | head -n 1)
+                    # Locate the internal mods directory inside the extracted zip
+                    MODS_SRC_DIR=$(find "$TMP_DIR" -type d -name "mods" | head -n 1)
 
-                    if [ -n "$INDEX_DIR" ] && [ -d "$INDEX_DIR" ]; then
-                        echo "Found Packwiz index at: $INDEX_DIR"
-                        echo "Processing Packwiz .pw.toml files..."
+                    if [ -n "$MODS_SRC_DIR" ] && [ -d "$MODS_SRC_DIR" ]; then
+                        echo "Found mods directory at: $MODS_SRC_DIR"
                         
                         CURRENT_MANIFEST="$TMP_DIR/active_mods.txt"
                         > "$CURRENT_MANIFEST"
 
-                        for toml in "$INDEX_DIR"/*.pw.toml; do
-                            [ -f "$toml" ] || continue
-                            
-                            DOWNLOAD_URL=""
-                            JAR_NAME=""
-                            IN_DOWNLOAD_SECTION=false
-                            
-                            while IFS= read -r line; do
-                                line="''${line//[$'\r']/}"
-                                if [[ "$line" =~ ^\[.*\] ]]; then
-                                    if [[ "$line" == "[download]" ]]; then
-                                        IN_DOWNLOAD_SECTION=true
-                                    else
-                                        IN_DOWNLOAD_SECTION=false
-                                    fi
-                                    continue
-                                fi
+                        for jar in "$MODS_SRC_DIR"/*.jar; do
+                            [ -f "$jar" ] || continue
+                            JAR_NAME=$(basename "$jar")
+                            echo "$JAR_NAME" >> "$CURRENT_MANIFEST"
 
-                                case "$line" in
-                                    *url*)
-                                        if [ "$IN_DOWNLOAD_SECTION" = true ] || [[ -z "$DOWNLOAD_URL" ]]; then
-                                            val="''${line#*=}"
-                                            val="''${val//[\"\'[:space:]]/}"
-                                            DOWNLOAD_URL="$val"
-                                        fi
-                                        ;;
-                                    *filename*|*file*)
-                                        val="''${line#*=}"
-                                        val="''${val//[\"\'[:space:]]/}"
-                                        JAR_NAME="$val"
-                                        ;;
-                                esac
-                            done < "$toml"
-                            
-                            if [ -z "$JAR_NAME" ] && [ -n "$DOWNLOAD_URL" ]; then
-                                JAR_NAME=$(basename "$DOWNLOAD_URL")
-                                JAR_NAME="''${JAR_NAME//[\"\'[:space:]]/}"
+                            TARGET_DIR=""
+                            FILENAME=$(echo "$JAR_NAME" | tr "[:upper:]" "[:lower:]")
+                            IS_CLIENT=false
+
+                            if [[ "$FILENAME" =~ (create_connected|ritchiesprojectilelib) ]]; then
+                                IS_CLIENT=false
+                            elif [[ "$FILENAME" =~ (sodium|embeddium|iris|oculus|entityculling|reeses-sodium-options|distanthorizons|minihud|xaero|skinlayers3d) ]]; then
+                                IS_CLIENT=true
                             fi
 
-                            if [ -n "$DOWNLOAD_URL" ] && [ -n "$JAR_NAME" ]; then
-                                TARGET_DIR=""
-                                FILENAME=$(echo "$JAR_NAME" | tr "[:upper:]" "[:lower:]")
-                                IS_CLIENT=false
+                            if [ "$IS_CLIENT" = true ]; then
+                                TARGET_DIR="$CLIENT_MODS_DIR"
+                            else
+                                TARGET_DIR="$SERVER_MODS"
+                            fi
 
-                                if [[ "$FILENAME" =~ (create_connected|ritchiesprojectilelib) ]]; then
-                                    IS_CLIENT=false
-                                elif [[ "$FILENAME" =~ (sodium|embeddium|iris|oculus|entityculling|reeses-sodium-options|distanthorizons|minihud|xaero|skinlayers3d) ]]; then
-                                    IS_CLIENT=true
-                                fi
+                            FINAL_JAR="$TARGET_DIR/$JAR_NAME"
 
-                                if [ "$IS_CLIENT" = true ]; then
-                                    TARGET_DIR="$CLIENT_MODS_DIR"
-                                else
-                                    TARGET_DIR="$SERVER_MODS"
-                                fi
-
-                                FINAL_JAR="$TARGET_DIR/$JAR_NAME"
-
-                                if [ -f "$FINAL_JAR" ]; then
-                                    echo "$JAR_NAME" >> "$CURRENT_MANIFEST"
-                                    echo "Skipping existing matching mod: $JAR_NAME"
-                                else
-                                    echo "Downloading: $JAR_NAME"
-                                    TMP_JAR="$TMP_DIR/$JAR_NAME"
-                                    
-                                    # Properly quoted URL to prevent special character stripping/mangling
-                                    HTTP_CODE=$(${pkgs.curl}/bin/curl -sL -A "Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/119.0" -w "%{http_code}" "$DOWNLOAD_URL" -o "$TMP_JAR")
-                                    
-                                    if [ "$HTTP_CODE" = "200" ] && [ -f "$TMP_JAR" ] && ${pkgs.unzip}/bin/unzip -t "$TMP_JAR" >/dev/null 2>&1; then
-                                        echo "$JAR_NAME" >> "$CURRENT_MANIFEST"
-                                        if ! [[ "$FILENAME" =~ (create_connected|ritchiesprojectilelib|sodium|embeddium|iris|oculus|entityculling|reeses-sodium-options|distanthorizons|minihud|xaero|skinlayers3d) ]]; then
-                                            if ${pkgs.unzip}/bin/unzip -p "$TMP_JAR" META-INF/neoforge.mods.toml 2>/dev/null | grep -qi "side\s*=\s*\"client\""; then
-                                                mv "$TMP_JAR" "$CLIENT_MODS_DIR/$JAR_NAME"
-                                                continue
-                                            elif ${pkgs.unzip}/bin/unzip -p "$TMP_JAR" META-INF/mods.toml 2>/dev/null | grep -qi "side\s*=\s*\"client\""; then
-                                                mv "$TMP_JAR" "$CLIENT_MODS_DIR/$JAR_NAME"
-                                                continue
-                                            fi
+                            if [ -f "$FINAL_JAR" ]; then
+                                echo "Skipping existing mod: $JAR_NAME"
+                            else
+                                echo "Sorting new/updated mod: $JAR_NAME -> $(basename "$TARGET_DIR")"
+                                
+                                # If going to server mods, check if it's actually a client-side mod inside the jar metadata
+                                if [ "$TARGET_DIR" = "$SERVER_MODS" ]; then
+                                    if ! [[ "$FILENAME" =~ (create_connected|ritchiesprojectilelib|sodium|embeddium|iris|oculus|entityculling|reeses-sodium-options|distanthorizons|minihud|xaero|skinlayers3d) ]]; then
+                                        if ${pkgs.unzip}/bin/unzip -p "$jar" META-INF/neoforge.mods.toml 2>/dev/null | grep -qi "side\s*=\s*\"client\""; then
+                                            cp "$jar" "$CLIENT_MODS_DIR/$JAR_NAME"
+                                            continue
+                                        elif ${pkgs.unzip}/bin/unzip -p "$jar" META-INF/mods.toml 2>/dev/null | grep -qi "side\s*=\s*\"client\""; then
+                                            cp "$jar" "$CLIENT_MODS_DIR/$JAR_NAME"
+                                            continue
                                         fi
-                                        mv "$TMP_JAR" "$FINAL_JAR"
-                                    else
-                                        echo "ERROR: Download failed for $JAR_NAME (HTTP Code: $HTTP_CODE) -> URL: $DOWNLOAD_URL"
-                                        rm -f "$TMP_JAR"
                                     fi
                                 fi
+                                
+                                cp "$jar" "$FINAL_JAR"
                             fi
                         done
 
@@ -205,7 +162,7 @@
                             fi
                         done
                     else
-                        echo "Warning: Could not find .index directory in $MODPACK_ZIP"
+                        echo "Warning: Could not find mods directory in $MODPACK_ZIP"
                     fi
                     rm -rf "$TMP_DIR"
                 else
