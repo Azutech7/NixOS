@@ -172,7 +172,8 @@
                                 else
                                     echo "Downloading new/updated mod: $JAR_NAME"
                                     TMP_JAR="$TMP_DIR/$JAR_NAME"
-                                    ${pkgs.curl}/bin/curl -sL "$DOWNLOAD_URL" -o "$TMP_JAR"
+                                    # Added User-Agent header to prevent CDN/Cloudflare blocking
+                                    ${pkgs.curl}/bin/curl -sL -A "Mozilla/5.0 (X11; Linux x86_64)" "$DOWNLOAD_URL" -o "$TMP_JAR"
                                     
                                     if [ -f "$TMP_JAR" ] && [ -s "$TMP_JAR" ]; then
                                         if ! [[ "$FILENAME" =~ (create_connected|ritchiesprojectilelib|sodium|embeddium|iris|oculus|entityculling|reeses-sodium-options|distanthorizons|minihud|xaero|skinlayers3d) ]]; then
