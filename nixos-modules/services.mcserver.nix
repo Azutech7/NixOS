@@ -80,7 +80,6 @@
             description = "Extract and sort Minecraft mods into server and automodpack folders";
             before = [ "docker-minecraft.service" ];
             requiredBy = [ "docker-minecraft.service" ];
-            wantedBy = [ "docker-minecraft.service" ];
             serviceConfig = {
                 Type = "oneshot";
                 RemainAfterExit = true;
@@ -93,7 +92,7 @@
                 mkdir -p "$SERVER_MODS"
                 mkdir -p "$CLIENT_MODS_DIR"
 
-                # Clear old state so we start fresh
+                # Clear old state
                 rm -rf "$SERVER_MODS"/*
                 rm -rf "$CLIENT_MODS_DIR"/*
 
@@ -110,10 +109,13 @@
                             FILENAME=$(basename "$jar" | tr '[:upper:]' '[:lower:]')
                             IS_CLIENT=false
 
-                            # Check filename patterns for client renderers/optimization mods
-                            if [[ "$FILENAME" =~ (sodium|embeddium|iris|oculus|entityculling|reeses-sodium-options|distanthorizons|minihud|xaero) ]] && [[ ! "$FILENAME" =~ (create_connected|ritchiesprojectilelib) ]]; then
+                            # 1. Explicitly force known network/server-required mods to stay on the server
+                            if [[ "$FILENAME" =~ (create_connected|ritchiesprojectilelib) ]]; then
+                                IS_CLIENT=false
+                            # 2. Check filename patterns for true client-only renderers
+                            elif [[ "$FILENAME" =~ (sodium|embeddium|iris|oculus|entityculling|reeses-sodium-options|distanthorizons|minihud|xaero) ]]; then
                                 IS_CLIENT=true
-                            # Check NeoForge metadata
+                            # 3. Check NeoForge/Forge metadata for client-side flag
                             elif ${pkgs.unzip}/bin/unzip -p "$jar" META-INF/neoforge.mods.toml 2>/dev/null | grep -qi 'side\s*=\s*"client"'; then
                                 IS_CLIENT=true
                             elif ${pkgs.unzip}/bin/unzip -p "$jar" META-INF/mods.toml 2>/dev/null | grep -qi 'side\s*=\s*"client"'; then
