@@ -108,24 +108,23 @@
                         for toml in "$INDEX_DIR"/*.pw.toml; do
                             [ -f "$toml" ] || continue
                             
-                            # Extract attributes safely avoiding any adjacent single-quote collisions
-                            RAW_URL=$(grep -E '^url\s*=' "$toml" | head -n 1 | cut -d'=' -f2)
-                            RAW_FILE=$(grep -E '^file\s*=' "$toml" | head -n 1 | cut -d'=' -f2)
+                            RAW_URL=$(grep -E "^url\s*=" "$toml" | head -n 1 | cut -d"=" -f2)
+                            RAW_FILE=$(grep -E "^file\s*=" "$toml" | head -n 1 | cut -d"=" -f2)
                             
-                            # Clean quotes and whitespace using standard parameter expansion
-                            DOWNLOAD_URL="''${RAW_URL//[\"'[:space:]\r]/}"
-                            JAR_NAME="''${RAW_FILE//[\"'[:space:]\r]/}"
+                            # Use ''$ to prevent Nix interpolation collision on bash parameter expansion
+                            DOWNLOAD_URL="''${RAW_URL//[\"[:space:]\r]/}"
+                            JAR_NAME="''${RAW_FILE//[\"[:space:]\r]/}"
                             
                             if [ -z "$JAR_NAME" ] && [ -n "$DOWNLOAD_URL" ]; then
                                 JAR_NAME=$(basename "$DOWNLOAD_URL")
-                                JAR_NAME="''${JAR_NAME//[\"'[:space:]\r]/}"
+                                JAR_NAME="''${JAR_NAME//[\"[:space:]\r]/}"
                             fi
 
                             if [ -n "$DOWNLOAD_URL" ] && [ -n "$JAR_NAME" ]; then
                                 echo "$JAR_NAME" >> "$CURRENT_MANIFEST"
                                 
                                 TARGET_DIR=""
-                                FILENAME=$(echo "$JAR_NAME" | tr '[:upper:]' '[:lower:]')
+                                FILENAME=$(echo "$JAR_NAME" | tr "[:upper:]" "[:lower:]")
                                 IS_CLIENT=false
 
                                 if [[ "$FILENAME" =~ (create_connected|ritchiesprojectilelib) ]]; then
@@ -151,10 +150,10 @@
                                     
                                     if [ -f "$TMP_JAR" ] && [ -s "$TMP_JAR" ]; then
                                         if ! [[ "$FILENAME" =~ (create_connected|ritchiesprojectilelib|sodium|embeddium|iris|oculus|entityculling|reeses-sodium-options|distanthorizons|minihud|xaero|skinlayers3d) ]]; then
-                                            if ${pkgs.unzip}/bin/unzip -p "$TMP_JAR" META-INF/neoforge.mods.toml 2>/dev/null | grep -qi 'side\s*=\s*"client"'; then
+                                            if ${pkgs.unzip}/bin/unzip -p "$TMP_JAR" META-INF/neoforge.mods.toml 2>/dev/null | grep -qi "side\s*=\s*\"client\""; then
                                                 mv "$TMP_JAR" "$CLIENT_MODS_DIR/$JAR_NAME"
                                                 continue
-                                            elif ${pkgs.unzip}/bin/unzip -p "$TMP_JAR" META-INF/mods.toml 2>/dev/null | grep -qi 'side\s*=\s*"client"'; then
+                                            elif ${pkgs.unzip}/bin/unzip -p "$TMP_JAR" META-INF/mods.toml 2>/dev/null | grep -qi "side\s*=\s*\"client\""; then
                                                 mv "$TMP_JAR" "$CLIENT_MODS_DIR/$JAR_NAME"
                                                 continue
                                             fi
