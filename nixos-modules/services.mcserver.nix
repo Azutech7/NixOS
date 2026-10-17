@@ -102,18 +102,18 @@
                     if [ -d "$INDEX_DIR" ]; then
                         echo "Processing Packwiz .pw.toml files..."
                         
-                        # Build a temporary manifest list of expected current jar filenames from this zip
                         CURRENT_MANIFEST="$TMP_DIR/active_mods.txt"
                         > "$CURRENT_MANIFEST"
 
                         for toml in "$INDEX_DIR"/*.pw.toml; do
                             [ -f "$toml" ] || continue
                             
-                            DOWNLOAD_URL=$(grep -E '^url\s*=' "$toml" | head -n 1 | cut -d'"' -f2)
-                            JAR_NAME=$(grep -E '^file\s*=' "$toml" | head -n 1 | cut -d'"' -f2)
+                            # Safely extract and strip any surrounding quotes, carriage returns, or spaces
+                            DOWNLOAD_URL=$(grep -E '^url\s*=' "$toml" | head -n 1 | cut -d'=' -f2 | tr -d '"'\''[:space:]\r')
+                            JAR_NAME=$(grep -E '^file\s*=' "$toml" | head -n 1 | cut -d'=' -f2 | tr -d '"'\''[:space:]\r')
                             
                             if [ -z "$JAR_NAME" ] && [ -n "$DOWNLOAD_URL" ]; then
-                                JAR_NAME=$(basename "$DOWNLOAD_URL")
+                                JAR_NAME=$(basename "$DOWNLOAD_URL" | tr -d '"'\''[:space:]\r')
                             fi
 
                             if [ -n "$DOWNLOAD_URL" ] && [ -n "$JAR_NAME" ]; then
@@ -123,7 +123,6 @@
                                 FILENAME=$(echo "$JAR_NAME" | tr '[:upper:]' '[:lower:]')
                                 IS_CLIENT=false
 
-                                # Determine target location (Server vs Client) based on naming rules
                                 if [[ "$FILENAME" =~ (create_connected|ritchiesprojectilelib) ]]; then
                                     IS_CLIENT=false
                                 elif [[ "$FILENAME" =~ (sodium|embeddium|iris|oculus|entityculling|reeses-sodium-options|distanthorizons|minihud|xaero) ]]; then
@@ -138,7 +137,6 @@
 
                                 FINAL_JAR="$TARGET_DIR/$JAR_NAME"
 
-                                # Smart check: Skip download if file already exists
                                 if [ -f "$FINAL_JAR" ]; then
                                     echo "Skipping existing matching mod: $JAR_NAME"
                                 else
@@ -146,14 +144,13 @@
                                     TMP_JAR="$TMP_DIR/$JAR_NAME"
                                     ${pkgs.curl}/bin/curl -sL "$DOWNLOAD_URL" -o "$TMP_JAR"
                                     
-                                    if [ -f "$TMP_JAR" ]; then
-                                        # If it wasn't pre-categorized by filename, inspect jar metadata inside
+                                    if [ -f "$TMP_JAR" ] && [ -s "$TMP_JAR" ]; then
                                         if ! [[ "$FILENAME" =~ (create_connected|ritchiesprojectilelib|sodium|embeddium|iris|oculus|entityculling|reeses-sodium-options|distanthorizons|minihud|xaero) ]]; then
                                             if ${pkgs.unzip}/bin/unzip -p "$TMP_JAR" META-INF/neoforge.mods.toml 2>/dev/null | grep -qi 'side\s*=\s*"client"'; then
-                                                mv "$TMP_JAR" "$CLIENT_MODS_DIR/"
+                                                mv "$TMP_JAR" "$CLIENT_MODS_DIR/$JAR_NAME"
                                                 continue
                                             elif ${pkgs.unzip}/bin/unzip -p "$TMP_JAR" META-INF/mods.toml 2>/dev/null | grep -qi 'side\s*=\s*"client"'; then
-                                                mv "$TMP_JAR" "$CLIENT_MODS_DIR/"
+                                                mv "$TMP_JAR" "$CLIENT_MODS_DIR/$JAR_NAME"
                                                 continue
                                             fi
                                         fi
@@ -163,7 +160,6 @@
                             fi
                         done
 
-                        # Cleanup old/stale mods in SERVER_MODS and CLIENT_MODS_DIR that are no longer in the manifest
                         echo "Cleaning up outdated/replaced mods..."
                         for existing_jar in "$SERVER_MODS"/*.jar "$CLIENT_MODS_DIR"/*.jar; do
                             [ -f "$existing_jar" ] || continue
