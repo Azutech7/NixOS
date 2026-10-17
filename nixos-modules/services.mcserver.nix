@@ -108,12 +108,17 @@
                         for toml in "$INDEX_DIR"/*.pw.toml; do
                             [ -f "$toml" ] || continue
                             
-                            # Safely extract attributes using Nix string interpolation for quotes
-                            DOWNLOAD_URL=$(grep -E '^url\s*=' "$toml" | head -n 1 | cut -d'=' -f2 | tr -d '"'${"'"}'[:space:]\r')
-                            JAR_NAME=$(grep -E '^file\s*=' "$toml" | head -n 1 | cut -d'=' -f2 | tr -d '"'${"'"}'[:space:]\r')
+                            # Extract raw attribute values after '='
+                            RAW_URL=$(grep -E '^url\s*=' "$toml" | head -n 1 | cut -d'=' -f2)
+                            RAW_FILE=$(grep -E '^file\s*=' "$toml" | head -n 1 | cut -d'=' -f2)
+                            
+                            # Clean quotes, spaces, and carriage returns using native Bash parameter expansion
+                            DOWNLOAD_URL="''${RAW_URL//[\"'[:space:]\r]/}"
+                            JAR_NAME="''${RAW_FILE//[\"'[:space:]\r]/}"
                             
                             if [ -z "$JAR_NAME" ] && [ -n "$DOWNLOAD_URL" ]; then
-                                JAR_NAME=$(basename "$DOWNLOAD_URL" | tr -d '"'${"'"}'[:space:]\r')
+                                JAR_NAME=$(basename "$DOWNLOAD_URL")
+                                JAR_NAME="''${JAR_NAME//[\"'[:space:]\r]/}"
                             fi
 
                             if [ -n "$DOWNLOAD_URL" ] && [ -n "$JAR_NAME" ]; then
