@@ -78,8 +78,9 @@
 
         systemd.services.minecraft-mod-sorter = {
             description = "Extract and sort Minecraft mods into server and automodpack folders";
-            before = [ "docker-minecraft.service" ];
-            requiredBy = [ "docker-minecraft.service" ];
+            before = [ "docker-mcserver.service" ];
+            requiredBy = [ "docker-mcserver.service" ];
+            wantedBy = [ "docker-mcserver.service" ];
             serviceConfig = {
                 Type = "oneshot";
                 RemainAfterExit = true;
@@ -109,7 +110,7 @@
                             FILENAME=$(basename "$jar" | tr '[:upper:]' '[:lower:]')
                             IS_CLIENT=false
 
-                            # 1. Explicitly force known network/server-required mods to stay on the server
+                            # 1. Force network/server-required mods to stay on the server
                             if [[ "$FILENAME" =~ (create_connected|ritchiesprojectilelib) ]]; then
                                 IS_CLIENT=false
                             # 2. Check filename patterns for true client-only renderers
