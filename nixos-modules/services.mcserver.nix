@@ -102,9 +102,6 @@
 
                     if [ -n "$INDEX_DIR" ] && [ -d "$INDEX_DIR" ]; then
                         echo "Found Packwiz index at: $INDEX_DIR"
-                        echo "Listing index contents for verification:"
-                        ls -la "$INDEX_DIR"
-
                         echo "Processing Packwiz .pw.toml files..."
                         
                         CURRENT_MANIFEST="$TMP_DIR/active_mods.txt"
@@ -115,12 +112,26 @@
                             
                             DOWNLOAD_URL=""
                             JAR_NAME=""
+                            IN_DOWNLOAD_SECTION=false
                             
                             while IFS= read -r line; do
+                                line="''${line//[$'\r']/}"
+                                # Check for section header
+                                if [[ "$line" =~ ^\[.*\] ]]; then
+                                    if [[ "$line" == "[download]" ]]; then
+                                        IN_DOWNLOAD_SECTION=true
+                                    else
+                                        IN_DOWNLOAD_SECTION=false
+                                    fi
+                                    continue
+                                fi
+
                                 case "$line" in
                                     *url=*)
-                                        val="''${line#*=}"
-                                        DOWNLOAD_URL="''${val//[\"[:space:]]/}"
+                                        if [ "$IN_DOWNLOAD_SECTION" = true ] || [[ -z "$DOWNLOAD_URL" ]]; then
+                                            val="''${line#*=}"
+                                            DOWNLOAD_URL="''${val//[\"[:space:]]/}"
+                                        fi
                                         ;;
                                     *filename=*|*file=*)
                                         val="''${line#*=}"
