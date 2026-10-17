@@ -19,6 +19,7 @@
                 EULA = "TRUE";
                 TYPE = "NEOFORGE";
                 VERSION = "1.21.1";
+                NEOFORGE_VERSION = "21.1.259";
 
                 # Performance & Environment
                 MEMORY = "12G";
@@ -110,7 +111,7 @@
                             IS_CLIENT=false
 
                             # Check filename patterns for client renderers/optimization mods
-                            if [[ "$FILENAME" =~ (sodium|embeddium|iris|oculus|entityculling|reeses-sodium-options|distanthorizons|minihud|xaero) ]]; then
+                            if [[ "$FILENAME" =~ (sodium|embeddium|iris|oculus|entityculling|reeses-sodium-options|distanthorizons|minihud|xaero) ]] && [[ ! "$FILENAME" =~ (create_connected|ritchiesprojectilelib) ]]; then
                                 IS_CLIENT=true
                             # Check NeoForge metadata
                             elif ${pkgs.unzip}/bin/unzip -p "$jar" META-INF/neoforge.mods.toml 2>/dev/null | grep -qi 'side\s*=\s*"client"'; then
