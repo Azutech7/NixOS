@@ -21,8 +21,8 @@
                 VERSION = "1.21.1";
                 NEOFORGE_VERSION = "21.1.259";
 
-                # Add JVM flags to bypass NeoForge's Java 21 version lock
-                JVM_OPTS = "-Dneoforge.ignoreJavaVersion=true";
+                # Extended JVM flags for Java 25 + NeoForge compatibility
+                JVM_OPTS = "-Dneoforge.ignoreJavaVersion=true --enable-native-access=ALL-UNNAMED";
 
                 # Performance & Environment
                 MEMORY = "12G";
@@ -78,6 +78,8 @@
                 #"/var/lib/mcserver/modpacks:/modpacks:ro"
             ];
         };
+
+        networking.firewall.allowedTCPPorts = [ 25565 ];
 
 #        services.caddy.virtualHosts = {
 #            
