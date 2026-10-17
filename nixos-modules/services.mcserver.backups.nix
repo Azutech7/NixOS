@@ -9,7 +9,8 @@
             autoStart = true;
 
             environment = {
-                RCON_HOST = "localhost";
+                RCON_HOST = "172.17.0.1";
+                RCON_PORT = "25575";
                 RCON_PASSWORD = "syt3aBEyt8fHXXeVEAznL4KkC2pR752n";
                 BACKUP_INTERVAL = "8h";
                 PRUNE_BACKUPS_DAYS = "1";
