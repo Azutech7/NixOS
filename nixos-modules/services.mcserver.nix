@@ -12,7 +12,7 @@
 
             ports = [ 
                 "25565:25565"
-                "25575:25575"
+                #"25575:25575"
             ];
 
             environment = {
@@ -41,8 +41,8 @@
                 ALLOW_NETHER = "true";
 
                 # Distances (3-32 inclusive)
-                VIEW_DISTANCE = "32";
-                SIMULATION_DISTANCE = "32";
+                VIEW_DISTANCE = "12";
+                SIMULATION_DISTANCE = "10";
 
                 # Whitelist
                 WHITE_LIST = "true";
