@@ -72,79 +72,8 @@
 
             volumes = [
                 "/var/lib/mcserver/data:/data"
-                "/var/lib/mcserver/modpacks:/modpacks:ro"
+                #"/var/lib/mcserver/modpacks:/modpacks:ro"
             ];
-        };
-
-        systemd.services.minecraft-mod-sorter = {
-            description = "Smart Prism Launcher modpack extractor and strict whitelist sorter";
-            before = [ "docker-mcserver.service" ];
-            requiredBy = [ "docker-mcserver.service" ];
-            wantedBy = [ "docker-mcserver.service" ];
-            serviceConfig = {
-                Type = "oneshot";
-                RemainAfterExit = true;
-            };
-            script = ''
-                MODPACK_ZIP="/var/lib/mcserver/modpacks/Modpak_prism-launcher_v1.0.1.zip"
-                SERVER_MODS="/var/lib/mcserver/data/mods"
-                CLIENT_MODS_DIR="/var/lib/mcserver/data/automodpack/host-modpack/mods"
-
-                mkdir -p "$SERVER_MODS"
-                mkdir -p "$CLIENT_MODS_DIR"
-
-                if [ -f "$MODPACK_ZIP" ]; then
-                    echo "Extracting modpack zip..."
-                    TMP_DIR=$(mktemp -d)
-                    ${pkgs.unzip}/bin/unzip -q "$MODPACK_ZIP" -d "$TMP_DIR"
-
-                    MODS_SRC_DIR=$(find "$TMP_DIR" -type d -name "mods" | head -n 1)
-
-                    if [ -n "$MODS_SRC_DIR" ] && [ -d "$MODS_SRC_DIR" ]; then
-                        echo "Found mods directory at: $MODS_SRC_DIR"
-                        
-                        CURRENT_MANIFEST="$TMP_DIR/active_mods.txt"
-                        > "$CURRENT_MANIFEST"
-
-                        # Wipe old mod files to prevent cross-contamination when rules change
-                        rm -f "$SERVER_MODS"/*.jar "$CLIENT_MODS_DIR"/*.jar
-
-                        for jar in "$MODS_SRC_DIR"/*.jar; do
-                            [ -f "$jar" ] || continue
-                            JAR_NAME=$(basename "$jar")
-                            echo "$JAR_NAME" >> "$CURRENT_MANIFEST"
-
-                            FILENAME=$(echo "$JAR_NAME" | tr "[:upper:]" "[:lower:]")
-                            
-                            # Strict client-only whitelist (purely graphical, UI, shader, or HUD/minimap mods)
-                            if [[ "$FILENAME" =~ (sodium|embeddium|iris|oculus|entityculling|skinlayers3d|minihud|xaero|better_modlist|boatiview|colorwheel|dynamic-fps|effecttimerplus|fast-ip-ping|freecam|gpubooster|immediatelyfast|modmenu|moreoverlays|mytotemdoll|ok_zoomer|particlerain|particular|quickcraft) ]]; then
-                                TARGET_DIR="$CLIENT_MODS_DIR"
-                            else
-                                TARGET_DIR="$SERVER_MODS"
-                            fi
-
-                            FINAL_JAR="$TARGET_DIR/$JAR_NAME"
-                            echo "Sorting mod: $JAR_NAME -> $(basename "$TARGET_DIR")"
-                            cp "$jar" "$FINAL_JAR"
-                        done
-
-                        echo "Cleaning up outdated/replaced mods..."
-                        for existing_jar in "$SERVER_MODS"/*.jar "$CLIENT_MODS_DIR"/*.jar; do
-                            [ -f "$existing_jar" ] || continue
-                            BASENAME=$(basename "$existing_jar")
-                            if ! grep -qxF "$BASENAME" "$CURRENT_MANIFEST"; then
-                                echo "Removing outdated/replaced mod: $BASENAME"
-                                rm -f "$existing_jar"
-                            fi
-                        done
-                    else
-                        echo "Warning: Could not find mods directory in $MODPACK_ZIP"
-                    fi
-                    rm -rf "$TMP_DIR"
-                else
-                    echo "Warning: Modpack zip not found at $MODPACK_ZIP"
-                fi
-            '';
         };
 
 #        services.caddy.virtualHosts = {
