@@ -5,7 +5,10 @@
     config = lib.mkIf config.modules.common.security.network.tailscale.enable {
 
         services.tailscale.enable = true;
-        networking.firewall.trustedInterfaces = [ "tailscale0" ];
+        networking.firewall = {
+            trustedInterfaces = [ "tailscale0" ];
+            allowedUDPPorts = [ 41641 ];
+        };
 
         boot.kernel.sysctl = {
             "net.ipv4.ip_forward" = 1;
