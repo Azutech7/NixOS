@@ -108,19 +108,25 @@
                         for toml in "$INDEX_DIR"/*.pw.toml; do
                             [ -f "$toml" ] || continue
                             
-                            TOML_CONTENT=$(tr -d '\r' < "$toml")
-                            DOWNLOAD_URL=$(echo "$TOML_CONTENT" | grep -E "^url\s*=" | head -n 1 | awk -F'"' '{print $2}')
-                            JAR_NAME=$(echo "$TOML_CONTENT" | grep -E "^file\s*=" | head -n 1 | awk -F'"' '{print $2}')
+                            # Read lines and use pure Bash substring removal to extract values between double quotes
+                            DOWNLOAD_URL=""
+                            JAR_NAME=""
+                            
+                            while IFS= read -r line; do
+                                line="''${line//[$'\r']/}"
+                                if [[ "$line" =~ ^url\s*= ]]; then
+                                    val="''${line#*=}"
+                                    val="''${val//[\"[:space:]]/}"
+                                    DOWNLOAD_URL="$val"
+                                elif [[ "$line" =~ ^file\s*= ]]; then
+                                    val="''${line#*=}"
+                                    val="''${val//[\"[:space:]]/}"
+                                    JAR_NAME="$val"
+                                fi
+                            done < "$toml"
                             
                             if [ -z "$JAR_NAME" ] && [ -n "$DOWNLOAD_URL" ]; then
                                 JAR_NAME=$(basename "$DOWNLOAD_URL")
-                            fi
-
-                            if [ -z "$JAR_NAME" ] || [ -z "$DOWNLOAD_URL" ]; then
-                                RAW_URL=$(echo "$TOML_CONTENT" | grep -E "^url\s*=" | head -n 1 | cut -d"=" -f2)
-                                RAW_FILE=$(echo "$TOML_CONTENT" | grep -E "^file\s*=" | head -n 1 | cut -d"=" -f2)
-                                [ -z "$DOWNLOAD_URL" ] && DOWNLOAD_URL="''${RAW_URL//[\"'[:space:]]/}"
-                                [ -z "$JAR_NAME" ] && JAR_NAME="''${RAW_FILE//[\"'[:space:]]/}"
                             fi
 
                             if [ -n "$DOWNLOAD_URL" ] && [ -n "$JAR_NAME" ]; then
