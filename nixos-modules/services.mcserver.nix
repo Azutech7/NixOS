@@ -108,16 +108,18 @@
                         for toml in "$INDEX_DIR"/*.pw.toml; do
                             [ -f "$toml" ] || continue
                             
-                            RAW_URL=$(grep -E "^url\s*=" "$toml" | head -n 1 | cut -d"=" -f2)
-                            RAW_FILE=$(grep -E "^file\s*=" "$toml" | head -n 1 | cut -d"=" -f2)
+                            # Strip carriage returns from the TOML file content first to prevent parsing corruption
+                            TOML_CONTENT=$(tr -d '\r' < "$toml")
+                            RAW_URL=$(echo "$TOML_CONTENT" | grep -E "^url\s*=" | head -n 1 | cut -d"=" -f2)
+                            RAW_FILE=$(echo "$TOML_CONTENT" | grep -E "^file\s*=" | head -n 1 | cut -d"=" -f2)
                             
-                            # Use ''$ to prevent Nix interpolation collision on bash parameter expansion
-                            DOWNLOAD_URL="''${RAW_URL//[\"[:space:]\r]/}"
-                            JAR_NAME="''${RAW_FILE//[\"[:space:]\r]/}"
+                            # Clean quotes and whitespace
+                            DOWNLOAD_URL="''${RAW_URL//[\"[:space:]]/}"
+                            JAR_NAME="''${RAW_FILE//[\"[:space:]]/}"
                             
                             if [ -z "$JAR_NAME" ] && [ -n "$DOWNLOAD_URL" ]; then
                                 JAR_NAME=$(basename "$DOWNLOAD_URL")
-                                JAR_NAME="''${JAR_NAME//[\"[:space:]\r]/}"
+                                JAR_NAME="''${JAR_NAME//[\"[:space:]]/}"
                             fi
 
                             if [ -n "$DOWNLOAD_URL" ] && [ -n "$JAR_NAME" ]; then
