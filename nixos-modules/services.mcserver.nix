@@ -77,10 +77,9 @@
         };
 
         systemd.services.minecraft-mod-sorter = {
-            description = "Extract and sort Minecraft mods into server and automodpack folders";
+            description = "Smart Packwiz modpack parser, downloader, and incremental sorter";
             before = [ "docker-mcserver.service" ];
             requiredBy = [ "docker-mcserver.service" ];
-            wantedBy = [ "docker-mcserver.service" ];
             serviceConfig = {
                 Type = "oneshot";
                 RemainAfterExit = true;
@@ -93,43 +92,84 @@
                 mkdir -p "$SERVER_MODS"
                 mkdir -p "$CLIENT_MODS_DIR"
 
-                # Clear old state
-                rm -rf "$SERVER_MODS"/*
-                rm -rf "$CLIENT_MODS_DIR"/*
-
                 if [ -f "$MODPACK_ZIP" ]; then
-                    echo "Extracting modpack zip..."
+                    echo "Extracting Packwiz modpack zip..."
                     TMP_DIR=$(mktemp -d)
                     ${pkgs.unzip}/bin/unzip -q "$MODPACK_ZIP" -d "$TMP_DIR"
 
-                    if [ -d "$TMP_DIR/mods" ]; then
-                        echo "Sorting mods (Server vs Client)..."
-                        for jar in "$TMP_DIR/mods"/*.jar; do
-                            [ -f "$jar" ] || continue
-                            
-                            FILENAME=$(basename "$jar" | tr '[:upper:]' '[:lower:]')
-                            IS_CLIENT=false
+                    INDEX_DIR="$TMP_DIR/minecraft/mods/.index"
+                    if [ -d "$INDEX_DIR" ]; then
+                        echo "Processing Packwiz .pw.toml files..."
+                        
+                        # Build a temporary manifest list of expected current jar filenames from this zip
+                        CURRENT_MANIFEST="$TMP_DIR/active_mods.txt"
+                        > "$CURRENT_MANIFEST"
 
-                            # 1. Force network/server-required mods to stay on the server
-                            if [[ "$FILENAME" =~ (create_connected|ritchiesprojectilelib) ]]; then
-                                IS_CLIENT=false
-                            # 2. Check filename patterns for true client-only renderers
-                            elif [[ "$FILENAME" =~ (sodium|embeddium|iris|oculus|entityculling|reeses-sodium-options|distanthorizons|minihud|xaero) ]]; then
-                                IS_CLIENT=true
-                            # 3. Check NeoForge/Forge metadata for client-side flag
-                            elif ${pkgs.unzip}/bin/unzip -p "$jar" META-INF/neoforge.mods.toml 2>/dev/null | grep -qi 'side\s*=\s*"client"'; then
-                                IS_CLIENT=true
-                            elif ${pkgs.unzip}/bin/unzip -p "$jar" META-INF/mods.toml 2>/dev/null | grep -qi 'side\s*=\s*"client"'; then
-                                IS_CLIENT=true
+                        for toml in "$INDEX_DIR"/*.pw.toml; do
+                            [ -f "$toml" ] || continue
+                            
+                            DOWNLOAD_URL=$(grep -E '^url\s*=' "$toml" | head -n 1 | cut -d'"' -f2)
+                            JAR_NAME=$(grep -E '^file\s*=' "$toml" | head -n 1 | cut -d'"' -f2)
+                            
+                            if [ -z "$JAR_NAME" ] && [ -n "$DOWNLOAD_URL" ]; then
+                                JAR_NAME=$(basename "$DOWNLOAD_URL")
                             fi
 
-                            # Route appropriately
-                            if [ "$IS_CLIENT" = true ]; then
-                                echo "Client mod -> Automodpack: $(basename "$jar")"
-                                mv "$jar" "$CLIENT_MODS_DIR/"
-                            else
-                                echo "Server mod -> Data mods: $(basename "$jar")"
-                                mv "$jar" "$SERVER_MODS/"
+                            if [ -n "$DOWNLOAD_URL" ] && [ -n "$JAR_NAME" ]; then
+                                echo "$JAR_NAME" >> "$CURRENT_MANIFEST"
+                                
+                                TARGET_DIR=""
+                                FILENAME=$(echo "$JAR_NAME" | tr '[:upper:]' '[:lower:]')
+                                IS_CLIENT=false
+
+                                # Determine target location (Server vs Client) based on naming/metadata rules
+                                if [[ "$FILENAME" =~ (create_connected|ritchiesprojectilelib) ]]; then
+                                    IS_CLIENT=false
+                                elif [[ "$FILENAME" =~ (sodium|embeddium|iris|oculus|entityculling|reeses-sodium-options|distanthorizons|minihud|xaero) ]]; then
+                                    IS_CLIENT=true
+                                fi
+
+                                if [ "$IS_CLIENT" = true ]; then
+                                    TARGET_DIR="$CLIENT_MODS_DIR"
+                                else
+                                    TARGET_DIR="$SERVER_MODS"
+                                end-if # (syntax note: standard bash uses fi)
+
+                                FINAL_JAR="$TARGET_DIR/$JAR_NAME"
+
+                                # Smart check: If file already exists, check if we need to re-download or if it's a 1:1 match
+                                if [ -f "$FINAL_JAR" ]; then
+                                    echo "Skipping existing matching mod: $JAR_NAME"
+                                else
+                                    echo "Downloading new/updated mod: $JAR_NAME"
+                                    TMP_JAR="$TMP_DIR/$JAR_NAME"
+                                    ${pkgs.curl}/bin/curl -sL "$DOWNLOAD_URL" -o "$TMP_JAR"
+                                    
+                                    if [ -f "$TMP_JAR" ]; then
+                                        # If it wasn't pre-categorized by filename, inspect jar metadata
+                                        if [[ "$FILENAME" !~ (create_connected|ritchiesprojectilelib|sodium|embeddium|iris|oculus|entityculling|reeses-sodium-options|distanthorizons|minihud|xaero) ]]; then
+                                            if ${pkgs.unzip}/bin/unzip -p "$TMP_JAR" META-INF/neoforge.mods.toml 2>/dev/null | grep -qi 'side\s*=\s*"client"'; then
+                                                mv "$TMP_JAR" "$CLIENT_MODS_DIR/"
+                                                continue
+                                            elif ${pkgs.unzip}/bin/unzip -p "$TMP_JAR" META-INF/mods.toml 2>/dev/null | grep -qi 'side\s*=\s*"client"'; then
+                                                mv "$TMP_JAR" "$CLIENT_MODS_DIR/"
+                                                continue
+                                            fi
+                                        fi
+                                        mv "$TMP_JAR" "$FINAL_JAR"
+                                    fi
+                                fi
+                            fi
+                        done
+
+                        # Cleanup old/stale mods in SERVER_MODS and CLIENT_MODS_DIR that are no longer in the zip manifest
+                        echo "Cleaning up outdated/replaced mods..."
+                        for existing_jar in "$SERVER_MODS"/*.jar "$CLIENT_MODS_DIR"/*.jar; do
+                            [ -f "$existing_jar" ] || continue
+                            BASENAME=$(basename "$existing_jar")
+                            if ! grep -qxF "$BASENAME" "$CURRENT_MANIFEST"; then
+                                echo "Removing outdated/replaced mod: $BASENAME"
+                                rm -f "$existing_jar"
                             fi
                         done
                     fi
