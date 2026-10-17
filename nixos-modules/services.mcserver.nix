@@ -106,6 +106,9 @@
                         CURRENT_MANIFEST="$TMP_DIR/active_mods.txt"
                         > "$CURRENT_MANIFEST"
 
+                        # Wipe old mod files to prevent cross-contamination when rules change
+                        rm -f "$SERVER_MODS"/*.jar "$CLIENT_MODS_DIR"/*.jar
+
                         for jar in "$MODS_SRC_DIR"/*.jar; do
                             [ -f "$jar" ] || continue
                             JAR_NAME=$(basename "$jar")
@@ -113,9 +116,6 @@
 
                             FILENAME=$(echo "$JAR_NAME" | tr "[:upper:]" "[:lower:]")
                             
-                            # DEFAULT: Everything goes to the server unless explicitly whitelisted below as client-only
-                            TARGET_DIR="$SERVER_MODS"
-
                             # Strict client-only whitelist (purely graphical, UI, shader, or HUD/minimap mods)
                             if [[ "$FILENAME" =~ (sodium|embeddium|iris|oculus|entityculling|skinlayers3d|minihud|xaero|better_modlist|boatiview|colorwheel|dynamic-fps|effecttimerplus|fast-ip-ping|freecam|gpubooster|immediatelyfast|modmenu|moreoverlays|mytotemdoll|ok_zoomer|particlerain|particular|quickcraft) ]]; then
                                 TARGET_DIR="$CLIENT_MODS_DIR"
@@ -124,13 +124,8 @@
                             fi
 
                             FINAL_JAR="$TARGET_DIR/$JAR_NAME"
-
-                            if [ -f "$FINAL_JAR" ]; then
-                                echo "Skipping existing mod: $JAR_NAME"
-                            else
-                                echo "Sorting mod: $JAR_NAME -> $(basename "$TARGET_DIR")"
-                                cp "$jar" "$FINAL_JAR"
-                            fi
+                            echo "Sorting mod: $JAR_NAME -> $(basename "$TARGET_DIR")"
+                            cp "$jar" "$FINAL_JAR"
                         done
 
                         echo "Cleaning up outdated/replaced mods..."
