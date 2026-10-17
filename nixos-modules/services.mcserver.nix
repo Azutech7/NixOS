@@ -108,11 +108,12 @@
                         for toml in "$INDEX_DIR"/*.pw.toml; do
                             [ -f "$toml" ] || continue
                             
-                            DOWNLOAD_URL=$(grep -E '^url\s*=' "$toml" | head -n 1 | cut -d'=' -f2 | tr -d '"'\''[:space:]\r')
-                            JAR_NAME=$(grep -E '^file\s*=' "$toml" | head -n 1 | cut -d'=' -f2 | tr -d '"'\''[:space:]\r')
+                            # Safely extract attributes using Nix string interpolation for quotes
+                            DOWNLOAD_URL=$(grep -E '^url\s*=' "$toml" | head -n 1 | cut -d'=' -f2 | tr -d '"'${"'"}'[:space:]\r')
+                            JAR_NAME=$(grep -E '^file\s*=' "$toml" | head -n 1 | cut -d'=' -f2 | tr -d '"'${"'"}'[:space:]\r')
                             
                             if [ -z "$JAR_NAME" ] && [ -n "$DOWNLOAD_URL" ]; then
-                                JAR_NAME=$(basename "$DOWNLOAD_URL" | tr -d '"'\''[:space:]\r')
+                                JAR_NAME=$(basename "$DOWNLOAD_URL" | tr -d '"'${"'"}'[:space:]\r')
                             fi
 
                             if [ -n "$DOWNLOAD_URL" ] && [ -n "$JAR_NAME" ]; then
