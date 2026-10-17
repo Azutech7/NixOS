@@ -117,16 +117,16 @@
                             JAR_NAME=""
                             
                             while IFS= read -r line; do
-                                line="''${line//[\"'[:space:]\r]/}"
-                                # Match url = ... anywhere on the line
-                                if [[ "$line" =~ (^|[[:space:]])url= ]]; then
-                                    val="''${line#*=}"
-                                    DOWNLOAD_URL="''${val//[\"[:space:]]/}"
-                                # Match filename = ... or file = ...
-                                elif [[ "$line" =~ (^|[[:space:]])(filename|file)= ]]; then
-                                    val="''${line#*=}"
-                                    JAR_NAME="''${val//[\"[:space:]]/}"
-                                fi
+                                case "$line" in
+                                    *url=*)
+                                        val="''${line#*=}"
+                                        DOWNLOAD_URL="''${val//[\"[:space:]]/}"
+                                        ;;
+                                    *filename=*|*file=*)
+                                        val="''${line#*=}"
+                                        JAR_NAME="''${val//[\"[:space:]]/}"
+                                        ;;
+                                esac
                             done < "$toml"
                             
                             if [ -z "$JAR_NAME" ] && [ -n "$DOWNLOAD_URL" ]; then
