@@ -108,19 +108,22 @@
                         for toml in "$INDEX_DIR"/*.pw.toml; do
                             [ -f "$toml" ] || continue
                             
-                            # Strip carriage returns from the TOML file content first to prevent parsing corruption
+                            # Use awk to extract the exact quoted value fields safely, ignoring all trailing debris
                             TOML_CONTENT=$(tr -d '\r' < "$toml")
-                            RAW_URL=$(echo "$TOML_CONTENT" | grep -E "^url\s*=" | head -n 1 | cut -d"=" -f2)
-                            RAW_FILE=$(echo "$TOML_CONTENT" | grep -E "^file\s*=" | head -n 1 | cut -d"=" -f2)
-                            
-                            # Clean quotes and whitespace
-                            DOWNLOAD_URL="''${RAW_URL//[\"[:space:]]/}"
-                            JAR_NAME="''${RAW_FILE//[\"[:space:]]/}"
+                            DOWNLOAD_URL=$(echo "$TOML_CONTENT" | grep -E "^url\s*=" | head -n 1 | awk -F'"' '{print $2}')
+                            JAR_NAME=$(echo "$TOML_CONTENT" | grep -E "^file\s*=" | head -n 1 | awk -F'"' '{print $2}')
                             
                             if [ -z "$JAR_NAME" ] && [ -n "$DOWNLOAD_URL" ]; then
                                 JAR_NAME=$(basename "$DOWNLOAD_URL")
-                                JAR_NAME="''${JAR_NAME//[\"[:space:]]/}"
                             fi
+
+                            # Fallback if double quotes weren't used (e.g. single quotes or unquoted)
+                            if [ -z "$JAR_NAME" ] || [ -z "$DOWNLOAD_URL" ]; then
+                                RAW_URL=$(echo "$TOML_CONTENT" | grep -E "^url\s*=" | head -n 1 | cut -d"=" -f2)
+                                RAW_FILE=$(echo "$TOML_CONTENT" | grep -E "^file\s*=" | head -n 1 | cut -d"=" -f2)
+                                [ -z "$DOWNLOAD_URL" ] && DOWNLOAD_URL="''${RAW_URL//[\"'[:space:]]/}"
+                                [ -z "$JAR_NAME" ] && JAR_NAME="''${RAW_FILE//[\"'[:space:]]/}"
+                            }
 
                             if [ -n "$DOWNLOAD_URL" ] && [ -n "$JAR_NAME" ]; then
                                 echo "$JAR_NAME" >> "$CURRENT_MANIFEST"
