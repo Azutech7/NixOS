@@ -100,87 +100,64 @@
 
                     INDEX_DIR="$TMP_DIR/minecraft/mods/.index"
                     if [ -d "$INDEX_DIR" ]; then
-                        echo "Processing Packwiz .pw.toml files via Python parser..."
+                        echo "Processing Packwiz .pw.toml files..."
                         
                         CURRENT_MANIFEST="$TMP_DIR/active_mods.txt"
-                        
-                        # Use Python to safely parse TOMLs, fetch URLs, and write out clean manifests
-                        ${pkgs.python3}/bin/python3 - <<EOF
-import os
-import glob
-import urllib.request
-import subprocess
-import zipfile
+                        > "$CURRENT_MANIFEST"
 
-index_dir = "$INDEX_DIR"
-server_mods = "$SERVER_MODS"
-client_mods = "$CLIENT_MODS_DIR"
-current_manifest_path = "$CURRENT_MANIFEST"
+                        for toml in "$INDEX_DIR"/*.pw.toml; do
+                            [ -f "$toml" ] || continue
+                            
+                            DOWNLOAD_URL=$(grep -E '^url\s*=' "$toml" | head -n 1 | cut -d'=' -f2 | tr -d '"'\''[:space:]\r')
+                            JAR_NAME=$(grep -E '^file\s*=' "$toml" | head -n 1 | cut -d'=' -f2 | tr -d '"'\''[:space:]\r')
+                            
+                            if [ -z "$JAR_NAME" ] && [ -n "$DOWNLOAD_URL" ]; then
+                                JAR_NAME=$(basename "$DOWNLOAD_URL" | tr -d '"'\''[:space:]\r')
+                            fi
 
-active_mods = []
+                            if [ -n "$DOWNLOAD_URL" ] && [ -n "$JAR_NAME" ]; then
+                                echo "$JAR_NAME" >> "$CURRENT_MANIFEST"
+                                
+                                TARGET_DIR=""
+                                FILENAME=$(echo "$JAR_NAME" | tr '[:upper:]' '[:lower:]')
+                                IS_CLIENT=false
 
-for toml_path in glob.glob(os.path.join(index_dir, "*.pw.toml")):
-    url = None
-    filename = None
-    
-    with open(toml_path, "r", encoding="utf-8") as f:
-        for line in f:
-            line = line.strip()
-            if line.startswith("url"):
-                url = line.split("=", 1)[1].strip().strip('"\'')
-            elif line.startswith("file"):
-                filename = line.split("=", 1)[1].strip().strip('"\'')
-                
-    if not filename and url:
-        filename = os.path.basename(url)
-        
-    if url and filename:
-        active_mods.append(filename)
-        
-        target_dir = server_mods
-        filename_lower = filename.lower()
-        
-        # Determine client vs server routing
-        is_client = False
-        if any(m in filename_lower for m in ["create_connected", "ritchiesprojectilelib"]):
-            is_client = False
-        elif any(m in filename_lower for m in ["sodium", "embeddium", "iris", "oculus", "entityculling", "reeses-sodium-options", "distanthorizons", "minihud", "xaero", "skinlayers3d"]):
-            is_client = True
-            
-        if is_client:
-            target_dir = client_mods
-            
-        final_jar = os.path.join(target_dir, filename)
-        
-        if os.path.exists(final_jar):
-            print(f"Skipping existing matching mod: {filename}")
-        else:
-            print(f"Downloading new/updated mod: {filename}")
-            tmp_jar = os.path.join("$TMP_DIR", filename)
-            try:
-                urllib.request.urlretrieve(url, tmp_jar)
-                if os.path.exists(tmp_jar) and os.path.getsize(tmp_jar) > 0:
-                    # Check jar metadata if not pre-categorized
-                    if not is_client and not any(m in filename_lower for m in ["create_connected", "ritchiesprojectilelib"]):
-                        try:
-                            with zipfile.ZipFile(tmp_jar, 'r') as z:
-                                jar_files = z.namelist()
-                                if "META-INF/neoforge.mods.toml" in jar_files:
-                                    content = z.read("META-INF/neoforge.mods.toml").decode("utf-8", errors="ignore")
-                                    if 'side="client"' in content or "side = 'client'" in content or 'side = "client"' in content:
-                                        target_dir = client_mods
-                                        final_jar = os.path.join(target_dir, filename)
-                        except Exception:
-                            pass
-                    
-                    os.rename(tmp_jar, final_jar)
-            except Exception as e:
-                print(f"Failed to download {filename}: {e}")
+                                if [[ "$FILENAME" =~ (create_connected|ritchiesprojectilelib) ]]; then
+                                    IS_CLIENT=false
+                                elif [[ "$FILENAME" =~ (sodium|embeddium|iris|oculus|entityculling|reeses-sodium-options|distanthorizons|minihud|xaero|skinlayers3d) ]]; then
+                                    IS_CLIENT=true
+                                fi
 
-with open(current_manifest_path, "w", encoding="utf-8") as mf:
-    for m in active_mods:
-        mf.write(m + "\n")
-EOF
+                                if [ "$IS_CLIENT" = true ]; then
+                                    TARGET_DIR="$CLIENT_MODS_DIR"
+                                else
+                                    TARGET_DIR="$SERVER_MODS"
+                                fi
+
+                                FINAL_JAR="$TARGET_DIR/$JAR_NAME"
+
+                                if [ -f "$FINAL_JAR" ]; then
+                                    echo "Skipping existing matching mod: $JAR_NAME"
+                                else
+                                    echo "Downloading new/updated mod: $JAR_NAME"
+                                    TMP_JAR="$TMP_DIR/$JAR_NAME"
+                                    ${pkgs.curl}/bin/curl -sL "$DOWNLOAD_URL" -o "$TMP_JAR"
+                                    
+                                    if [ -f "$TMP_JAR" ] && [ -s "$TMP_JAR" ]; then
+                                        if ! [[ "$FILENAME" =~ (create_connected|ritchiesprojectilelib|sodium|embeddium|iris|oculus|entityculling|reeses-sodium-options|distanthorizons|minihud|xaero|skinlayers3d) ]]; then
+                                            if ${pkgs.unzip}/bin/unzip -p "$TMP_JAR" META-INF/neoforge.mods.toml 2>/dev/null | grep -qi 'side\s*=\s*"client"'; then
+                                                mv "$TMP_JAR" "$CLIENT_MODS_DIR/$JAR_NAME"
+                                                continue
+                                            elif ${pkgs.unzip}/bin/unzip -p "$TMP_JAR" META-INF/mods.toml 2>/dev/null | grep -qi 'side\s*=\s*"client"'; then
+                                                mv "$TMP_JAR" "$CLIENT_MODS_DIR/$JAR_NAME"
+                                                continue
+                                            fi
+                                        fi
+                                        mv "$TMP_JAR" "$FINAL_JAR"
+                                    fi
+                                fi
+                            fi
+                        done
 
                         echo "Cleaning up outdated/replaced mods..."
                         for existing_jar in "$SERVER_MODS"/*.jar "$CLIENT_MODS_DIR"/*.jar; do
