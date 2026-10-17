@@ -116,8 +116,10 @@
                             FILENAME=$(echo "$JAR_NAME" | tr "[:upper:]" "[:lower:]")
                             IS_CLIENT=false
 
-                            if [[ "$FILENAME" =~ (create_connected|ritchiesprojectilelib) ]]; then
+                            # Forced server-side mods (including JEi for recipes/sync)
+                            if [[ "$FILENAME" =~ (create_connected|ritchiesprojectilelib|jei) ]]; then
                                 IS_CLIENT=false
+                            # Forced client-side mods
                             elif [[ "$FILENAME" =~ (sodium|embeddium|iris|oculus|entityculling|reeses-sodium-options|distanthorizons|minihud|xaero|skinlayers3d) ]]; then
                                 IS_CLIENT=true
                             fi
@@ -135,9 +137,9 @@
                             else
                                 echo "Sorting new/updated mod: $JAR_NAME -> $(basename "$TARGET_DIR")"
                                 
-                                # If going to server mods, check if it's actually a client-side mod inside the jar metadata
+                                # If going to server mods, check metadata unless explicitly forced
                                 if [ "$TARGET_DIR" = "$SERVER_MODS" ]; then
-                                    if ! [[ "$FILENAME" =~ (create_connected|ritchiesprojectilelib|sodium|embeddium|iris|oculus|entityculling|reeses-sodium-options|distanthorizons|minihud|xaero|skinlayers3d) ]]; then
+                                    if ! [[ "$FILENAME" =~ (create_connected|ritchiesprojectilelib|jei|sodium|embeddium|iris|oculus|entityculling|reeses-sodium-options|distanthorizons|minihud|xaero|skinlayers3d) ]]; then
                                         if ${pkgs.unzip}/bin/unzip -p "$jar" META-INF/neoforge.mods.toml 2>/dev/null | grep -qi "side\s*=\s*\"client\""; then
                                             cp "$jar" "$CLIENT_MODS_DIR/$JAR_NAME"
                                             continue
