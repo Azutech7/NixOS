@@ -117,7 +117,7 @@
                             TARGET_DIR="$SERVER_MODS"
 
                             # Strict client-only whitelist (purely graphical, UI, shader, or HUD/minimap mods)
-                            if [[ "$FILENAME" =~ (sodium|embeddium|iris|oculus|entityculling|skinlayers3d|minihud|xaero|better_modlist|boatiview|dynamic-fps|effecttimerplus|fast-ip-ping|freecam|gpubooster|immediatelyfast|modmenu|moreoverlays|mytotemdoll|ok_zoomer|particlerain|particular|quickcraft) ]]; then
+                            if [[ "$FILENAME" =~ (sodium|embeddium|iris|oculus|entityculling|skinlayers3d|minihud|xaero|better_modlist|boatiview|colorwheel|dynamic-fps|effecttimerplus|fast-ip-ping|freecam|gpubooster|immediatelyfast|modmenu|moreoverlays|mytotemdoll|ok_zoomer|particlerain|particular|quickcraft) ]]; then
                                 TARGET_DIR="$CLIENT_MODS_DIR"
                             else
                                 TARGET_DIR="$SERVER_MODS"
