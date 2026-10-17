@@ -108,11 +108,11 @@
                         for toml in "$INDEX_DIR"/*.pw.toml; do
                             [ -f "$toml" ] || continue
                             
-                            # Extract raw attribute values after '='
+                            # Extract attributes safely avoiding any adjacent single-quote collisions
                             RAW_URL=$(grep -E '^url\s*=' "$toml" | head -n 1 | cut -d'=' -f2)
                             RAW_FILE=$(grep -E '^file\s*=' "$toml" | head -n 1 | cut -d'=' -f2)
                             
-                            # Clean quotes, spaces, and carriage returns using native Bash parameter expansion
+                            # Clean quotes and whitespace using standard parameter expansion
                             DOWNLOAD_URL="''${RAW_URL//[\"'[:space:]\r]/}"
                             JAR_NAME="''${RAW_FILE//[\"'[:space:]\r]/}"
                             
