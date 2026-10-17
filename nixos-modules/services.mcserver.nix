@@ -147,8 +147,6 @@
                             fi
 
                             if [ -n "$DOWNLOAD_URL" ] && [ -n "$JAR_NAME" ]; then
-                                echo "$JAR_NAME" >> "$CURRENT_MANIFEST"
-                                
                                 TARGET_DIR=""
                                 FILENAME=$(echo "$JAR_NAME" | tr "[:upper:]" "[:lower:]")
                                 IS_CLIENT=false
@@ -168,14 +166,16 @@
                                 FINAL_JAR="$TARGET_DIR/$JAR_NAME"
 
                                 if [ -f "$FINAL_JAR" ]; then
+                                    echo "$JAR_NAME" >> "$CURRENT_MANIFEST"
                                     echo "Skipping existing matching mod: $JAR_NAME"
                                 else
                                     echo "Downloading new/updated mod: $JAR_NAME"
                                     TMP_JAR="$TMP_DIR/$JAR_NAME"
-                                    # Added User-Agent header to prevent CDN/Cloudflare blocking
                                     ${pkgs.curl}/bin/curl -sL -A "Mozilla/5.0 (X11; Linux x86_64)" "$DOWNLOAD_URL" -o "$TMP_JAR"
                                     
-                                    if [ -f "$TMP_JAR" ] && [ -s "$TMP_JAR" ]; then
+                                    # Validate that the downloaded file is a real ZIP/JAR (not a 404 HTML error page)
+                                    if [ -f "$TMP_JAR" ] && ${pkgs.unzip}/bin/unzip -t "$TMP_JAR" >/dev/null 2>&1; then
+                                        echo "$JAR_NAME" >> "$CURRENT_MANIFEST"
                                         if ! [[ "$FILENAME" =~ (create_connected|ritchiesprojectilelib|sodium|embeddium|iris|oculus|entityculling|reeses-sodium-options|distanthorizons|minihud|xaero|skinlayers3d) ]]; then
                                             if ${pkgs.unzip}/bin/unzip -p "$TMP_JAR" META-INF/neoforge.mods.toml 2>/dev/null | grep -qi "side\s*=\s*\"client\""; then
                                                 mv "$TMP_JAR" "$CLIENT_MODS_DIR/$JAR_NAME"
@@ -186,6 +186,9 @@
                                             fi
                                         fi
                                         mv "$TMP_JAR" "$FINAL_JAR"
+                                    else
+                                        echo "WARNING: Failed to download valid mod jar for $JAR_NAME (URL returned 404 or invalid archive): $DOWNLOAD_URL"
+                                        rm -f "$TMP_JAR"
                                     fi
                                 fi
                             fi
