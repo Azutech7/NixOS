@@ -172,7 +172,7 @@
                                     echo "Downloading: $JAR_NAME"
                                     TMP_JAR="$TMP_DIR/$JAR_NAME"
                                     
-                                    # Capture HTTP response code while downloading
+                                    # Properly quoted URL to prevent special character stripping/mangling
                                     HTTP_CODE=$(${pkgs.curl}/bin/curl -sL -A "Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/119.0" -w "%{http_code}" "$DOWNLOAD_URL" -o "$TMP_JAR")
                                     
                                     if [ "$HTTP_CODE" = "200" ] && [ -f "$TMP_JAR" ] && ${pkgs.unzip}/bin/unzip -t "$TMP_JAR" >/dev/null 2>&1; then
