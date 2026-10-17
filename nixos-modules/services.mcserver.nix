@@ -98,8 +98,11 @@
                     TMP_DIR=$(mktemp -d)
                     ${pkgs.unzip}/bin/unzip -q "$MODPACK_ZIP" -d "$TMP_DIR"
 
-                    INDEX_DIR="$TMP_DIR/minecraft/mods/.index"
-                    if [ -d "$INDEX_DIR" ]; then
+                    # Dynamically locate the .index directory anywhere in the extracted zip
+                    INDEX_DIR=$(find "$TMP_DIR" -type d -name ".index" | head -n 1)
+
+                    if [ -n "$INDEX_DIR" ] && [ -d "$INDEX_DIR" ]; then
+                        echo "Found Packwiz index at: $INDEX_DIR"
                         echo "Processing Packwiz .pw.toml files..."
                         
                         CURRENT_MANIFEST="$TMP_DIR/active_mods.txt"
@@ -108,20 +111,15 @@
                         for toml in "$INDEX_DIR"/*.pw.toml; do
                             [ -f "$toml" ] || continue
                             
-                            # Read lines and use pure Bash substring removal to extract values between double quotes
                             DOWNLOAD_URL=""
                             JAR_NAME=""
                             
                             while IFS= read -r line; do
-                                line="''${line//[$'\r']/}"
+                                line="''${line//[\"'[:space:]\r]/}"
                                 if [[ "$line" =~ ^url\s*= ]]; then
-                                    val="''${line#*=}"
-                                    val="''${val//[\"[:space:]]/}"
-                                    DOWNLOAD_URL="$val"
+                                    DOWNLOAD_URL="''${line#*=}"
                                 elif [[ "$line" =~ ^file\s*= ]]; then
-                                    val="''${line#*=}"
-                                    val="''${val//[\"[:space:]]/}"
-                                    JAR_NAME="$val"
+                                    JAR_NAME="''${line#*=}"
                                 fi
                             done < "$toml"
                             
@@ -182,6 +180,8 @@
                                 rm -f "$existing_jar"
                             fi
                         done
+                    else
+                        echo "Warning: Could not find .index directory in $MODPACK_ZIP"
                     fi
                     rm -rf "$TMP_DIR"
                 else
