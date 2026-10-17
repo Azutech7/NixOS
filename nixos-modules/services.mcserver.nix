@@ -102,6 +102,9 @@
 
                     if [ -n "$INDEX_DIR" ] && [ -d "$INDEX_DIR" ]; then
                         echo "Found Packwiz index at: $INDEX_DIR"
+                        echo "Listing index contents for verification:"
+                        ls -la "$INDEX_DIR"
+
                         echo "Processing Packwiz .pw.toml files..."
                         
                         CURRENT_MANIFEST="$TMP_DIR/active_mods.txt"
@@ -114,11 +117,13 @@
                             JAR_NAME=""
                             
                             while IFS= read -r line; do
-                                line="''${line//[$'\r']/}"
-                                if [[ "$line" =~ ^url\s*= ]]; then
+                                line="''${line//[\"'[:space:]\r]/}"
+                                # Match url = ... anywhere on the line
+                                if [[ "$line" =~ (^|[[:space:]])url= ]]; then
                                     val="''${line#*=}"
                                     DOWNLOAD_URL="''${val//[\"[:space:]]/}"
-                                elif [[ "$line" =~ ^file\s*= ]]; then
+                                # Match filename = ... or file = ...
+                                elif [[ "$line" =~ (^|[[:space:]])(filename|file)= ]]; then
                                     val="''${line#*=}"
                                     JAR_NAME="''${val//[\"[:space:]]/}"
                                 fi
@@ -129,6 +134,7 @@
                             fi
 
                             if [ -n "$DOWNLOAD_URL" ] && [ -n "$JAR_NAME" ]; then
+                                echo "Parsed Mod -> File: $JAR_NAME | URL: $DOWNLOAD_URL"
                                 echo "$JAR_NAME" >> "$CURRENT_MANIFEST"
                                 
                                 TARGET_DIR=""
