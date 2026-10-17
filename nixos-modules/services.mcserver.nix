@@ -77,7 +77,7 @@
         };
 
         systemd.services.minecraft-mod-sorter = {
-            description = "Smart Prism Launcher modpack extractor and incremental sorter";
+            description = "Smart Prism Launcher modpack extractor and metadata-driven sorter";
             before = [ "docker-mcserver.service" ];
             requiredBy = [ "docker-mcserver.service" ];
             wantedBy = [ "docker-mcserver.service" ];
@@ -98,7 +98,6 @@
                     TMP_DIR=$(mktemp -d)
                     ${pkgs.unzip}/bin/unzip -q "$MODPACK_ZIP" -d "$TMP_DIR"
 
-                    # Locate the internal mods directory inside the extracted zip
                     MODS_SRC_DIR=$(find "$TMP_DIR" -type d -name "mods" | head -n 1)
 
                     if [ -n "$MODS_SRC_DIR" ] && [ -d "$MODS_SRC_DIR" ]; then
@@ -112,19 +111,25 @@
                             JAR_NAME=$(basename "$jar")
                             echo "$JAR_NAME" >> "$CURRENT_MANIFEST"
 
-                            TARGET_DIR=""
                             FILENAME=$(echo "$JAR_NAME" | tr "[:upper:]" "[:lower:]")
-                            IS_CLIENT=false
+                            
+                            # Default everything to SERVER first (since most mods are both or server-compatible)
+                            TARGET_DIR="$SERVER_MODS"
+                            IS_CLIENT_ONLY=false
 
-                            # Forced server-side mods (including JEi for recipes/sync)
-                            if [[ "$FILENAME" =~ (create_connected|ritchiesprojectilelib|jei) ]]; then
-                                IS_CLIENT=false
-                            # Forced client-side mods
-                            elif [[ "$FILENAME" =~ (sodium|embeddium|iris|oculus|entityculling|reeses-sodium-options|distanthorizons|minihud|xaero|skinlayers3d) ]]; then
-                                IS_CLIENT=true
+                            # Strict client-only overrides for purely graphical/client rendering mods that crash servers
+                            if [[ "$FILENAME" =~ (iris|oculus|entityculling|skinlayers3d|minihud|xaero) ]]; then
+                                IS_CLIENT_ONLY=true
+                            else
+                                # Inspect mod metadata inside the jar to check if it's strictly client-side
+                                if ${pkgs.unzip}/bin/unzip -p "$jar" META-INF/neoforge.mods.toml 2>/dev/null | grep -qiE 'side\s*=\s*"client"'; then
+                                    IS_CLIENT_ONLY=true
+                                elif ${pkgs.unzip}/bin/unzip -p "$jar" META-INF/mods.toml 2>/dev/null | grep -qiE 'side\s*=\s*"client"'; then
+                                    IS_CLIENT_ONLY=true
+                                fi
                             fi
 
-                            if [ "$IS_CLIENT" = true ]; then
+                            if [ "$IS_CLIENT_ONLY" = true ]; then
                                 TARGET_DIR="$CLIENT_MODS_DIR"
                             else
                                 TARGET_DIR="$SERVER_MODS"
@@ -135,21 +140,7 @@
                             if [ -f "$FINAL_JAR" ]; then
                                 echo "Skipping existing mod: $JAR_NAME"
                             else
-                                echo "Sorting new/updated mod: $JAR_NAME -> $(basename "$TARGET_DIR")"
-                                
-                                # If going to server mods, check metadata unless explicitly forced
-                                if [ "$TARGET_DIR" = "$SERVER_MODS" ]; then
-                                    if ! [[ "$FILENAME" =~ (create_connected|ritchiesprojectilelib|jei|sodium|embeddium|iris|oculus|entityculling|reeses-sodium-options|distanthorizons|minihud|xaero|skinlayers3d) ]]; then
-                                        if ${pkgs.unzip}/bin/unzip -p "$jar" META-INF/neoforge.mods.toml 2>/dev/null | grep -qi "side\s*=\s*\"client\""; then
-                                            cp "$jar" "$CLIENT_MODS_DIR/$JAR_NAME"
-                                            continue
-                                        elif ${pkgs.unzip}/bin/unzip -p "$jar" META-INF/mods.toml 2>/dev/null | grep -qi "side\s*=\s*\"client\""; then
-                                            cp "$jar" "$CLIENT_MODS_DIR/$JAR_NAME"
-                                            continue
-                                        fi
-                                    fi
-                                fi
-                                
+                                echo "Sorting mod: $JAR_NAME -> $(basename "$TARGET_DIR")"
                                 cp "$jar" "$FINAL_JAR"
                             fi
                         done
