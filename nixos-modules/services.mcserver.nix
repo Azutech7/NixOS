@@ -77,7 +77,7 @@
         };
 
         systemd.services.minecraft-mod-sorter = {
-            description = "Smart Prism Launcher modpack extractor and metadata-driven sorter";
+            description = "Smart Prism Launcher modpack extractor and strict whitelist sorter";
             before = [ "docker-mcserver.service" ];
             requiredBy = [ "docker-mcserver.service" ];
             wantedBy = [ "docker-mcserver.service" ];
@@ -113,23 +113,11 @@
 
                             FILENAME=$(echo "$JAR_NAME" | tr "[:upper:]" "[:lower:]")
                             
-                            # Default everything to SERVER first (since most mods are both or server-compatible)
+                            # DEFAULT: Everything goes to the server unless explicitly whitelisted below as client-only
                             TARGET_DIR="$SERVER_MODS"
-                            IS_CLIENT_ONLY=false
 
-                            # Strict client-only overrides for purely graphical/client rendering mods that crash servers
-                            if [[ "$FILENAME" =~ (iris|oculus|entityculling|skinlayers3d|minihud|xaero) ]]; then
-                                IS_CLIENT_ONLY=true
-                            else
-                                # Inspect mod metadata inside the jar to check if it's strictly client-side
-                                if ${pkgs.unzip}/bin/unzip -p "$jar" META-INF/neoforge.mods.toml 2>/dev/null | grep -qiE 'side\s*=\s*"client"'; then
-                                    IS_CLIENT_ONLY=true
-                                elif ${pkgs.unzip}/bin/unzip -p "$jar" META-INF/mods.toml 2>/dev/null | grep -qiE 'side\s*=\s*"client"'; then
-                                    IS_CLIENT_ONLY=true
-                                fi
-                            fi
-
-                            if [ "$IS_CLIENT_ONLY" = true ]; then
+                            # Strict client-only whitelist (purely graphical, UI, shader, or HUD/minimap mods)
+                            if [[ "$FILENAME" =~ (sodium|embeddium|iris|oculus|entityculling|skinlayers3d|minihud|xaero|better_modlist|boatiview|dynamic-fps|effecttimerplus|fast-ip-ping|freecam|gpubooster|immediatelyfast|modmenu|moreoverlays|mytotemdoll|ok_zoomer|particlerain|particular|quickcraft) ]]; then
                                 TARGET_DIR="$CLIENT_MODS_DIR"
                             else
                                 TARGET_DIR="$SERVER_MODS"
