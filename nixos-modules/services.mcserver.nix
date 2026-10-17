@@ -7,7 +7,7 @@
         virtualisation.oci-containers.backend = "docker";
 
         virtualisation.oci-containers.containers.mcserver = {
-            image = "itzg/minecraft-server";
+            image = "itzg/minecraft-server:java25";
             autoStart = true;
 
             ports = [ 
@@ -20,6 +20,9 @@
                 TYPE = "NEOFORGE";
                 VERSION = "1.21.1";
                 NEOFORGE_VERSION = "21.1.259";
+
+                # Add JVM flags to bypass NeoForge's Java 21 version lock
+                JVM_OPTS = "-Dneoforge.ignoreJavaVersion=true";
 
                 # Performance & Environment
                 MEMORY = "12G";
