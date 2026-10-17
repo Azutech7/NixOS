@@ -22,7 +22,7 @@
                 NEOFORGE_VERSION = "21.1.259";
 
                 # Performance & Environment
-                MEMORY = "12G";
+                MEMORY = "18G";
                 TZ = "America/Los_Angeles";
                 UID = "1000";
                 GID = "1000";
