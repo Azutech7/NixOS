@@ -80,6 +80,7 @@
             description = "Smart Packwiz modpack parser, downloader, and incremental sorter";
             before = [ "docker-mcserver.service" ];
             requiredBy = [ "docker-mcserver.service" ];
+            wantedBy = [ "docker-mcserver.service" ];
             serviceConfig = {
                 Type = "oneshot";
                 RemainAfterExit = true;
@@ -122,7 +123,7 @@
                                 FILENAME=$(echo "$JAR_NAME" | tr '[:upper:]' '[:lower:]')
                                 IS_CLIENT=false
 
-                                # Determine target location (Server vs Client) based on naming/metadata rules
+                                # Determine target location (Server vs Client) based on naming rules
                                 if [[ "$FILENAME" =~ (create_connected|ritchiesprojectilelib) ]]; then
                                     IS_CLIENT=false
                                 elif [[ "$FILENAME" =~ (sodium|embeddium|iris|oculus|entityculling|reeses-sodium-options|distanthorizons|minihud|xaero) ]]; then
@@ -133,11 +134,11 @@
                                     TARGET_DIR="$CLIENT_MODS_DIR"
                                 else
                                     TARGET_DIR="$SERVER_MODS"
-                                end-if # (syntax note: standard bash uses fi)
+                                fi
 
                                 FINAL_JAR="$TARGET_DIR/$JAR_NAME"
 
-                                # Smart check: If file already exists, check if we need to re-download or if it's a 1:1 match
+                                # Smart check: Skip download if file already exists
                                 if [ -f "$FINAL_JAR" ]; then
                                     echo "Skipping existing matching mod: $JAR_NAME"
                                 else
@@ -146,8 +147,8 @@
                                     ${pkgs.curl}/bin/curl -sL "$DOWNLOAD_URL" -o "$TMP_JAR"
                                     
                                     if [ -f "$TMP_JAR" ]; then
-                                        # If it wasn't pre-categorized by filename, inspect jar metadata
-                                        if [[ "$FILENAME" !~ (create_connected|ritchiesprojectilelib|sodium|embeddium|iris|oculus|entityculling|reeses-sodium-options|distanthorizons|minihud|xaero) ]]; then
+                                        # If it wasn't pre-categorized by filename, inspect jar metadata inside
+                                        if ! [[ "$FILENAME" =~ (create_connected|ritchiesprojectilelib|sodium|embeddium|iris|oculus|entityculling|reeses-sodium-options|distanthorizons|minihud|xaero) ]]; then
                                             if ${pkgs.unzip}/bin/unzip -p "$TMP_JAR" META-INF/neoforge.mods.toml 2>/dev/null | grep -qi 'side\s*=\s*"client"'; then
                                                 mv "$TMP_JAR" "$CLIENT_MODS_DIR/"
                                                 continue
@@ -162,7 +163,7 @@
                             fi
                         done
 
-                        # Cleanup old/stale mods in SERVER_MODS and CLIENT_MODS_DIR that are no longer in the zip manifest
+                        # Cleanup old/stale mods in SERVER_MODS and CLIENT_MODS_DIR that are no longer in the manifest
                         echo "Cleaning up outdated/replaced mods..."
                         for existing_jar in "$SERVER_MODS"/*.jar "$CLIENT_MODS_DIR"/*.jar; do
                             [ -f "$existing_jar" ] || continue
