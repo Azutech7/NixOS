@@ -98,7 +98,6 @@
                     TMP_DIR=$(mktemp -d)
                     ${pkgs.unzip}/bin/unzip -q "$MODPACK_ZIP" -d "$TMP_DIR"
 
-                    # Dynamically locate the .index directory anywhere in the extracted zip
                     INDEX_DIR=$(find "$TMP_DIR" -type d -name ".index" | head -n 1)
 
                     if [ -n "$INDEX_DIR" ] && [ -d "$INDEX_DIR" ]; then
@@ -115,11 +114,13 @@
                             JAR_NAME=""
                             
                             while IFS= read -r line; do
-                                line="''${line//[\"'[:space:]\r]/}"
+                                line="''${line//[$'\r']/}"
                                 if [[ "$line" =~ ^url\s*= ]]; then
-                                    DOWNLOAD_URL="''${line#*=}"
+                                    val="''${line#*=}"
+                                    DOWNLOAD_URL="''${val//[\"[:space:]]/}"
                                 elif [[ "$line" =~ ^file\s*= ]]; then
-                                    JAR_NAME="''${line#*=}"
+                                    val="''${line#*=}"
+                                    JAR_NAME="''${val//[\"[:space:]]/}"
                                 fi
                             done < "$toml"
                             
