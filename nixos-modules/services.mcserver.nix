@@ -127,13 +127,13 @@
                                 fi
 
                                 case "$line" in
-                                    *url=*)
+                                    *url*)
                                         if [ "$IN_DOWNLOAD_SECTION" = true ] || [[ -z "$DOWNLOAD_URL" ]]; then
                                             val="''${line#*=}"
                                             DOWNLOAD_URL="''${val//[\"[:space:]]/}"
                                         fi
                                         ;;
-                                    *filename=*|*file=*)
+                                    *filename*|*file*)
                                         val="''${line#*=}"
                                         JAR_NAME="''${val//[\"[:space:]]/}"
                                         ;;
@@ -144,8 +144,9 @@
                                 JAR_NAME=$(basename "$DOWNLOAD_URL")
                             fi
 
+                            echo "DEBUG: File: $(basename "$toml") -> JAR: '$JAR_NAME' | URL: '$DOWNLOAD_URL'"
+
                             if [ -n "$DOWNLOAD_URL" ] && [ -n "$JAR_NAME" ]; then
-                                echo "Parsed Mod -> File: $JAR_NAME | URL: $DOWNLOAD_URL"
                                 echo "$JAR_NAME" >> "$CURRENT_MANIFEST"
                                 
                                 TARGET_DIR=""
