@@ -116,7 +116,6 @@
                             
                             while IFS= read -r line; do
                                 line="''${line//[$'\r']/}"
-                                # Check for section header
                                 if [[ "$line" =~ ^\[.*\] ]]; then
                                     if [[ "$line" == "[download]" ]]; then
                                         IN_DOWNLOAD_SECTION=true
@@ -130,21 +129,22 @@
                                     *url*)
                                         if [ "$IN_DOWNLOAD_SECTION" = true ] || [[ -z "$DOWNLOAD_URL" ]]; then
                                             val="''${line#*=}"
-                                            DOWNLOAD_URL="''${val//[\"[:space:]]/}"
+                                            val="''${val//[\"\'[:space:]]/}"
+                                            DOWNLOAD_URL="$val"
                                         fi
                                         ;;
                                     *filename*|*file*)
                                         val="''${line#*=}"
-                                        JAR_NAME="''${val//[\"[:space:]]/}"
+                                        val="''${val//[\"\'[:space:]]/}"
+                                        JAR_NAME="$val"
                                         ;;
                                 esac
                             done < "$toml"
                             
                             if [ -z "$JAR_NAME" ] && [ -n "$DOWNLOAD_URL" ]; then
                                 JAR_NAME=$(basename "$DOWNLOAD_URL")
+                                JAR_NAME="''${JAR_NAME//[\"\'[:space:]]/}"
                             fi
-
-                            echo "DEBUG: File: $(basename "$toml") -> JAR: '$JAR_NAME' | URL: '$DOWNLOAD_URL'"
 
                             if [ -n "$DOWNLOAD_URL" ] && [ -n "$JAR_NAME" ]; then
                                 echo "$JAR_NAME" >> "$CURRENT_MANIFEST"
