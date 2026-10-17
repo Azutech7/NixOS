@@ -22,10 +22,13 @@
                 NEOFORGE_VERSION = "21.1.259";
 
                 # Performance & Environment
-                MEMORY = "18G";
+                MEMORY = "14G";
                 TZ = "America/Los_Angeles";
                 UID = "1000";
                 GID = "1000";
+
+                # GC optimizations
+                JVM_XX_OPTS = "-XX:+UseZGC -XX:+ZGenerational -XX:+UnlockExperimentalVMOptions -XX:MaxGCPauseMillis=20";
 
                 # Server Properties
                 MOTD = "bello.";
