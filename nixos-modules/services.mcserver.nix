@@ -42,6 +42,7 @@
                 GAMEMODE = "survival";
                 SPAWN_PROTECTION = "0";
                 ALLOW_NETHER = "true";
+                ALLOW_FLIGHT = "true";
 
                 # Distances (3-32 inclusive)
                 VIEW_DISTANCE = "12";
