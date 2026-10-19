@@ -19,7 +19,7 @@
                 EULA = "TRUE";
                 TYPE = "NEOFORGE";
                 VERSION = "1.21.1";
-                NEOFORGE_VERSION = "21.1.259";
+                NEOFORGE_VERSION = "21.1.262";
 
                 # Performance & Environment
                 MEMORY = "14G";
