@@ -12,11 +12,7 @@
                 "/var/lib/music-stack/slskd-config:/app"
                 "/var/lib/music-stack/slskd-downloads:/downloads"
             ];
-            environment = {
-                SLSKD_SLSK_USERNAME = "YOUR_SOULSEEK_USERNAME";
-                SLSKD_SLSK_PASSWORD = "YOUR_SOULSEEK_PASSWORD";
-                SLSKD_WEB_API_KEYS = "my_super_secret_slskd_key_12345";
-            };
+            environmentFiles = [ "/var/lib/music-stack/secrets.env" ];
         };
 
     };
