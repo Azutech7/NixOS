@@ -11,7 +11,7 @@
             environment = {
                 PUID = "1000";
                 PGID = "1000";
-                SLSK   D_REMOTE_CONFIGURATION = "true";
+                SLSKD_REMOTE_CONFIGURATION = "true";
             };
             environmentFiles = [
                 "/var/lib/secrets.env"
