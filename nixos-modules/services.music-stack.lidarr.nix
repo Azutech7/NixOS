@@ -8,16 +8,19 @@
             image = "lscr.io/linuxserver/lidarr:latest";
             autoStart = true;
             ports = [ "8686:8686" ];
-            volumes = [
-                "/var/lib/music-stack/lidarr-config:/config"
-                "/var/lib/navidrome/music:/music"
-                "/var/lib/music-stack/slskd-downloads:/downloads"
-            ];
             environment = {
                 PUID = "1000";
                 PGID = "1000";
                 TZ = "America/Los_Angeles";
             };
+            environmentFiles = [
+                "/var/lib/secrets.env"
+            ];
+            volumes = [
+                "/var/lib/music-stack/lidarr-config:/config"
+                "/var/lib/music-stack/downloads:/downloads"
+                "/var/lib/music-stack/music:/music"
+            ];
         };
 
     };

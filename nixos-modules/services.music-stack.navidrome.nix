@@ -9,7 +9,7 @@
             settings = {
                 Address = "0.0.0.0";
                 Port = 4533;
-                MusicFolder = "/var/lib/navidrome/music";
+                MusicFolder = "/var/lib/music-stack/music";
                 Scanner.Schedule = "@every 5m";
                 EnableDownloads = true;
             };

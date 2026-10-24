@@ -11,8 +11,8 @@
                 User = "root";
             };
             script = ''
-                ${pkgs.findutils}/bin/find /var/lib/navidrome/music/Temporary -mindepth 1 -mmin +10080 -delete
-                ${pkgs.findutils}/bin/find /var/lib/navidrome/music/Temporary -mindepth 1 -type d -empty -delete
+                ${pkgs.findutils}/bin/find /var/lib/music-stack/music/Temporary -mindepth 1 -mmin +10080 -delete
+                ${pkgs.findutils}/bin/find /var/lib/music-stack/music/Temporary -mindepth 1 -type d -empty -delete
             '';
         };
 

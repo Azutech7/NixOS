@@ -17,14 +17,14 @@
         modules.services.docker.enable = true;
 
         systemd.tmpfiles.rules = [
-            "d /var/lib/navidrome/music 0777 1000 1000 -"
-            "d /var/lib/navidrome/music/Permanent 0777 1000 1000 -"
-            "d /var/lib/navidrome/music/Temporary 0777 1000 1000 -"
-            "d /var/lib/music-stack/slskd-downloads 0775 1000 1000 -"
+            "d /var/lib/music-stack/music 0777 1000 1000 -"
+            "d /var/lib/music-stack/music/Permanent 0777 1000 1000 -"
+            "d /var/lib/music-stack/music/Temporary 0777 1000 1000 -"
+            "d /var/lib/music-stack/downloads 0775 1000 1000 -"
+            "d /var/lib/music-stack/downloads/incomplete 0775 1000 1000 -"
             "d /var/lib/music-stack/lidarr-config 0775 1000 1000 -"
             "d /var/lib/music-stack/slskd-config 0775 1000 1000 -"
             "d /var/lib/music-stack/soularr-config 0775 1000 1000 -"
-            "d /var/lib/music-stack/aurral-data 0775 1000 1000 -"
         ];
 
     };
