@@ -51,6 +51,7 @@
         ./services.jellyfin.nix
         ./services.lidarr.nix
         ./services.rdt-client.nix
+        ./services.prowlarr.nix
         ./steam.nix
     ];
 }
