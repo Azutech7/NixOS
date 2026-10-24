@@ -39,6 +39,7 @@
         ./services.docker.nix
         ./services.mcserver.nix
         ./services.mcserver.backups.nix
+        ./services.navidrome.nix
         #./services.trakt.nix
         ./steam.nix
     ];
