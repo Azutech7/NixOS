@@ -5,7 +5,7 @@
     config = lib.mkIf config.modules.services.music-stack.soularr.enable {
 
         virtualisation.oci-containers.containers.soularr = {
-            image = "m4m3ts/soularr:latest";
+            image = "ghcr.io/m4m3ts/soularr:latest";
             autoStart = true;
             environment = {
                 PUID = "1000";
