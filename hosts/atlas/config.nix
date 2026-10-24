@@ -36,7 +36,7 @@
         services.mcserver.enable = true;
         #services.mcserver.backups.enable = true; #DOES NOT WORK CURRENTLY
 
-        services.navidrome.enable = true;
+        services.music-stack.enable = true;
     };
 
     environment.systemPackages = with pkgs; [
