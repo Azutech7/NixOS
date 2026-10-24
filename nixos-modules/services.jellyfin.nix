@@ -6,13 +6,13 @@
 
         virtualisation.oci-containers.containers.jellyfin = {
             image = "jellyfin/jellyfin:latest";
+            autoStart = true;
             ports = [ "8096:8096" ]; # Default web UI port
             volumes = [
                 "/var/lib/jellyfin/config:/config"
                 "/var/lib/jellyfin/cache:/cache"
                 "/var/lib/media/music:/media/music:ro" # Read-only access to host music folder
             ];
-            extraOptions = [ "--restart=unless-stopped" ];
         };
 
     };

@@ -6,6 +6,7 @@
 
         virtualisation.oci-containers.containers.rdt-client = {
             image = "rogerfar/rdtclient:latest";
+            autoStart = true;
             ports = [ "6500:6500" ];
             environment = {
                 PUID = "1000";
@@ -16,7 +17,6 @@
                 "/var/lib/rdtclient/config:/data/db"
                 "/var/lib/media/downloads:/data/downloads"
             ];
-            extraOptions = [ "--restart=unless-stopped" ];
         };
 
     };

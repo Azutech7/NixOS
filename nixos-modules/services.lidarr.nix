@@ -6,6 +6,7 @@
 
         virtualisation.oci-containers.containers.lidarr = {
             image = "lscr.io/linuxserver/lidarr:latest";
+            autoStart = true;
             ports = [ "8686:8686" ];
             environment = {
                 PUID = "1000";
@@ -17,7 +18,6 @@
                 "/var/lib/media/music:/music" # Write access to organize and tag media
                 "/var/lib/media/downloads:/downloads" # Shared download staging directory
             ];
-            extraOptions = [ "--restart=unless-stopped" ];
       };
 
     };
