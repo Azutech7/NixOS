@@ -6,6 +6,7 @@
 
         virtualisation.oci-containers.containers.prowlarr = {
             image = "lscr.io/linuxserver/prowlarr:latest";
+            autoStart = true;
             ports = [ "9696:9696" ];
             environment = {
                 PUID = "1000";
