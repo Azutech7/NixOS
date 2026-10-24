@@ -14,7 +14,7 @@
                 TZ = "America/Los_Angeles";
             };
             environmentFiles = [
-                "/var/lib/secrets.env"
+                "/var/lib/music-stack/secrets.env"
             ];
             volumes = [
                 "/var/lib/music-stack/lidarr-config:/config"

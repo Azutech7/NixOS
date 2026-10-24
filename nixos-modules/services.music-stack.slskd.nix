@@ -14,7 +14,7 @@
                 SLSKD_REMOTE_CONFIGURATION = "true";
             };
             environmentFiles = [
-                "/var/lib/secrets.env"
+                "/var/lib/music-stack/secrets.env"
             ];
             volumes = [
                 "/var/lib/music-stack/slskd-config:/app"

@@ -25,6 +25,7 @@
             "d /var/lib/music-stack/lidarr-config 0775 1000 1000 -"
             "d /var/lib/music-stack/slskd-config 0775 1000 1000 -"
             "d /var/lib/music-stack/soularr-config 0775 1000 1000 -"
+            "f /var/lib/music-stack/secrets.env 0600 root root -"
         ];
 
     };
