@@ -36,7 +36,11 @@
         services.mcserver.enable = true;
         #services.mcserver.backups.enable = true; #DOES NOT WORK CURRENTLY
 
-        services.music-stack.enable = true;
+        #services.music-stack.enable = true; #IN REPLACEMENT
+
+        services.jellyfin.enable = true;
+        services.lidarr.enable = true;
+        services.rdt-client.enable = true;
     };
 
     environment.systemPackages = with pkgs; [

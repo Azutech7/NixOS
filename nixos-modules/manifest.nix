@@ -39,15 +39,18 @@
         ./services.docker.nix
         ./services.mcserver.nix
         ./services.mcserver.backups.nix
-        ./services.music-stack.aurral.nix
-        ./services.music-stack.feishin.nix
-        ./services.music-stack.lidarr.nix
-        ./services.music-stack.navidrome.nix
-        ./services.music-stack.navidrome.temp-cleaner.nix
-        ./services.music-stack.nix
-        ./services.music-stack.slskd.nix
-        ./services.music-stack.soularr.nix
+#        ./services.music-stack.aurral.nix
+#        ./services.music-stack.feishin.nix
+#        ./services.music-stack.lidarr.nix
+#        ./services.music-stack.navidrome.nix
+#        ./services.music-stack.navidrome.temp-cleaner.nix
+#        ./services.music-stack.nix
+#        ./services.music-stack.slskd.nix
+#        ./services.music-stack.soularr.nix
         #./services.trakt.nix
+        ./services.jellyfin.nix
+        ./services.lidarr.nix
+        ./services.rdt-client.nix
         ./steam.nix
     ];
 }
