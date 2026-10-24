@@ -13,6 +13,11 @@
                 "/var/lib/music-stack/slskd-downloads:/downloads"
             ];
             environmentFiles = [ "/var/lib/music-stack/secrets.env" ];
+            environment = {
+                PUID = "1000";
+                PGID = "1000";
+                SLSKD_REMOTE_CONFIGURATION = "true";
+            };
         };
 
     };
