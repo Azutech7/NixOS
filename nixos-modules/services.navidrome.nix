@@ -8,7 +8,7 @@
             enable = true;
 
             settings = {
-                Address = "0.0.0.0";
+                Address = "127.0.0.1";
                 Port = 4533;
 
                 MusicFolder = "/var/lib/navidrome/music";
