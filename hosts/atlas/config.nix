@@ -38,11 +38,12 @@
 
         #services.music-stack.enable = true; #IN REPLACEMENT
 
-        services.jellyfin.enable = true;
+        #services.jellyfin.enable = true;
         services.lidarr.enable = true;
         services.rdt-client.enable = true;
         services.prowlarr.enable = true;
         services.flaresolverr.enable = true;
+        services.navidrome.enable = true;
     };
 
     environment.systemPackages = with pkgs; [

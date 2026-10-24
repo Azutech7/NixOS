@@ -53,6 +53,7 @@
         ./services.rdt-client.nix
         ./services.prowlarr.nix
         ./services.flaresolverr.nix
+        ./services.navidrome.nix
         ./steam.nix
     ];
 }
