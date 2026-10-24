@@ -8,7 +8,7 @@
             enable = true;
 
             settings = {
-                Address = "127.0.0.1";
+                Address = "0.0.0.0";
                 Port = 4533;
 
                 MusicFolder = "/var/lib/navidrome/music";
@@ -26,7 +26,7 @@
             
             "navidrome.azutech.cc".extraConfig = ''
                 tls internal
-                reverse_proxy http://localhost:4533
+                reverse_proxy 0.0.0.0:4533
             '';
 
         };
