@@ -9,8 +9,10 @@
             autoStart = true;
             ports = [ "5030:5030" ];
             volumes = [
-                "/var/lib/music-stack/slskd-config:/app"
-                "/var/lib/music-stack/slskd-downloads:/downloads"
+                volumes = [
+                    "/var/lib/music-stack/slskd-config:/app"
+                    "/var/lib/music-stack/downloads:/downloads"
+                ];
             ];
             environmentFiles = [ "/var/lib/music-stack/secrets.env" ];
             environment = {
