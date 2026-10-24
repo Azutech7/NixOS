@@ -12,6 +12,7 @@
                 MusicFolder = "/var/lib/music-stack/music";
                 Scanner.Schedule = "@every 5m";
                 EnableDownloads = true;
+                EnableSubsonicApi = true;
             };
         };
 
