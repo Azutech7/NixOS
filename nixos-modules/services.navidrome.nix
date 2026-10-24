@@ -25,7 +25,7 @@
         services.caddy.virtualHosts = {
             
             "navidrome.azutech.cc".extraConfig = ''
-                tls internal
+                #tls internal
                 reverse_proxy 0.0.0.0:4533
             '';
 
