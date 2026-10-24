@@ -52,6 +52,7 @@
         ./services.lidarr.nix
         ./services.rdt-client.nix
         ./services.prowlarr.nix
+        ./services.flaresolverr.nix
         ./steam.nix
     ];
 }

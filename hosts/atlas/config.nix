@@ -42,6 +42,7 @@
         services.lidarr.enable = true;
         services.rdt-client.enable = true;
         services.prowlarr.enable = true;
+        services.flaresolverr.enable = true;
     };
 
     environment.systemPackages = with pkgs; [
