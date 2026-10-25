@@ -25,6 +25,7 @@
                 tls {
                     dns cloudflare {env.CLOUDFLARE_API_TOKEN}
                     ca https://acme-staging-v02.api.letsencrypt.org/directory
+                    resolvers 1.1.1.1 8.8.8.8
                 }
                 reverse_proxy http://localhost:4533
             '';
