@@ -22,7 +22,9 @@
         services.caddy.virtualHosts = {
 
             "navidrome.azutech.cc".extraConfig = ''
-                tls internal
+                tls internal {
+                    on_demand
+                }
                 reverse_proxy http://localhost:4533
             '';
 
