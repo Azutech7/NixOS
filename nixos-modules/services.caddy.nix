@@ -16,10 +16,7 @@
 
             extraConfig = ''
                 {
-                    acme_dns cloudflare {env.CLOUDFLARE_API_TOKEN}
-                    preferred_chains {
-                        smallstep
-                    }
+                    resolvers 1.1.1.1 8.8.8.8
                 }
             '';
         };
