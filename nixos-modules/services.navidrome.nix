@@ -24,6 +24,7 @@
             "navidrome.azutech.cc".extraConfig = ''
                 tls {
                     dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+                    ca https://acme-staging-v02.api.letsencrypt.org/directory
                 }
                 reverse_proxy http://localhost:4533
             '';
