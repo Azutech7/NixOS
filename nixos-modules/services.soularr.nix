@@ -14,7 +14,6 @@
                 RUN_INTERVAL = "900";
                 TZ = "America/Los_Angeles";
             };
-            extraOptions = [ "--restart=unless-stopped" ];
         };
 
     };
