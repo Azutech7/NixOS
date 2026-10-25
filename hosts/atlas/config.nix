@@ -44,6 +44,8 @@
         services.prowlarr.enable = true;
         services.flaresolverr.enable = true;
         services.navidrome.enable = true;
+        services.soularr.enable = true;
+        services.slskd.enable = true;
     };
 
     environment.systemPackages = with pkgs; [

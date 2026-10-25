@@ -17,6 +17,7 @@
                 "/var/lib/rdtclient/config:/data/db"
                 "/var/lib/media/downloads:/data/downloads"
             ];
+            extraOptions = [ "--restart=unless-stopped" ];
         };
 
     };

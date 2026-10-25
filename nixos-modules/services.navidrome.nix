@@ -17,6 +17,7 @@
                 "/var/lib/navidrome/data:/data"
                 "/var/lib/media/music:/music:ro"
             ];
+            extraOptions = [ "--restart=unless-stopped" ];
         };
 
         services.caddy.virtualHosts = {

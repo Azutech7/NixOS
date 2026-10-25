@@ -16,6 +16,7 @@
             volumes = [
                 "/var/lib/prowlarr/config:/config"
             ];
+            extraOptions = [ "--restart=unless-stopped" ];
         };
 
     };

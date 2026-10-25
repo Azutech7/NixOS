@@ -55,5 +55,7 @@
         ./services.flaresolverr.nix
         ./services.navidrome.nix
         ./steam.nix
+        ./services.slskd.nix
+        ./services.soularr.nix
     ];
 }

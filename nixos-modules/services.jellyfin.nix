@@ -13,6 +13,7 @@
                 "/var/lib/jellyfin/cache:/cache"
                 "/var/lib/media/music:/media/music:ro" # Read-only access to host music folder
             ];
+            extraOptions = [ "--restart=unless-stopped" ];
         };
 
     };
