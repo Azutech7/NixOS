@@ -14,13 +14,11 @@
 
             environmentFile = "/var/lib/caddy/cloudflare.env";
 
-            extraConfig = lib.mkForce ''
-            {
+            globalConfig = lib.mkForce ''
                 log {
                     level ERROR
                 }
                 resolvers 1.1.1.1 8.8.8.8
-            }
             '';
         };
 
