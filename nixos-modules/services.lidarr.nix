@@ -22,7 +22,7 @@
 
         services.caddy.virtualHosts = {
 
-            "slskd.azutech.cc".extraConfig = ''
+            "lidarr.azutech.cc".extraConfig = ''
                 tls {
                     dns cloudflare {$CLOUDFLARE_API_TOKEN}
                 }
