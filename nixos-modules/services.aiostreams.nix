@@ -39,12 +39,16 @@
         services.caddy.virtualHosts = {
             
             "aiostreams.azutech.cc".extraConfig = ''
-                tls internal
+                tls {
+                    dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+                }
                 reverse_proxy http://localhost:3000
             '';
 
             "jellyfin.azutech.cc".extraConfig = ''
-                tls internal
+                tls {
+                    dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+                }
                 handle / { redir * /jellyfin 302 }
                 handle { reverse_proxy localhost:3000 {
                     header_up X-Forwarded-Prefix /jellyfin

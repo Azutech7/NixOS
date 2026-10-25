@@ -22,8 +22,8 @@
         services.caddy.virtualHosts = {
 
             "navidrome.azutech.cc".extraConfig = ''
-                tls internal {
-                    on_demand
+                tls {
+                    dns cloudflare {env.CLOUDFLARE_API_TOKEN}
                 }
                 reverse_proxy http://localhost:4533
             '';
