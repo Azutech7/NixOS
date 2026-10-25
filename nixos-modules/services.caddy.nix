@@ -12,7 +12,9 @@
                 hash = "sha256-xRJ5evsAJ2akg47j3Bt6YDXJOgX88B/rKNP50KSVyNY=";
             };
 
-            environmentFile = "/var/lib/caddy/cloudflare.env";
+            serviceConfig = {
+                EnvironmentFile = "/var/lib/caddy/cloudflare.env";
+            };
         };
 
     };
