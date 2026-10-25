@@ -40,11 +40,11 @@
 
         #services.jellyfin.enable = true;
         services.lidarr.enable = true;
-        services.rdt-client.enable = true;
-        services.prowlarr.enable = true;
-        services.flaresolverr.enable = true;
+        #services.rdt-client.enable = true;
+        #services.prowlarr.enable = true;
+        #services.flaresolverr.enable = true;
         services.navidrome.enable = true;
-        services.soularr.enable = true;
+        #services.soularr.enable = true;
         services.slskd.enable = true;
     };
 
