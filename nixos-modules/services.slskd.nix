@@ -4,14 +4,14 @@
 
     config = lib.mkIf config.modules.services.slskd.enable {
 
-        virtualisation.oci-containers.containers.slskd = {
+        virtualisation.oci-containers.containers.slskd = slskd = {
             image = "slskd/slskd:latest";
             autoStart = true;
             ports = [
                 "5030:5030"
                 "5031:5031"
             ];
-            environmentFiles = [ "/var/lib/mediastack/secrets.env" ];
+            environmentFiles = [ "/var/lib/slskd/secrets.env" ];
             environment = {
                 TZ = "America/Los_Angeles";
             };
