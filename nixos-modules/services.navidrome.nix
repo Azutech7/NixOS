@@ -17,6 +17,9 @@
                 "/var/lib/navidrome/data:/data"
                 "/var/lib/media/music:/music:ro"
             ];
+            environmentFiles = [
+                /var/lib/navidrome/spotify.env
+            ];
         };
 
         services.caddy.virtualHosts = {
