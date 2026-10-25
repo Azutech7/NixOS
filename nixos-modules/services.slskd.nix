@@ -38,5 +38,16 @@
             };
         };
 
+        services.caddy.virtualHosts = {
+
+            "slskd.azutech.cc".extraConfig = ''
+                tls {
+                    dns cloudflare {$CLOUDFLARE_API_TOKEN}
+                }
+                reverse_proxy http://localhost:5030
+            '';
+
+        };
+
     };
 }

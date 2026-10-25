@@ -18,7 +18,18 @@
                 "/var/lib/media/music:/music" # Write access to organize and tag media
                 "/var/lib/media/downloads:/downloads" # Shared download staging directory
             ];
-      };
+        };
+
+        services.caddy.virtualHosts = {
+
+            "slskd.azutech.cc".extraConfig = ''
+                tls {
+                    dns cloudflare {$CLOUDFLARE_API_TOKEN}
+                }
+                reverse_proxy http://localhost:8686
+            '';
+
+        };
 
     };
 }
