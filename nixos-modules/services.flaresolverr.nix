@@ -11,7 +11,6 @@
                 LOG_LEVEL = "info";
                 TZ = "America/Los_Angeles";
             };
-            extraOptions = [ "--restart=unless-stopped" ];
         };
 
     };

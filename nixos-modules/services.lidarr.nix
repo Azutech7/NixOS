@@ -18,7 +18,6 @@
                 "/var/lib/media/music:/music" # Write access to organize and tag media
                 "/var/lib/media/downloads:/downloads" # Shared download staging directory
             ];
-            extraOptions = [ "--restart=unless-stopped" ];
       };
 
     };

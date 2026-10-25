@@ -19,7 +19,6 @@
                 "/var/lib/slskd:/app"
                 "/var/lib/slskd/downloads:/downloads"
             ];
-            extraOptions = [ "--restart=unless-stopped" ];
         };
 
     };

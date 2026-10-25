@@ -30,7 +30,6 @@
                 "--cpus=2"
                 "--ulimit=nofile=2048:4096"
                 "--log-driver=journald" 
-                "--restart=unless-stopped"
             ];
         };
 
