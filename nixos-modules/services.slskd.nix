@@ -14,6 +14,7 @@
             environmentFiles = [ "/var/lib/slskd/secrets.env" ];
             environment = {
                 TZ = "America/Los_Angeles";
+                SLSKD_WEB_BIND_ADDRESS = "0.0.0.0";
             };
             volumes = [
                 "/var/lib/slskd:/app"
