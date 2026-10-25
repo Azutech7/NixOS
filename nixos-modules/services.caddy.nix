@@ -13,6 +13,10 @@
             };
 
             environmentFile = "/var/lib/caddy/cloudflare.env";
+
+            logFormat = ''
+                level INFO
+            '';
         };
 
     };
