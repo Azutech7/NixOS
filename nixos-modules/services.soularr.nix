@@ -5,7 +5,7 @@
     config = lib.mkIf config.modules.services.soularr.enable {
 
         virtualisation.oci-containers.containers.soularr = {
-            image = "mrusitorio/soularr:latest";
+            image = "mrusse08/soularr:latest";
             autoStart = true;
             environmentFiles = [ "/var/lib/soularr/secrets.env" ];
             environment = {
