@@ -22,5 +22,21 @@
             ];
         };
 
+        systemd.services.clean-slskd-downloads = {
+            description = "Clean old imported Lidarr staging downloads";
+            serviceConfig = {
+                Type = "oneshot";
+                ExecStart = "${pkgs.findutils}/bin/find /var/lib/media/downloads/lidarr -mindepth 1 -mtime +1 -delete";
+            };
+        };
+
+        systemd.timers.clean-slskd-downloads = {
+            wantedBy = [ "timers.target" ];
+            timerConfig = {
+                OnCalendar = "daily";
+                Persistent = true;
+            };
+        };
+
     };
 }
