@@ -41,6 +41,7 @@
             "aiostreams.azutech.cc".extraConfig = ''
                 tls {
                     dns cloudflare {env.CLOUDFLARE_API_TOKEN} {
+                        zone_id 2bf38e8634f88ccd09b4ff2792583963
                         resolvers 1.1.1.1
                     }
                 }
@@ -50,6 +51,7 @@
             "jellyfin.azutech.cc".extraConfig = ''
                 tls {
                     dns cloudflare {env.CLOUDFLARE_API_TOKEN} {
+                        zone_id 2bf38e8634f88ccd09b4ff2792583963
                         resolvers 1.1.1.1
                     }
                 }
