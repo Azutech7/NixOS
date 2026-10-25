@@ -40,20 +40,14 @@
             
             "aiostreams.azutech.cc".extraConfig = ''
                 tls {
-                    dns porkbun {
-                        api_key {env.PORKBUN_API_KEY}
-                        secret_key {env.PORKBUN_SECRET_KEY}
-                    }
+                    dns cloudflare {env.CLOUDFLARE_API_TOKEN}
                 }
                 reverse_proxy http://localhost:3000
             '';
 
             "jellyfin.azutech.cc".extraConfig = ''
                 tls {
-                    dns porkbun {
-                        api_key {env.PORKBUN_API_KEY}
-                        secret_key {env.PORKBUN_SECRET_KEY}
-                    }
+                    dns cloudflare {env.CLOUDFLARE_API_TOKEN}
                 }
                 handle / { redir * /jellyfin 302 }
                 handle { reverse_proxy localhost:3000 {

@@ -23,10 +23,7 @@
 
             "navidrome.azutech.cc".extraConfig = ''
                 tls {
-                    dns porkbun {
-                        api_key {env.PORKBUN_API_KEY}
-                        secret_key {env.PORKBUN_SECRET_KEY}
-                    }
+                    dns cloudflare {env.CLOUDFLARE_API_TOKEN}
                 }
                 reverse_proxy http://localhost:4533
             '';
