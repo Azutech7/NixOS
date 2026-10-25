@@ -18,7 +18,7 @@
                 "/var/lib/media/music:/music:ro"
             ];
             environmentFiles = [
-                /var/lib/navidrome/spotify.env
+                "/var/lib/navidrome/spotify.env"
             ];
         };
 
