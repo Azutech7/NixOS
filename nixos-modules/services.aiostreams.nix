@@ -40,9 +40,7 @@
             
             "aiostreams.azutech.cc".extraConfig = ''
                 tls {
-                    dns cloudflare {$CLOUDFLARE_API_TOKEN} {
-                        resolvers 1.1.1.1 8.8.8.8
-                    }
+                    dns cloudflare {$CLOUDFLARE_API_TOKEN}
                     ca https://acme-staging-v02.api.letsencrypt.org/directory
                 }
                 reverse_proxy http://localhost:3000
@@ -50,9 +48,7 @@
 
             "jellyfin.azutech.cc".extraConfig = ''
                 tls {
-                    dns cloudflare {$CLOUDFLARE_API_TOKEN} {
-                        resolvers 1.1.1.1 8.8.8.8
-                    }
+                    dns cloudflare {$CLOUDFLARE_API_TOKEN}
                     ca https://acme-staging-v02.api.letsencrypt.org/directory
                 }
                 handle / { redir * /jellyfin 302 }
