@@ -18,7 +18,7 @@
             };
             volumes = [
                 "/var/lib/slskd:/app"
-                "/var/lib/slskd/downloads:/downloads"
+                "/var/lib/media/downloads:/downloads"
             ];
         };
 
