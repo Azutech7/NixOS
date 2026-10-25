@@ -19,5 +19,14 @@
             ];
         };
 
+        services.caddy.virtualHosts = {
+
+            "navidrome.azutech.cc".extraConfig = ''
+                tls internal
+                reverse_proxy http://localhost:4533
+            '';
+
+        };
+
     };
 }
