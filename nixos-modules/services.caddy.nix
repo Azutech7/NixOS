@@ -13,6 +13,15 @@
             };
 
             environmentFile = "/var/lib/caddy/cloudflare.env";
+
+            extraConfig = ''
+                {
+                    acme_dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+                    preferred_chains {
+                        smallstep
+                    }
+                }
+            '';
         };
 
     };
