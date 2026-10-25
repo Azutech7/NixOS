@@ -14,6 +14,9 @@
                 RUN_INTERVAL = "900";
                 TZ = "America/Los_Angeles";
             };
+            volumes = [
+                "/var/lib/soularr:/data"
+            ];
         };
 
     };
