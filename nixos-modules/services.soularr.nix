@@ -16,6 +16,7 @@
             };
             volumes = [
                 "/var/lib/soularr:/data"
+                "/var/lib/media/downloads:/downloads"
             ];
         };
 
