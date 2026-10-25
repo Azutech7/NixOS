@@ -4,7 +4,7 @@
 
     config = lib.mkIf config.modules.services.slskd.enable {
 
-        virtualisation.oci-containers.containers.slskd = slskd = {
+        virtualisation.oci-containers.containers.slskd = {
             image = "slskd/slskd:latest";
             autoStart = true;
             ports = [
