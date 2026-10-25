@@ -14,7 +14,7 @@
 
             environmentFile = "/var/lib/caddy/cloudflare.env";
 
-            extraConfig = ''
+            extraConfig = lib.mkForce ''
             {
                 log {
                     level ERROR
