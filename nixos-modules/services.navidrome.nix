@@ -23,7 +23,7 @@
 
             "navidrome.azutech.cc".extraConfig = ''
                 tls {
-                    dns cloudflare {env.CLOUDFLARE_API_TOKEN} {
+                    dns cloudflare {$CLOUDFLARE_API_TOKEN} {
                         resolvers 1.1.1.1 8.8.8.8
                     }
                     ca https://acme-staging-v02.api.letsencrypt.org/directory
