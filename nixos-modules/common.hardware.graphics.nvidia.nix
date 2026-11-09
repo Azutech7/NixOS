@@ -5,7 +5,9 @@
 	config = lib.mkIf config.modules.common.hardware.graphics.nvidia.enable {
 
 		hardware.nvidia = {
-			open = true;
+			open = false;
+			package = config.boot.kernelPackages.nvidiaPackages.stable;
+
 			modesetting.enable = true;
 			nvidiaSettings = true;
 		};

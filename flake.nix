@@ -10,8 +10,8 @@
         home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
         # Modules
-        hyprland.url = "github:hyprwm/Hyprland";
-        cosmic.url = "github:lilyinstarlight/nixos-cosmic";
+        #hyprland.url = "github:hyprwm/Hyprland";
+        #cosmic.url = "github:lilyinstarlight/nixos-cosmic";
     };
 
     outputs = { self, nixpkgs, home-manager, ... }@inputs: {

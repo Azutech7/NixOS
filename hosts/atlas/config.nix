@@ -70,6 +70,7 @@
 
     users.groups.server-manager = {};
 
+    time.timeZone = "America/Los_Angeles";
 
     system.stateVersion = "26.05";
 
