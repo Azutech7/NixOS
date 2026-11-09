@@ -11,7 +11,7 @@
 
 		services.xserver.enable = true;
 		services.xserver.xkb.layout = "us";
-		services.displayManager.defaultSession = "hyprland";
+		services.displayManager.defaultSession = lib.mkDefault "hyprland";
 
 	};
 }
