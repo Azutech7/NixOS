@@ -2,10 +2,16 @@
     description = "Azutech NixOS Rice";
 
     inputs = {
+        # NixOS
         nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
+        # Home Manager
         home-manager.url = "github:nix-community/home-manager";
         home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
+        # Modules
+        hyprland.url = "github:hyprwm/Hyprland";
+        cosmic.url = "github:lilyinstarlight/nixos-cosmic";
     };
 
     outputs = { self, nixpkgs, home-manager, ... }@inputs: {
