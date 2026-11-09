@@ -1,21 +1,12 @@
 # TODO LIST:
 
 - [ ] systemd hardening (ProtectSystem, ProtectHome, PrivateTmp, NoNewPrivileges)
-- [ ] sudo restrictions
-- [x] fail2ban
-- [ ] usbguard
 - [ ] sops-nix (secrets management)
-- [x] auditd
 - [ ] java integration (cli runner w/ System.in tracking)
-- [ ] custom image
-- [x] plymouth (boot screens)
 - [ ] disko integration (alongside NixOS fileSystems)
 - [ ] satty (screenshot editing)
-- [x] mako (notification daemon; w/ theme module integration)
 - [ ] grlim+slurp (instead of hyprshot)
 - [ ] Automatic updates from GitHub
-- [ ] Seperate Client & Host Tailscale modules better
-- [x] services.mcserver caddy integration
-- [x] Lenovo ThinkCentre Tiny series crash fix by disabling Intel AMT
-- [ ] Trakt tracking for AIOStreams
 - [ ] Refactor away from the common system, it has gotten too far
+- [ ] ThinkFan ACPI module
+- [ ] Cosmic DE module
