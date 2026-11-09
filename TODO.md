@@ -11,3 +11,4 @@
 - [ ] ThinkFan ACPI module
 - [ ] Cosmic DE module
 - [ ] Built in module options wrapper
+- [ ] Update Hyprland + ly to prevent default-conflicts within other DEs

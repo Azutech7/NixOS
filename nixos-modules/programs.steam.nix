@@ -1,8 +1,8 @@
 { inputs, config, pkgs, lib, host, ... }: {
 
-    options.modules.steam.enable = lib.mkEnableOption "steam";
+    options.modules.programs.steam.enable = lib.mkEnableOption "programs.steam";
 
-    config = lib.mkIf config.modules.steam.enable {
+    config = lib.mkIf config.modules.programs.steam.enable {
 
 		programs.steam = {
 			enable = true;

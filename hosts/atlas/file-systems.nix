@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ inputs, pkgs, lib, host, config, ... }:
 
 {
     fileSystems."/" = {

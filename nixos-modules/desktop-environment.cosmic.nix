@@ -5,8 +5,11 @@
 
         make-default = lib.mkEnableOption "desktop-environment.cosmic.make-default";
 
-        firefox-support.enable = lib.mkEnableOption "ddesktop.environment.cosmic.firefox-support";
-
+        firefox-support.enable = lib.mkOption {
+            type = lib.types.bool;
+            default = true;
+            description = "desktop-environment.cosmic.firefox-support";
+        };
         optimize = lib.mkOption {
             type = lib.types.bool;
             default = true;

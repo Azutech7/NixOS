@@ -1,6 +1,6 @@
 { inputs, config, lib, pkgs, ... }: {
 
-    # 1. ALL OPTIONS DEFINED AT THE TOP LEVEL
+    # OPTIONS BLOCK
     options.modules.theme = {
         enable = lib.mkEnableOption "theme";
 
@@ -70,13 +70,12 @@
         };
     };
 
-    # 2. CONFIGURATION BLOCK CONSUMING THE OPTIONS
+    # CONFIGURATION BLOCK
     config = lib.mkIf config.modules.theme.enable (
         let
             cfg = config.modules.theme;
         in
         {
-            # Notice we dropped the 'config.' prefix inside this block
             modules.theme = {
                 color = {
                     error = lib.mkDefault cfg.color.red;

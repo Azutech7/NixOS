@@ -1,6 +1,5 @@
 { ... }: {
     imports = [
-        ./common.network.captive-browser.nix
         ./common.audio.pipewire.nix
         ./common.boot.nix
         ./common.boot.plymouth.nix
@@ -10,15 +9,19 @@
         ./common.hardware.graphics.intel-mesa.nix
         ./common.hardware.graphics.nix
         ./common.hardware.graphics.nvidia.nix
+        ./common.hardware.graphics.nvidia.power-fix.nix
         ./common.home-manager.backup.nix
+        ./common.input.disable-usb-power-management.nix
         ./common.input.touchpad.nix
         ./common.laptop.battery-optimizations.nix
         ./common.network.anti-panic.nix
         ./common.network.avahi.nix
         ./common.network.bluetooth.nix
+        ./common.network.captive-browser.nix
         ./common.network.network-manager.nix
         ./common.network.openssh.nix
         ./common.network.printing.nix
+        ./common.nixpkgs.allow-unfree.nix
         ./common.security.auditd.nix
         ./common.security.gnupg.nix
         ./common.security.network.adguard-home.nix
@@ -29,24 +32,28 @@
         ./common.security.network.tailscale.nix
         ./common.security.network.unbound.nix
         ./common.security.pam.nix
-        ./common.nixpkgs.allow-unfree.nix
+        ./common.storage.btrfs.auto-scrub.nix
         ./common.storage.space-optimizations.nix
-        ./flatpak.nix
-        ./hyprland.nix
-        ./ly.nix
+        ./desktop-environment.cosmic.nix
+        ./desktop-environment.hyprland.nix
+        ./desktop-environment.ly.nix
+        ./desktop-environment.nix
+        ./manifest.nix
+        ./programs.firefox.nix
+        ./programs.flatpak.nix
+        ./programs.java.nix
+        ./programs.steam.nix
         ./services.aiostreams.nix
         ./services.caddy.nix
         ./services.docker.nix
-        ./services.mcserver.nix
-        ./services.mcserver.backups.nix
-        ./desktop-environment.cosmic.nix
+        ./services.flaresolverr.nix
         ./services.jellyfin.nix
         ./services.lidarr.nix
-        ./services.rdt-client.nix
-        ./services.prowlarr.nix
-        ./services.flaresolverr.nix
+        ./services.mcserver.backups.nix
+        ./services.mcserver.nix
         ./services.navidrome.nix
-        ./steam.nix
+        ./services.prowlarr.nix
+        ./services.rdt-client.nix
         ./services.slskd.nix
         ./services.soularr.nix
     ];
