@@ -21,7 +21,7 @@
 
             home-manager.backup.enable = true;
 
-            common.input.disable-usb-power-management.enable = true;
+            input.disable-usb-power-management.enable = true;
 
             network.avahi.enable = true;
             network.bluetooth.enable = true;
