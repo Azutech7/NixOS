@@ -26,6 +26,8 @@
             network.anti-panic.enable = true;
             security.network.tailscale.enable = true;
             security.network.adguard-home.enable = true;
+
+            storage.btrfs.auto-scrub.enable = true;
         };
 
         services.aiostreams.enable = true;
