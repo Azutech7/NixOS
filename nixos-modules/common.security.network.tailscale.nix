@@ -12,7 +12,7 @@
         })
 
         # 2. Host-specific routing & firewall settings | Mandatorily enables modules.common.security.network.tailscale.enable
-        (lib.mkIf config.modules.common.security.network.tailscale.host.enable {
+        (lib.mkIf config.modules.common.security.network.tailscale.host {
 
             modules.common.security.network.tailscale.enable = lib.mkForce true;
 
