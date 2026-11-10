@@ -19,7 +19,7 @@
         vscodium.enable = true;
     };
 
-    home = with pkgs; [
+    home.packages = with pkgs; [
         discord
         zoom-us
         prism-launcher
