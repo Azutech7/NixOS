@@ -1,5 +1,4 @@
 # NixOS Drive Preparation & Btrfs Subvolume Setup Guide
-<div><small>(guide produced by Gemini)</small></div>
 
 This guide covers how to completely clear, partition, format, and mount a storage drive (supporting both NVMe and SATA drives) with a customized Btrfs subvolume and swapfile layout for NixOS.
 
@@ -165,3 +164,6 @@ sudo nixos-rebuild switch --refresh --no-write-lock-file --flake github:Azutech7
 ```
 
 * **What this does:** Fetches updates from your remote repository, builds a new generation in the background, updates system profiles, and transitions services without requiring a system reboot.
+
+
+<small>This is a small note or credit.</small>
