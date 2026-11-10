@@ -1,4 +1,5 @@
-# NixOS Drive Preparation & Btrfs Subvolume Setup Guide<sup>(guide produced by Gemini)</sup>
+# NixOS Drive Preparation & Btrfs Subvolume Setup Guide
+<div><small>(guide produced by Gemini)</small></div>
 
 This guide covers how to completely clear, partition, format, and mount a storage drive (supporting both NVMe and SATA drives) with a customized Btrfs subvolume and swapfile layout for NixOS.
 
