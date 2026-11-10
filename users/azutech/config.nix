@@ -5,6 +5,7 @@
     ];
 
     modules = {
+        # Core
         bash.enable = true;
         btop.enable = true;
         cava.enable = true;
@@ -13,6 +14,15 @@
         micro.enable = true;
         theme.enable = true;
         wayland-clipboard.enable = true;
+
+        # Extra
+        vscodium.enable = true;
     };
+
+    home = with pkgs; [
+        discord
+        zoom-us
+        prism-launcher
+    ];
 
 }
