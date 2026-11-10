@@ -22,7 +22,7 @@
     home.packages = with pkgs; [
         discord
         zoom-us
-        prism-launcher
+        prismlauncher
     ];
 
 }
