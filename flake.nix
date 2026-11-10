@@ -43,13 +43,11 @@
                     ];
 
                     home-manager.users = {
-                        home-manager.users = {
-                            <USER_NAME> = {
-                                imports =  [./users/<USER_NAME>/config.nix];
-                                home.username = inputs.nixpkgs.lib.mkForce "<USER_NAME>";
-                                home.homeDirectory = inputs.nixpkgs.lib.mkForce "/home/<USER_NAME>";
-                                home.stateVersion = inputs.nixpkgs.lib.mkForce "25.11";
-                            };
+                        <USER_NAME> = {
+                            imports =  [./users/<USER_NAME>/config.nix];
+                            home.username = inputs.nixpkgs.lib.mkForce "<USER_NAME>";
+                            home.homeDirectory = inputs.nixpkgs.lib.mkForce "/home/<USER_NAME>";
+                            home.stateVersion = inputs.nixpkgs.lib.mkForce "25.11";
                         };
                     };
 
@@ -80,13 +78,11 @@
                     ];
 
                     home-manager.users = {
-                        home-manager.users = {
-                            azutech = {
-                                imports =  [./users/azutech/config.nix];
-                                home.username = inputs.nixpkgs.lib.mkForce "azutech";
-                                home.homeDirectory = inputs.nixpkgs.lib.mkForce "/home/azutech";
-                                home.stateVersion = inputs.nixpkgs.lib.mkForce "25.11";
-                            };
+                        azutech = {
+                            imports =  [./users/azutech/config.nix];
+                            home.username = inputs.nixpkgs.lib.mkForce "azutech";
+                            home.homeDirectory = inputs.nixpkgs.lib.mkForce "/home/azutech";
+                            home.stateVersion = inputs.nixpkgs.lib.mkForce "25.11";
                         };
                     };
 
