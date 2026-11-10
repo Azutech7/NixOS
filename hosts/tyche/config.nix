@@ -43,9 +43,10 @@
             storage.space-optimizations.enable = true;
         };
 
-        desktop-environment.cosmic = {
+        environment.cosmic = {
             enable = true;
             make-default = true;
+            greeter.enable = true;
         };
 
         programs.firefox.enable = true;

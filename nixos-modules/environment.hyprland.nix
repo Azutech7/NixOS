@@ -1,8 +1,8 @@
 { inputs, config, pkgs, lib, host, ... }: {
 
-    options.modules.desktop-environment.hyprland.enable = lib.mkEnableOption "desktop-environment.hyprland";
+    options.modules.environment.hyprland.enable = lib.mkEnableOption "environment.hyprland";
 
-    config = lib.mkIf config.modules.desktop-environment.hyprland.enable {
+    config = lib.mkIf config.modules.environment.hyprland.enable {
 	
 		programs.hyprland = {
 			enable = true;

@@ -6,7 +6,7 @@
         anti-stutter.enable = lib.mkEnableOption "common.audio.pipewire.anti-stutter";
     };
 
-    config = lib.mkIf config.modules.common.audio.pipewire.enable {
+    config = lib.mkIf config.modules.common.audio.pipewire.enable (
 
         lib.mkMerge [
 
@@ -39,5 +39,5 @@
 
         ]
 
-    };
+    );
 }
