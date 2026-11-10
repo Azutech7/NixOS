@@ -38,7 +38,6 @@
         ./environment.hyprland.nix
         ./environment.ly.nix
         ./environment.nix
-        ./manifest.nix
         ./programs.firefox.nix
         ./programs.flatpak.nix
         ./programs.java.nix

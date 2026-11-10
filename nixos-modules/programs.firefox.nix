@@ -6,7 +6,7 @@
         disable-libadwaita-theming = lib.mkEnableOption "programs.firefox.disable-libadwaita-theming";
     }
 
-    config = lib.mkIf config.modules.programs.firefox.enable {
+    config = lib.mkIf config.modules.programs.firefox.enable (
 
         lib.mkMerge [
             {
@@ -21,5 +21,5 @@
             })
         ]
 
-    };
+    );
 }
