@@ -34,10 +34,10 @@
         ./common.security.pam.nix
         ./common.storage.btrfs.auto-scrub.nix
         ./common.storage.space-optimizations.nix
-        ./desktop-environment.cosmic.nix
-        ./desktop-environment.hyprland.nix
-        ./desktop-environment.ly.nix
-        ./desktop-environment.nix
+        ./environment.cosmic.nix
+        ./environment.hyprland.nix
+        ./environment.ly.nix
+        ./environment.nix
         ./manifest.nix
         ./programs.firefox.nix
         ./programs.flatpak.nix
