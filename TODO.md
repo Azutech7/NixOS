@@ -13,3 +13,4 @@
 - [ ] Built in module options wrapper
 - [ ] Update Hyprland + ly to prevent default-conflicts within other DEs
 - [ ] Change to UUIDs for sambar file-systems
+- [ ] Transition to podman instead of docker AFTER mcserver closes
