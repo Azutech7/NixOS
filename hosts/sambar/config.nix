@@ -16,12 +16,13 @@
             hardware.automatic-compatability.enable = true;
             hardware.graphics.intel-mesa.enable = true;
             hardware.graphics.enable = true;
-            hardware.graphics.nvidia.enable = true;
-            hardware.graphics.nvidia.power-fix.enable = true;
 
             home-manager.backup.enable = true;
 
             input.disable-usb-power-management.enable = true;
+            input.touchpad.enable = true;
+
+            laptop.battery-optimizations.enable = true;
 
             network.avahi.enable = true;
             network.bluetooth.enable = true;
