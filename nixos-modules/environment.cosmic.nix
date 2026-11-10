@@ -35,7 +35,7 @@
             })
 
             (lib.mkIf config.modules.environment.cosmic.firefox-support.enable {
-                config.modules.programs.firefox.disable-libadwaita-theming = true;
+                modules.programs.firefox.disable-libadwaita-theming = true;
             })
 
             (lib.mkIf config.modules.environment.cosmic.optimize {
