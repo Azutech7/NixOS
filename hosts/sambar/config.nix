@@ -63,7 +63,7 @@
         yazi
         btop
         unzip
-        p7zip
+        7zip
         fzf
         libgcc
         tree
