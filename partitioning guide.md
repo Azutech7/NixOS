@@ -42,7 +42,7 @@ Depending on the type of storage hardware you are using, Linux names your drives
 To perform these steps, spawn a temporary shell containing all required disk management utilities (`parted`, `btrfs-progs`, `util-linux`, `gdisk`) without installing them permanently:
 
 ```bash
-nix-shell -p parted btrfs-progs util-linux gdisk
+nix-shell -p parted btrfs-progs util-linux
 ```
 
 ---
@@ -147,7 +147,7 @@ The tool and command used to build your system depend entirely on whether you ar
 When running on an installer ISO with empty partitions mounted at `/mnt`, the drive is not yet bootable and lacks core file structures. You **must** use `nixos-install` to bootstrap the initial installation and write the bootloader to the drive:
 
 ```bash
-sudo nixos-install --flake github:Azutech7/NixOS#<insert_hostname>
+sudo nixos-install --root /mnt --flake github:Azutech7/NixOS#<insert_hostname> --option tarball-ttl 0
 ```
 
 * **What this does:** Compiles your remote flake configuration, bootstraps system files into `/mnt`, installs the EFI bootloader to `/dev/nvme0n1p1` (or your SATA boot partition), and prompts for a root password.
