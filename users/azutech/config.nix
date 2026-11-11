@@ -24,6 +24,14 @@
         discord
         zoom-us
         prismlauncher
+        feishin
+        heroic
     ];
+
+    programs.git.enable = true;
+	programs.git.settings = {
+		user.name = "Azutech7";
+		user.email = "masonheuberger@gmail.com";
+	};
 
 }

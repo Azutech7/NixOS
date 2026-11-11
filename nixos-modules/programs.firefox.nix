@@ -10,7 +10,7 @@
 
         lib.mkMerge [
             {
-                programs.java.enable = true;
+                programs.firefox.enable = true;
             }
 
             (lib.mkIf config.modules.programs.firefox.disable-libadwaita-theming {
