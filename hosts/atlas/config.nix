@@ -62,6 +62,7 @@
         libgcc
         tree
         parted
+        unrar
     ];
 
     users.users.server-manager = {
