@@ -69,7 +69,7 @@
         tree
         parted
         unrar
-        peazip
+        mate.engrampa
     ];
 
     users.users.azutech = {
