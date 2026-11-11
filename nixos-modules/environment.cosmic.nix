@@ -37,16 +37,44 @@
                 services.displayManager.defaultSession = "cosmic";
             })
 
-            (lib.mkIf config.modules.environment.cosmic.greeter.enable {
-                services.displayManager.cosmic-greeter.enable = true;
-            })
+            (lib.mkIf config.modules.environment.cosmic.greeter.enable (
+                lib.mkMerge [
+                    {
+                        services.displayManager.cosmic-greeter.enable = true;
+                    }
 
-            # Apply fullscreen flickering fixes
+                    (lib.mkIf config.modules.environment.cosmic.nvidia-fixes.enable {
+                        systemd.services.cosmic-greeter = {
+                            environment = {
+                                COSMIC_DISABLE_DIRECT_SCANOUT = "1";
+                                COSMIC_DISABLE_OVERLAY_SCANOUT = "1";
+
+                                # Hard-disables NVIDIA variable refresh rate timing at the driver level
+                                # to prevent flickering vignette effect
+                                # __GL_VRR_ALLOWED = "0";
+                            };
+                        };
+                    })
+                ]
+            ))
+
             (lib.mkIf config.modules.environment.cosmic.nvidia-fixes.enable {
                 environment.sessionVariables = {
                     COSMIC_DISABLE_DIRECT_SCANOUT = "1";
                     COSMIC_DISABLE_OVERLAY_SCANOUT = "1";
+
+                    # Hard-disables NVIDIA variable refresh rate timing at the driver level
+                    # to prevent flickering vignette effect
+                    # __GL_VRR_ALLOWED = "0"; 
+                    # __GL_SYNC_TO_VBLANK = "0";
                 };
+
+                # For cosmic-comp specifically
+                # systemd.user.settings.Manager = {
+                #     DefaultEnvironment = "COSMIC_DISABLE_DIRECT_SCANOUT=1 COSMIC_DISABLE_OVERLAY_SCANOUT=1 __GL_VRR_ALLOWED=0 __GL_SYNC_TO_VBLANK=0";
+                # };
+
+                # boot.kernelParams = [ "nvidia-drm.fbdev=1" ]; 
             })
 
             (lib.mkIf config.modules.environment.cosmic.firefox-support.enable {
