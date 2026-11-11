@@ -29,7 +29,7 @@
             }
 
             # Auto-enable NVIDIA fixes if NVIDIA graphics module is enabled
-            (lib.mkIf config.modules.hardware.graphics.nvidia.enable {
+            (lib.mkIf config.modules.common.hardware.graphics.nvidia.enable {
                 modules.environment.cosmic.nvidia-fixes.enable = lib.mkDefault true;
             })
 
