@@ -126,6 +126,40 @@
             ];
         };
 
+        nixosConfigurations.sambar = nixpkgs.lib.nixosSystem {
+            system = "x86_64-linux";
+
+            specialArgs = { inherit inputs; }; 
+
+            modules = [
+                ./hosts/sambar/config.nix
+                
+                ./nixos-modules/manifest.nix
+
+                home-manager.nixosModules.home-manager
+                {
+                    home-manager.useGlobalPkgs = true;
+                    home-manager.useUserPackages = true;
+
+                    home-manager.extraSpecialArgs = { inherit inputs; };
+
+                    home-manager.sharedModules = [
+                        ./home-modules/manifest.nix
+                    ];
+
+                    home-manager.users = {
+                        azutech = {
+                            imports =  [./users/azutech/config.nix];
+                            home.username = inputs.nixpkgs.lib.mkForce "azutech";
+                            home.homeDirectory = inputs.nixpkgs.lib.mkForce "/home/azutech";
+                            home.stateVersion = inputs.nixpkgs.lib.mkForce "25.11";
+                        };
+                    };
+
+                }
+            ];
+        };
+
         ###################
         #### HOSTS END ####
         ###################
