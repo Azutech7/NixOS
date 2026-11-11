@@ -68,6 +68,7 @@
         tree
         parted
         unrar
+        peazip
     ];
 
     users.users.azutech = {
