@@ -9,6 +9,7 @@
         bash.enable = true;
         btop.enable = true;
         cava.enable = true;
+        firefox.enable = true;
         fastfetch.enable = true;
         kitty.enable = true;
         micro.enable = true;
