@@ -13,6 +13,8 @@
                     "network.dns.use_https_rr_as_alpn" = true;
                 };
             };
+
+            configPath = "${config.xdg.configHome}/mozilla/firefox";
         };
 
     };
