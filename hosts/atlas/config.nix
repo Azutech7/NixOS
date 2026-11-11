@@ -57,7 +57,7 @@
         yazi
         btop
         unzip
-        7zip
+        p7zip-rar
         fzf
         libgcc
         tree
