@@ -84,6 +84,10 @@ parted /dev/sda -- mkpart primary btrfs 1G 100%
 ```bash
 mkfs.fat -F 32 -n boot /dev/nvme0n1p1
 mkfs.btrfs -f -L nixos /dev/nvme0n1p2
+
+# Enable EFI and boot
+parted /dev/nvme0n1 set 1 esp on
+parted /dev/nvme0n1 set 1 boot on
 ```
 
 *(For SATA, replace `nvme0n1p1` / `nvme0n1p2` with `sda1` / `sda2`).*
@@ -147,6 +151,9 @@ The tool and command used to build your system depend entirely on whether you ar
 When running on an installer ISO with empty partitions mounted at `/mnt`, the drive is not yet bootable and lacks core file structures. You **must** use `nixos-install` to bootstrap the initial installation and write the bootloader to the drive:
 
 ```bash
+sudo nixos-install --root /mnt --flake github:Azutech7/NixOS#<insert_hostname>
+
+# To refresh link
 sudo nixos-install --root /mnt --flake github:Azutech7/NixOS#<insert_hostname> --option tarball-ttl 0
 ```
 
