@@ -1,5 +1,9 @@
-{ inputs, config, lib, pkgs, ... }: {
+{ inputs, config, lib, pkgs, ... }:
 
+let
+  open-vsx-pkgs = inputs.nix-vscode-extensions.extensions.${pkgs.system}.open-vsx;
+in
+{
     options.modules.vscodium.enable = lib.mkEnableOption "vscodium";
 
     config = lib.mkIf config.modules.vscodium.enable {
@@ -7,18 +11,18 @@
         programs.vscodium = {
             enable = true;
 
-            profiles.default.extensions = with pkgs.vscode-extensions; [
+            profiles.default.extensions = (with pkgs.vscode-extensions; [
                 jnoortheen.nix-ide
-                jeanp413.open-remote-ssh
                 zhuangtongfa.material-theme
                 redhat.java
                 redhat.vscode-yaml
-                PKief.material-icon-theme
+                pkief.material-icon-theme
                 esbenp.prettier-vscode
                 ms-vscode.cmake-tools
                 shd101wyy.markdown-preview-enhanced
-                ms-vscode.cpptools
-            ];
+            ]) ++ (with open-vsx-pkgs; [
+                jeanp413.open-remote-ssh
+            ]);
         };
 
     };

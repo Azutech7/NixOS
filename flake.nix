@@ -12,6 +12,8 @@
         # Modules
         #hyprland.url = "github:hyprwm/Hyprland";
         #cosmic.url = "github:lilyinstarlight/nixos-cosmic";
+        nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
+        nix-vscode-extensions.inputs.nixpkgs.follows = "nixpkgs";
     };
 
     outputs = { self, nixpkgs, home-manager, ... }@inputs: {
