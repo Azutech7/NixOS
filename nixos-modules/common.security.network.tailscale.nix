@@ -5,6 +5,13 @@
         host = lib.mkEnableOption "common.security.network.tailscale.host";
     };
 
+    # Servers open with:
+    # tailscale up --advertise-exit-node
+
+    # Clients connect with:
+    # sudo tailscale set --accept-dns=true
+    # sudo tailscale up --exit-node=<exit-node-ip-or-name> --exit-node-allow-lan-access
+
     config = lib.mkMerge [
         # 1. Base Tailscale service
         (lib.mkIf config.modules.common.security.network.tailscale.enable {
