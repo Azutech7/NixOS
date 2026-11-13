@@ -13,3 +13,4 @@
 - [ ] Update Hyprland + ly to prevent default-conflicts within other DEs
 - [ ] Transition to podman instead of docker AFTER mcserver closes
 - [ ] Link modules to flakes
+- [ ] Move some more host-level stuff like the system state version into the flake
