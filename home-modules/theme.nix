@@ -98,7 +98,14 @@
                 };
             };
 
-            fonts.fontconfig.enable = true;
+            fonts.fontconfig= {
+                enable = true;
+                defaultFonts = {
+                    sansSerif = [ cfg.font.name ];
+                    serif = [ cfg.font.name ];
+                    monospace = [ cfg.font.name ];
+                };
+            };
 
             home.packages = with pkgs; [
                 cfg.font.package

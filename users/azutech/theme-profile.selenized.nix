@@ -45,7 +45,7 @@
 
 		font = {
 			package = pkgs.maple-mono.NF-unhinted;
-			name = "Maple Mono";
+			name = "Maple Mono NF";
 			size.default = 12;
 		};
 
