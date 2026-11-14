@@ -107,7 +107,8 @@ in
                         "cosmic/com.system76.CosmicTheme.Mode/v1/is_dark".text = "true";
                     }
                     #### COLORS ####
-                    // (prefixBuilder "cosmic/com.system76.CosmicTheme.Dark.Builder/v1");
+                    // (prefixBuilder "cosmic/com.system76.CosmicTheme.Dark.Builder/v1")
+                    // (prefixBuilder "cosmic/com.system76.CosmicTheme.Dark.Builder/v2");
             })
         ]
     );
