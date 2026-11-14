@@ -21,7 +21,7 @@
             }
 
             (lib.mkIf config.modules.environment.noctalia.include-recommended {
-                programs.noctalia.recommendedServices = true;
+                programs.noctalia.recommendedServices.enable = true;
             })
         ]
     );
