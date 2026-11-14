@@ -29,7 +29,7 @@ let
     spaceXxxl = 64; # CHECK THIS
 
     # Window Gaps & Active Window Border Thickness (px)
-    # gapOuter   = 0;  # CHECK THIS
+    gapOuter   = 0;  # CHECK THIS
     gapInner   = 16; # CHECK THIS
     activeHint = 2;  # CHECK THIS
 
