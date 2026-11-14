@@ -7,7 +7,7 @@
     options.modules.environment.noctalia = {
         enable = lib.mkEnableOption "environment.noctalia";
 
-        umbrial-support.enable = lib.mkEnableOption "environment.noctalia.umbrial-support";
+        umbriel-support.enable = lib.mkEnableOption "environment.noctalia.umbriel-support";
 
         theme-support.enable = lib.mkEnableOption "environment.noctalia.theme-support";
 
@@ -25,11 +25,11 @@
                 programs.noctalia.enable = true;
             }
 
-            (lib.mkIf config.modules.environment.umbrial.enable {
-                config.modules.environment.noctalia.umbrial-support.enable = lib.mkDefault true;
+            (lib.mkIf config.modules.environment.umbriel.enable {
+                config.modules.environment.noctalia.umbriel-support.enable = lib.mkDefault true;
             })
 
-            (lib.mkIf config.modules.environment.noctalia.umbrial-support.enable {
+            (lib.mkIf config.modules.environment.noctalia.umbriel-support.enable {
                 programs.noctalia.settings."theme.templates" = {
                     enable_builtin_templates = true;
                     builtin_ids = [ "umbriel" ];
