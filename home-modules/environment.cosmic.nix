@@ -35,61 +35,21 @@ let
 
     rgb = hex: rgba hex 1.0;
 
-    # Reusable container block with corrected `disabled_border` field name
-    mkContainer = { base, compBase, compHover, compPressed }: ''
-        (
-            base: ${rgb base},
-            on: ${rgb c.foreground},
-            divider: ${rgba c.comment 0.35},
-            component: (
-                base: ${rgb compBase},
-                hover: ${rgb compHover},
-                pressed: ${rgb compPressed},
-                selected: ${rgb c.selection},
-                selected_text: ${rgb c.br_blue},
-                focus: ${rgb c.br_blue},
-                divider: ${rgba c.comment 0.35},
-                on: ${rgb c.foreground},
-                on_disabled: ${rgba c.comment 0.6},
-                disabled: ${rgba compBase 0.5},
-                border: ${rgb c.comment},
-                disabled_border: ${rgba c.comment 0.4},
-            ),
-        )
-    '';
-
-    # Core GUI-level theme colors
-    coreColors = {
-        "accent".text = rgb c.blue;
-        "success".text = rgb c.green;
-        "warning".text = rgb c.warning;
-        "destructive".text = rgb c.error;
-        "window_header_background".text = rgb c.background;
-
-        "background".text = mkContainer {
-            base = c.background;
-            compBase = c.br_background;
-            compHover = c.primary;
-            compPressed = c.selection;
-        };
-
-        "primary".text = mkContainer {
-            base = c.primary;
-            compBase = c.br_background;
-            compHover = c.selection;
-            compPressed = c.selection;
-        };
-
-        "secondary".text = mkContainer {
-            base = c.br_background;
-            compBase = c.primary;
-            compHover = c.selection;
-            compPressed = c.selection;
-        };
+    # Flat Builder colors (mirrors COSMIC Settings -> Appearance)
+    builderColors = {
+        "accent".text = "Some(${rgb c.blue})";
+        "bg_color".text = "Some(${rgb c.background})";
+        "primary_container_bg".text = "Some(${rgb c.primary})";
+        "secondary_container_bg".text = "Some(${rgb c.br_background})";
+        "text_tint".text = "Some(${rgb c.foreground})";
+        "neutral_tint".text = "Some(${rgb c.comment})";
+        "success".text = "Some(${rgb c.green})";
+        "warning".text = "Some(${rgb c.warning})";
+        "destructive".text = "Some(${rgb c.error})";
     };
 
-    prefixTheme = prefix:
-        lib.mapAttrs' (name: val: lib.nameValuePair "${prefix}/${name}" val) coreColors;
+    prefixBuilder = prefix:
+        lib.mapAttrs' (name: val: lib.nameValuePair "${prefix}/${name}" val) builderColors;
 in
 {
     options.modules.environment.cosmic = {
@@ -147,8 +107,7 @@ in
                         "cosmic/com.system76.CosmicTheme.Mode/v1/is_dark".text = "true";
                     }
                     #### COLORS ####
-                    // (prefixTheme "cosmic/com.system76.CosmicTheme.Dark/v1")
-                    // (prefixTheme "cosmic/com.system76.CosmicTheme.Dark/v2");
+                    // (prefixBuilder "cosmic/com.system76.CosmicTheme.Dark.Builder/v1");
             })
         ]
     );
