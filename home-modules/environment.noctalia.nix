@@ -26,7 +26,7 @@
             }
 
             (lib.mkIf config.modules.environment.umbriel.enable {
-                config.modules.environment.noctalia.umbriel-support.enable = lib.mkDefault true;
+                modules.environment.noctalia.umbriel-support.enable = lib.mkDefault true;
             })
 
             (lib.mkIf config.modules.environment.noctalia.umbriel-support.enable {
@@ -37,7 +37,7 @@
             })
 
             (lib.mkIf config.modules.theme.enable {
-                config.modules.environment.noctalia.theme-support.enable = lib.mkDefault true;
+                modules.environment.noctalia.theme-support.enable = lib.mkDefault true;
             })
 
             (lib.mkIf config.modules.environment.theme-support.enable {
