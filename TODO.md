@@ -15,3 +15,4 @@
 - [ ] Link modules to flakes
 - [ ] Move some more host-level stuff like the system state version into the flake
 - [ ] Make a system module for "nix.settings.accept-flake-config = true;"
+- [ ] Add automatic theme management for 3rd party programs with noctalia
