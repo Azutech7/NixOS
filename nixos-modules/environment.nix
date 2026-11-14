@@ -3,6 +3,12 @@
     options.modules.environment = {
         enable = lib.mkEnableOption "environment";
 
+        xserver.enable = lib.mkOption {
+            type = lib.types.bool;
+            default = true;
+            description = "environment.xserver";
+        };
+
         compatability-links.enable = lib.mkOption {
             type = lib.types.bool;
             default = true;
@@ -18,6 +24,11 @@
 
     config = lib.mkIf config.modules.environment.enable (
         lib.mkMerge [
+            (lib.mkIf config.modules.environment.xserver.enable {
+                services.xserver.enable = true;
+			    services.xserver.xkb.layout = "us";
+            })
+
             (lib.mkIf config.modules.environment.compatability-links.enable {
                 environment.pathsToLink = [
                     "/share/applications"

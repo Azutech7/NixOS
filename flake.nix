@@ -12,6 +12,8 @@
         # Modules
         #hyprland.url = "github:hyprwm/Hyprland";
         #cosmic.url = "github:lilyinstarlight/nixos-cosmic";
+        umbriel.url = "github:noctalia-dev/umbriel";
+        noctalia.url = "github:noctalia-dev/noctalia";
         nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
         nix-vscode-extensions.inputs.nixpkgs.follows = "nixpkgs";
     };

@@ -38,6 +38,8 @@
         ./environment.hyprland.nix
         ./environment.ly.nix
         ./environment.nix
+        ./environment.noctalia.nix
+        ./environment.umbriel.nix
         ./programs.firefox.nix
         ./programs.flatpak.nix
         ./programs.java.nix

@@ -2,16 +2,14 @@
 
     options.modules.environment.hyprland.enable = lib.mkEnableOption "environment.hyprland";
 
-    config = lib.mkIf config.modules.environment.hyprland.enable {
+    config = lib.mkIf config.modules.environment.hyprland.enable { # <- DOES NOT INCLUDE ENV CURRENTLY SO BROKEN & OUTDATED
 	
-		programs.hyprland = {
-			enable = true;
-			xwayland.enable = true;
-		};
-
-		services.xserver.enable = true;
-		services.xserver.xkb.layout = "us";
-		services.displayManager.defaultSession = lib.mkDefault "hyprland";
+			programs.hyprland = {
+				enable = true;
+				xwayland.enable = true;
+			};
+			
+			services.displayManager.defaultSession = lib.mkDefault "hyprland";
 
 	};
 }

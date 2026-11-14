@@ -49,6 +49,9 @@
             greeter.enable = true;
         };
 
+        environemtn.noctalia.enable = true;
+        environment.umbriel.enable = true;
+
         programs.firefox.enable = true;
         programs.flatpak.enable = true;
         programs.java.enable = true;
@@ -68,7 +71,7 @@
         tree
         parted
         unrar
-        mate.engrampa
+        engrampa
     ];
 
     users.users.azutech = {
