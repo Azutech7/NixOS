@@ -2,14 +2,14 @@
 
     options.modules.environment.cosmic = {
         enable = lib.mkEnableOption "environment.cosmic";
-
+        
         theme-support.enable = lib.mkEnableOption "environment.cosmic.theme-support";
     };
 
     config = lib.mkIf config.modules.environment.cosmic.enable (
         lib.mkMerge [
             {
-                services.desktopManager.cosmic.enable = true;
+                # Default would go here
             }
 
             # Auto-enable NVIDIA fixes if NVIDIA graphics module is enabled
