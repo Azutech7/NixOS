@@ -1,5 +1,9 @@
 { inputs, config, lib, pkgs, ... }: {
 
+	  imports = [
+        inputs.hyprland.homeModules.default
+    ];
+
 	options.modules.hyprland.enable = lib.mkEnableOption "hyprland";
 
 	config = lib.mkIf config.modules.hyprland.enable (

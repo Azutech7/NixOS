@@ -194,6 +194,10 @@ let
         lib.mapAttrs' (name: val: lib.nameValuePair "${prefix}/${name}" val) builderEntries;
 in
 {
+    imports = [
+        inputs.cosmic.homeModules.default
+    ];
+
     options.modules.environment.cosmic = {
         enable = lib.mkEnableOption "environment.cosmic";
         

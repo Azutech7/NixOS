@@ -14,3 +14,4 @@
 - [ ] Transition to podman instead of docker AFTER mcserver closes
 - [ ] Link modules to flakes
 - [ ] Move some more host-level stuff like the system state version into the flake
+- [ ] Make a system module for "nix.settings.accept-flake-config = true;"
