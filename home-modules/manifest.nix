@@ -4,6 +4,8 @@
         ./btop.nix
         ./cava.nix
         ./environment.cosmic.nix
+        ./environment.noctalia.nix
+        ./environment.umbriel.nix
         ./fastfetch.nix
         ./firefox.nix
         ./fuzzel.nix
