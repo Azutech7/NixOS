@@ -3,6 +3,7 @@
         ./bash.nix
         ./btop.nix
         ./cava.nix
+        ./environment.cosmic.nix
         ./fastfetch.nix
         ./firefox.nix
         ./fuzzel.nix

@@ -17,6 +17,7 @@
         wayland-clipboard.enable = true;
 
         # Extra
+        environment.cosmic.enable = true;
         vscodium.enable = true;
     };
 
