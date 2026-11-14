@@ -35,7 +35,7 @@ let
 
     rgb = hex: rgba hex 1.0;
 
-    # Reusable container block using only background, br_background, primary, and selection
+    # Reusable container block with corrected `disabled_border` field name
     mkContainer = { base, compBase, compHover, compPressed }: ''
         (
             base: ${rgb base},
@@ -53,7 +53,7 @@ let
                 on_disabled: ${rgba c.comment 0.6},
                 disabled: ${rgba compBase 0.5},
                 border: ${rgb c.comment},
-                border_disabled: ${rgba c.comment 0.4},
+                disabled_border: ${rgba c.comment 0.4},
             ),
         )
     '';
@@ -76,6 +76,13 @@ let
         "primary".text = mkContainer {
             base = c.primary;
             compBase = c.br_background;
+            compHover = c.selection;
+            compPressed = c.selection;
+        };
+
+        "secondary".text = mkContainer {
+            base = c.br_background;
+            compBase = c.primary;
             compHover = c.selection;
             compPressed = c.selection;
         };
