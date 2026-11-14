@@ -35,12 +35,12 @@ let
 
     rgb = hex: rgba hex 1.0;
 
-    # Reusable container block for background and primary window surfaces
+    # Reusable container block using only background, br_background, primary, and selection
     mkContainer = { base, compBase, compHover, compPressed }: ''
         (
             base: ${rgb base},
             on: ${rgb c.foreground},
-            divider: ${rgba c.tertiary 0.35},
+            divider: ${rgba c.comment 0.35},
             component: (
                 base: ${rgb compBase},
                 hover: ${rgb compHover},
@@ -48,38 +48,36 @@ let
                 selected: ${rgb c.selection},
                 selected_text: ${rgb c.br_blue},
                 focus: ${rgb c.br_blue},
-                divider: ${rgba c.tertiary 0.35},
+                divider: ${rgba c.comment 0.35},
                 on: ${rgb c.foreground},
                 on_disabled: ${rgba c.comment 0.6},
                 disabled: ${rgba compBase 0.5},
-                border: ${rgb c.tertiary},
-                border_disabled: ${rgba c.tertiary 0.4},
+                border: ${rgb c.comment},
+                border_disabled: ${rgba c.comment 0.4},
             ),
         )
     '';
 
     # Core GUI-level theme colors
     coreColors = {
-        # Semantic / Accent colors (what you pick in COSMIC Settings)
         "accent".text = rgb c.blue;
         "success".text = rgb c.green;
         "warning".text = rgb c.warning;
         "destructive".text = rgb c.error;
         "window_header_background".text = rgb c.background;
 
-        # Main window background & elevated card/panel surface
         "background".text = mkContainer {
             base = c.background;
             compBase = c.br_background;
             compHover = c.primary;
-            compPressed = c.secondary;
+            compPressed = c.selection;
         };
 
         "primary".text = mkContainer {
             base = c.primary;
-            compBase = c.secondary;
-            compHover = c.tertiary;
-            compPressed = c.quaternary;
+            compBase = c.br_background;
+            compHover = c.selection;
+            compPressed = c.selection;
         };
     };
 
