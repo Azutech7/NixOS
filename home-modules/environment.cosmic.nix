@@ -9,24 +9,24 @@ let
     # =========================================================================
 
     # Corner Radii (px)
-    # radius0  = 0; # CHECK THIS
-    # radiusXs = 2; # CHECK THIS
-    # radiusS  = 8; # CHECK THIS
-    # radiusM  = 8; # CHECK THIS
-    # radiusL  = 8; # CHECK THIS
-    # radiusXl = 8; # CHECK THIS
+    radius0  = 0; # CHECK THIS
+    radiusXs = 2; # CHECK THIS
+    radiusS  = 8; # CHECK THIS
+    radiusM  = 8; # CHECK THIS
+    radiusL  = 8; # CHECK THIS
+    radiusXl = 8; # CHECK THIS
 
     # Spacing Scale (px)
-    # spaceNone = 0;  # CHECK THIS
-    # spaceXxxs = 4;  # CHECK THIS
-    # spaceXxs  = 4;  # CHECK THIS
-    # spaceXs   = 8;  # CHECK THIS
-    # spaceS    = 8;  # CHECK THIS
-    # spaceM    = 16; # CHECK THIS
-    # spaceL    = 24; # CHECK THIS
-    # spaceXl   = 32; # CHECK THIS
-    # spaceXxl  = 48; # CHECK THIS
-    # spaceXxxl = 64; # CHECK THIS
+    spaceNone = 0;  # CHECK THIS
+    spaceXxxs = 4;  # CHECK THIS
+    spaceXxs  = 4;  # CHECK THIS
+    spaceXs   = 8;  # CHECK THIS
+    spaceS    = 8;  # CHECK THIS
+    spaceM    = 16; # CHECK THIS
+    spaceL    = 24; # CHECK THIS
+    spaceXl   = 32; # CHECK THIS
+    spaceXxl  = 48; # CHECK THIS
+    spaceXxxl = 64; # CHECK THIS
 
     # Window Gaps & Active Window Border Thickness (px)
     # gapOuter   = 0;  # CHECK THIS
@@ -42,27 +42,27 @@ let
     frosted = "Off"; # CHECK THIS
 
     # Note: `frosted_*` flags use RON booleans ("true" | "false"), NOT integers.
-    # frostedWindows         = "false"; # CHECK THIS
-    # frostedSystemInterface = "false"; # CHECK THIS
-    # frostedPanel           = "false"; # CHECK THIS
-    # frostedApplets         = "false"; # CHECK THIS
-    # frostedMaximizedApps   = "false"; # CHECK THIS
+    frostedWindows         = "false"; # CHECK THIS
+    frostedSystemInterface = "false"; # CHECK THIS
+    frostedPanel           = "false"; # CHECK THIS
+    frostedApplets         = "false"; # CHECK THIS
+    frostedMaximizedApps   = "false"; # CHECK THIS
 
     # Note: `alpha_map` uses 0.0–1.0 floats for frosted glass transparency steps, NOT integers.
-    # alphaExtremelyLow   = "0.9";     # CHECK THIS
-    # alphaExtremelyLow2  = "0.87692"; # CHECK THIS
-    # alphaVeryLow        = "0.85385"; # CHECK THIS
-    # alphaVeryLow2       = "0.83076"; # CHECK THIS
-    # alphaLow            = "0.80769"; # CHECK THIS
-    # alphaLow2           = "0.78461"; # CHECK THIS
-    # alphaMedium         = "0.76154"; # CHECK THIS
-    # alphaMedium2        = "0.73846"; # CHECK THIS
-    # alphaHigh           = "0.71538"; # CHECK THIS
-    # alphaHigh2          = "0.69231"; # CHECK THIS
-    # alphaVeryHigh       = "0.66023"; # CHECK THIS
-    # alphaVeryHigh2      = "0.64615"; # CHECK THIS
-    # alphaExtremelyHigh  = "0.62308"; # CHECK THIS
-    # alphaExtremelyHigh2 = "0.6";     # CHECK THIS
+    alphaExtremelyLow   = "0.9";     # CHECK THIS
+    alphaExtremelyLow2  = "0.87692"; # CHECK THIS
+    alphaVeryLow        = "0.85385"; # CHECK THIS
+    alphaVeryLow2       = "0.83076"; # CHECK THIS
+    alphaLow            = "0.80769"; # CHECK THIS
+    alphaLow2           = "0.78461"; # CHECK THIS
+    alphaMedium         = "0.76154"; # CHECK THIS
+    alphaMedium2        = "0.73846"; # CHECK THIS
+    alphaHigh           = "0.71538"; # CHECK THIS
+    alphaHigh2          = "0.69231"; # CHECK THIS
+    alphaVeryHigh       = "0.66023"; # CHECK THIS
+    alphaVeryHigh2      = "0.64615"; # CHECK THIS
+    alphaExtremelyHigh  = "0.62308"; # CHECK THIS
+    alphaExtremelyHigh2 = "0.6";     # CHECK THIS
 
     # =========================================================================
     # HELPERS
