@@ -49,7 +49,7 @@
             greeter.enable = true;
         };
 
-        environemtn.noctalia.enable = true;
+        environment.noctalia.enable = true;
         environment.umbriel.enable = true;
 
         programs.firefox.enable = true;
