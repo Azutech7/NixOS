@@ -109,6 +109,14 @@ in
                     #### COLORS ####
                     // (prefixBuilder "cosmic/com.system76.CosmicTheme.Dark.Builder/v1")
                     // (prefixBuilder "cosmic/com.system76.CosmicTheme.Dark.Builder/v2");
+
+                    home.activation.reloadCosmicTheme = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+                        if ${pkgs.procps}/bin/pgrep -x cosmic-settings-daemon >/dev/null; then
+                            ${pkgs.procps}/bin/pkill -x cosmic-settings-daemon || true
+                            ${pkgs.util-linux}/bin/setsid -f cosmic-settings-daemon >/dev/null 2>&1 || true
+                        fi
+                    '';
+
             })
         ]
     );
