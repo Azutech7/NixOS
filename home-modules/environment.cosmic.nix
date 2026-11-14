@@ -36,11 +36,11 @@ let
     rgb = hex: rgba hex 1.0;
 
     # Flat Builder colors (mirrors COSMIC Settings -> Appearance)
-    builderColors = {
-        "accent".text = "Some(${rgb c.blue})";
+        builderColors = {
+        "accent".text = "Some(${rgb c.primary})";
         "bg_color".text = "Some(${rgb c.background})";
-        "primary_container_bg".text = "Some(${rgb c.primary})";
-        "secondary_container_bg".text = "Some(${rgb c.br_background})";
+        "primary_container_bg".text = "Some(${rgb c.br_background})";
+        "secondary_container_bg".text = "Some(${rgb c.selection})";
         "text_tint".text = "Some(${rgb c.foreground})";
         "neutral_tint".text = "Some(${rgb c.comment})";
         "success".text = "Some(${rgb c.green})";
