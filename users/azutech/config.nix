@@ -19,6 +19,9 @@
         # Extra
         #environment.cosmic.enable = true; <- broken basically
         vscodium.enable = true;
+
+        environment.umbriel.enable = true;
+        environment.noctalia.enable = true;
     };
 
     home.packages = with pkgs; [
