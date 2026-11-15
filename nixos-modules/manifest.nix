@@ -1,7 +1,6 @@
 { inputs, config, pkgs, lib, host, ... }: {
     imports = [
         # Flake
-        inputs.cosmic.nixosModules.default
         inputs.hyprland.nixosModules.default
         inputs.noctalia.nixosModules.default
         inputs.umbriel.nixosModules.default
