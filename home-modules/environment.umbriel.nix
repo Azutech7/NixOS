@@ -63,11 +63,11 @@
     "Mod+Shift+Up" = "window-move-up";
     "Mod+Shift+Right" = "window-move-right";
 
-    # --- Resize Windows ---
-    "Mod+Ctrl+Left" = "window-resize-left -50";
-    "Mod+Ctrl+Right" = "window-resize-right 50";
-    "Mod+Ctrl+Up" = "window-resize-up -50";
-    "Mod+Ctrl+Down" = "window-resize-down 50";
+    # --- Move Window to Next/Previous Workspace ---
+    "Mod+Ctrl+Down" = "window-move-to-workspace-next";
+    "Mod+Ctrl+Right" = "window-move-to-workspace-next";
+    "Mod+Ctrl+Up" = "window-move-to-workspace-previous";
+    "Mod+Ctrl+Left" = "window-move-to-workspace-previous";
 
     # --- Workspaces (Explicit 1-10) ---
     "Mod+1" = "workspace-switch 1";
