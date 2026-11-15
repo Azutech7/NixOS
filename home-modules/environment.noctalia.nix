@@ -53,49 +53,49 @@
                             sync_color_scheme = true;
                         };
 
-                        customPalettes."managed-theme" = { # Replace with custom colors later
+                        customPalettes."managed-theme" = {
                             name = "managed-theme";
                             dark = {
-                                primary = "#7aa2f7";
-                                on_primary = "#1a1b26";
-                                primary_container = "#283457";
-                                on_primary_container = "#c0caf5";
+                                primary = "#${config.modules.theme.color.primary}";
+                                on_primary = "#${config.modules.theme.color.background}";
+                                primary_container = "#${config.modules.theme.color.primary}";
+                                on_primary_container = "#${config.modules.theme.color.foreground}";
 
-                                secondary = "#bb9af7";
-                                on_secondary = "#1a1b26";
-                                secondary_container = "#3b2e58";
-                                on_secondary_container = "#e0af68";
+                                secondary = "#${config.modules.theme.color.primary}";
+                                on_secondary = "#${config.modules.theme.color.background}";
+                                secondary_container = "#${config.modules.theme.color.primary}";
+                                on_secondary_container = "#${config.modules.theme.color.primary}";
 
-                                tertiary = "#7dcfff";
-                                on_tertiary = "#1a1b26";
-                                tertiary_container = "#223b4d";
-                                on_tertiary_container = "#b4f9f8";
+                                tertiary = "#${config.modules.theme.color.primary}";
+                                on_tertiary = "#${config.modules.theme.color.background}";
+                                tertiary_container = "#${config.modules.theme.color.primary}";
+                                on_tertiary_container = "#${config.modules.theme.color.primary}";
 
-                                error = "#f7768e";
-                                on_error = "#1a1b26";
-                                error_container = "#4c222b";
-                                on_error_container = "#ff9e64";
+                                error = "#${config.modules.theme.color.error}";
+                                on_error = "#${config.modules.theme.color.background}";
+                                error_container = "#${config.modules.theme.color.error}";
+                                on_error_container = "#${config.modules.theme.color.error}";
 
-                                background = "#16161e";
-                                on_background = "#c0caf5";
-                                surface = "#1a1b26";
-                                on_surface = "#c0caf5";
-                                surface_variant = "#24283b";
-                                on_surface_variant = "#a9b1d6";
+                                background = "#${config.modules.theme.color.background}";
+                                on_background = "#${config.modules.theme.color.foreground}";
+                                surface = "#${config.modules.theme.color.background}";
+                                on_surface = "#${config.modules.theme.color.foreground}";
+                                surface_variant = "#${config.modules.theme.color.selection}";
+                                on_surface_variant = "#${config.modules.theme.color.foreground}";
 
-                                surface_container_lowest = "#13131a";
-                                surface_container_low = "#1a1b26";
-                                surface_container = "#1f2335";
-                                surface_container_high = "#292e42";
-                                surface_container_highest = "#343b58";
+                                surface_container_lowest = "#${config.modules.theme.color.background}";
+                                surface_container_low = "#${config.modules.theme.color.background}";
+                                surface_container = "#${config.modules.theme.color.background}";
+                                surface_container_high = "#${config.modules.theme.color.selection}";
+                                surface_container_highest = "#${config.modules.theme.color.selection}";
 
-                                outline = "#565f89";
-                                outline_variant = "#3b4261";
-                                shadow = "#000000";
-                                scrim = "#000000";
-                                inverse_surface = "#c0caf5";
-                                inverse_on_surface = "#1a1b26";
-                                inverse_primary = "#3d59a1";
+                                outline = "#${config.modules.theme.color.comment}";
+                                outline_variant = "#${config.modules.theme.color.comment}";
+                                shadow = "#${config.modules.theme.color.background}";
+                                scrim = "#${config.modules.theme.color.background}";
+                                inverse_surface = "#${config.modules.theme.color.foreground}";
+                                inverse_on_surface = "#${config.modules.theme.color.background}";
+                                inverse_primary = "#${config.modules.theme.color.primary}";
                             };
                         };
                     };
