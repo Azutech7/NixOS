@@ -22,6 +22,10 @@
                     honor_restored_maximize = false;
                 };
 
+                input = {
+                    focus_follows_cursor = true;
+                };
+
                 layout = {
                     mode = "dwindle";
                     gap = 8;

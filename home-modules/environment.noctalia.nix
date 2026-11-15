@@ -56,48 +56,97 @@
 
                     customPalettes."managed-theme" = {
                         version = 2;
-                        name = "managed-theme";
                         dark = {
                             primary = "#${config.modules.theme.color.primary}";
                             on_primary = "#${config.modules.theme.color.background}";
-                            primary_container = "#${config.modules.theme.color.primary}";
-                            on_primary_container = "#${config.modules.theme.color.foreground}";
-
                             secondary = "#${config.modules.theme.color.primary}";
                             on_secondary = "#${config.modules.theme.color.background}";
-                            secondary_container = "#${config.modules.theme.color.primary}";
-                            on_secondary_container = "#${config.modules.theme.color.primary}";
-
                             tertiary = "#${config.modules.theme.color.primary}";
-                            on_tertiary = "#${config.modules.theme.color.background}";
-                            tertiary_container = "#${config.modules.theme.color.primary}";
-                            on_tertiary_container = "#${config.modules.theme.color.primary}";
-
+                            on_tertiary = "#${config.modules.theme.color.foreground}";
                             error = "#${config.modules.theme.color.error}";
                             on_error = "#${config.modules.theme.color.background}";
-                            error_container = "#${config.modules.theme.color.error}";
-                            on_error_container = "#${config.modules.theme.color.error}";
-
-                            background = "#${config.modules.theme.color.background}";
-                            on_background = "#${config.modules.theme.color.foreground}";
                             surface = "#${config.modules.theme.color.background}";
                             on_surface = "#${config.modules.theme.color.foreground}";
-                            surface_variant = "#${config.modules.theme.color.selection}";
-                            on_surface_variant = "#${config.modules.theme.color.foreground}";
-
-                            surface_container_lowest = "#${config.modules.theme.color.background}";
-                            surface_container_low = "#${config.modules.theme.color.background}";
                             surface_container = "#${config.modules.theme.color.background}";
-                            surface_container_high = "#${config.modules.theme.color.selection}";
-                            surface_container_highest = "#${config.modules.theme.color.selection}";
-
-                            outline = "#${config.modules.theme.color.comment}";
+                            on_surface_variant = "#${config.modules.theme.color.foreground}";
                             outline_variant = "#${config.modules.theme.color.comment}";
                             shadow = "#${config.modules.theme.color.background}";
-                            scrim = "#${config.modules.theme.color.background}";
-                            inverse_surface = "#${config.modules.theme.color.foreground}";
-                            inverse_on_surface = "#${config.modules.theme.color.background}";
-                            inverse_primary = "#${config.modules.theme.color.primary}";
+                            hover = "#${config.modules.theme.color.primary}";
+                            on_hover = "#${config.modules.theme.color.foreground}";
+                            terminal = {
+                                normal = {
+                                    black = "#${config.modules.theme.color.background}";
+                                    red = "#${config.modules.theme.color.error}";
+                                    green = "#${config.modules.theme.color.primary}";
+                                    yellow = "#${config.modules.theme.color.primary}";
+                                    blue = "#${config.modules.theme.color.primary}";
+                                    magenta = "#${config.modules.theme.color.primary}";
+                                    cyan = "#${config.modules.theme.color.primary}";
+                                    white = "#${config.modules.theme.color.foreground}";
+                                };
+                                bright = {
+                                    black = "#${config.modules.theme.color.comment}";
+                                    red = "#${config.modules.theme.color.error}";
+                                    green = "#${config.modules.theme.color.primary}";
+                                    yellow = "#${config.modules.theme.color.primary}";
+                                    blue = "#${config.modules.theme.color.primary}";
+                                    magenta = "#${config.modules.theme.color.primary}";
+                                    cyan = "#${config.modules.theme.color.primary}";
+                                    white = "#${config.modules.theme.color.foreground}";
+                                };
+                                foreground = "#${config.modules.theme.color.foreground}";
+                                background = "#${config.modules.theme.color.background}";
+                                selection_fg = "#${config.modules.theme.color.foreground}";
+                                selection_bg = "#${config.modules.theme.color.selection}";
+                                cursor_text = "#${config.modules.theme.color.background}";
+                                cursor = "#${config.modules.theme.color.primary}";
+                            };
+                        };
+                        light = {
+                            primary = "#${config.modules.theme.color.primary}";
+                            on_primary = "#${config.modules.theme.color.background}";
+                            secondary = "#${config.modules.theme.color.primary}";
+                            on_secondary = "#${config.modules.theme.color.background}";
+                            tertiary = "#${config.modules.theme.color.primary}";
+                            on_tertiary = "#${config.modules.theme.color.foreground}";
+                            error = "#${config.modules.theme.color.error}";
+                            on_error = "#${config.modules.theme.color.background}";
+                            surface = "#${config.modules.theme.color.background}";
+                            on_surface = "#${config.modules.theme.color.foreground}";
+                            surface_container = "#${config.modules.theme.color.background}";
+                            on_surface_variant = "#${config.modules.theme.color.foreground}";
+                            outline_variant = "#${config.modules.theme.color.comment}";
+                            shadow = "#${config.modules.theme.color.background}";
+                            hover = "#${config.modules.theme.color.primary}";
+                            on_hover = "#${config.modules.theme.color.foreground}";
+                            terminal = {
+                                normal = {
+                                    black = "#${config.modules.theme.color.background}";
+                                    red = "#${config.modules.theme.color.error}";
+                                    green = "#${config.modules.theme.color.primary}";
+                                    yellow = "#${config.modules.theme.color.primary}";
+                                    blue = "#${config.modules.theme.color.primary}";
+                                    magenta = "#${config.modules.theme.color.primary}";
+                                    cyan = "#${config.modules.theme.color.primary}";
+                                    white = "#${config.modules.theme.color.foreground}";
+                                };
+                                bright = {
+                                    black = "#${config.modules.theme.color.comment}";
+                                    red = "#${config.modules.theme.color.error}";
+                                    green = "#${config.modules.theme.color.primary}";
+                                    yellow = "#${config.modules.theme.color.primary}";
+                                    blue = "#${config.modules.theme.color.primary}";
+                                    magenta = "#${config.modules.theme.color.primary}";
+                                    cyan = "#${config.modules.theme.color.primary}";
+                                    white = "#${config.modules.theme.color.foreground}";
+                                };
+                                foreground = "#${config.modules.theme.color.foreground}";
+                                background = "#${config.modules.theme.color.background}";
+                                selection_fg = "#${config.modules.theme.color.foreground}";
+                                selection_bg = "#${config.modules.theme.color.selection}";
+                                cursor_text = "#${config.modules.theme.color.background}";
+                                cursor = "#${config.modules.theme.color.primary}";
+                            };
                         };
                     };
                 };
