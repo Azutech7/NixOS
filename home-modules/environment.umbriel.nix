@@ -8,17 +8,23 @@
             enable = true;
 
             settings = {
-                mod_key = "Super";
+                # Set the modifier explicitly at the top level
+                modifier = "super";
                 
-                autostart = [
-                    "noctalia"
+                # Correct key for starting applications on boot
+                spawn_at_startup = [
+                    [ "noctalia" ]
                 ];
 
-                xwayland = true;
+                # xwayland must be configured as a subtable or attribute set
+                xwayland = {
+                    enabled = true;
+                };
 
                 output."*" = {
                     scale = 1.0;
-                    vrr = "on-demand";
+                    # Valid vrr options in Umbriel: "disabled", "always", "fullscreen", or "fullscreen_any"
+                    vrr = "fullscreen";
                     layout.mode = "dwindle";
 
                     workspaces = "dynamic";
@@ -27,14 +33,14 @@
                 };
 
                 keybinds = {
+                    # Umbriel action names use snake_case and correct verbs
                     "Mod+R" = "spawn noctalia msg launcher-toggle";
                     "Mod+T" = "spawn kitty";
-                    #"Mod+T" = { action = "spawn kitty"; repeat = false; };
-                    "Mod+Q" = "window-close";
-                    "Mod+F" = "window-fullscreen";
-                    "Mod+Left" = "window-focus-left";
-                    "Mod+Right" = "window-focus-right";
-                    "Mod+V" = "window-toggle-floating";
+                    "Mod+Q" = "close_window";
+                    "Mod+F" = "fullscreen_window";
+                    "Mod+Left" = "focus_window_left";
+                    "Mod+Right" = "focus_window_right";
+                    "Mod+V" = "toggle_floating";
                 };
             };
         };
