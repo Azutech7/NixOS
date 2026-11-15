@@ -26,7 +26,7 @@
             })
 
             (lib.mkIf config.modules.environment.noctalia.umbriel-support.enable {
-                programs.noctalia.settings."theme.templates" = {
+                programs.noctalia.settings.theme.templates = {
                     enable_builtin_templates = true;
                     builtin_ids = [ "umbriel" ];
                 };
@@ -36,7 +36,7 @@
                 modules.environment.noctalia.theme-support.enable = lib.mkDefault true;
             })
 
-            (lib.mkIf config.modules.environment.theme-support.enable {
+            (lib.mkIf config.modules.environment.noctalia.theme-support.enable {
                 programs.noctalia = {
                     settings = {
                         wallpaper = {
@@ -102,7 +102,7 @@
                 };
             })
 
-            (lib.mkIf config.modules.environment.check-config {
+            (lib.mkIf config.modules.environment.noctalia.check-config {
                 programs.noctalia.checkConfig = true;
             })
         ]
