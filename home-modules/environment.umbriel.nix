@@ -47,8 +47,8 @@
                     "*" = {
                         scale = 1.0;
                         vrr = "fullscreen";
-                        workspaces = "fixed";
-                        min_workspaces = 10;
+                        workspaces = 10;
+                        #min_workspaces = 10;
                         workspace_axis = "vertical";
                     };
                 };
