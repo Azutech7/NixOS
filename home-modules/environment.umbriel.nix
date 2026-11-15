@@ -8,15 +8,19 @@
             enable = true;
 
             settings = {
-                # Some versions of Umbriel expect 'mod' or 'mod_key' depending on the schema version. 
-                # If 'mod_key' threw an unknown key, check your local dump-default for the modifier key name.
-                mod_key = "Super";
-                
-                autostart = [
-                    "noctalia"
-                ];
-
-                xwayland = true;
+                general = {
+                    mod_key = "Super";
+                    autostart = [ "noctalia" ];
+                    xwayland = true;
+                    xwayland_native_resolution = false;
+                    xwayland_xsettings = true;
+                    xwayland_primary_output = "";
+                    nvidia_sync_workaround = true;
+                    show_cheatsheet = true;
+                    focus_on_activate = false;
+                    attach_modal_dialogs = true;
+                    honor_restored_maximize = false;
+                };
 
                 output."*" = {
                     scale = 1.0;
@@ -30,7 +34,6 @@
                 keybinds = {
                     "Mod+R" = "spawn noctalia msg launcher-toggle";
                     "Mod+T" = "spawn kitty";
-                    # Use the actions that matched your local version or fallback to generic exec
                     "Mod+Q" = "close_window";
                     "Mod+F" = "fullscreen_window";
                     "Mod+Left" = "focus_window_left";
