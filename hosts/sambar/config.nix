@@ -6,6 +6,8 @@
 
     modules = {
         common = {
+            accept-flake-config.enable = true;
+
             audio.pipewire.enable = true;
 
             boot.enable = true;

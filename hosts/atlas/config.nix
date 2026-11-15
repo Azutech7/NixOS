@@ -28,6 +28,8 @@
             security.network.adguard-home.enable = true;
 
             storage.btrfs.auto-scrub.enable = true;
+
+            accept-flake-config.enable = true;
         };
 
         services.aiostreams.enable = true;

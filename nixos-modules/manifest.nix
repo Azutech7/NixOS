@@ -6,6 +6,7 @@
         inputs.umbriel.nixosModules.default
 
         # Files
+        ./common.accept-flake-config.nix
         ./common.audio.pipewire.nix
         ./common.boot.nix
         ./common.boot.plymouth.nix
