@@ -8,6 +8,10 @@
             enable = true;
 
             settings = {
+                include.optional = {
+                    files = [ "${config.home.homeDirectory}/.config/umbriel/noctalia.toml" ];
+                };
+
                 general = {
                     mod_key = "Super";
                     autostart = [ "noctalia" ];
@@ -43,7 +47,7 @@
                     "*" = {
                         scale = 1.0;
                         vrr = "fullscreen";
-                        workspaces = "dynamic";
+                        workspaces = "fixed";
                         min_workspaces = 10;
                         workspace_axis = "vertical";
                     };
@@ -132,9 +136,8 @@
                     "XF86KbdBrightnessDown" = "spawn brightnessctl --device='*::kbd_backlight' set 10%-";
 
                     # --- Screenshots ---
-                    "Print" = "spawn sh -c 'grim -g \"$(slurp)\" - | wl-copy'";
-                    "Shift+Print" = "spawn sh -c 'grim - | wl-copy'";
-                    "Mod+Shift+S" = "spawn sh -c 'grim -g \"$(slurp)\" - | wl-copy'";
+                    "Mod+P" = "spawn sh -c 'grim -g \"$(slurp)\" | wl-copy'";
+                    "Mod+Shift+P" = "spawn sh -c 'grim | wl-copy'";
 
                     # --- Compositor Session ---
                     "Mod+Slash" = "cheatsheet-toggle";

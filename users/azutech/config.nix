@@ -30,6 +30,8 @@
         prismlauncher
         feishin
         heroic
+        grim
+        slurp
     ];
 
     services.kdeconnect = {
