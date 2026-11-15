@@ -67,12 +67,15 @@
     ];
 
     nixpkgs.overlays = [
-        (final: prev: {
-            cosmic-edit = prev.cosmic-edit.overrideAttrs (old: {
-            src = old.src.override {
-                outputHash = "sha256-GN1Zts+v3ARcrkN+ZkMUSGNOAlIhXSYWRtWAyqUfUrY=";
-            };
-            });
-        })
-    ];
+  (final: prev: {
+    cosmic-edit = prev.cosmic-edit.overrideAttrs (old: {
+      src = prev.fetchFromGitHub {
+        owner = "pop-os";
+        repo = "cosmic-edit";
+        rev = "020342119d0ac4d362f7642a97eecade3d766177"; # match the expected revision
+        hash = "sha256-GN1Zts+v3ARcrkN+ZkMUSGNOAlIhXSYWRtWAyqUfUrY=";
+      };
+    });
+  })
+];
 }
