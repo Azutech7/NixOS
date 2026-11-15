@@ -24,7 +24,7 @@
 
                 input = {
                     focus = {
-                        follows_mouse = true;
+                        follows_mouse = "always";
                         follows_mouse_max_scroll = 0.0;
                         hover_raises = false;
                     };
