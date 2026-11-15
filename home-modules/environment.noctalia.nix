@@ -105,6 +105,15 @@
             (lib.mkIf config.modules.environment.noctalia.check-config {
                 programs.noctalia.checkConfig = true;
             })
+
+            {
+                home.activation.reloadNoctaliaTheme = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+                    if command -v noctalia >/dev/null 2>&1; then
+                        $DRY_RUN_CMD noctalia msg config-reload || true
+                        $DRY_RUN_CMD noctalia msg templates-apply || true
+                    fi
+                '';
+            }
         ]
 
     );
