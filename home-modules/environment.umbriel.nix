@@ -8,34 +8,29 @@
             enable = true;
 
             settings = {
-                # Set the modifier explicitly at the top level
-                modifier = "super";
+                # Some versions of Umbriel expect 'mod' or 'mod_key' depending on the schema version. 
+                # If 'mod_key' threw an unknown key, check your local dump-default for the modifier key name.
+                mod_key = "Super";
                 
-                # Correct key for starting applications on boot
-                spawn_at_startup = [
-                    [ "noctalia" ]
+                autostart = [
+                    "noctalia"
                 ];
 
-                # xwayland must be configured as a subtable or attribute set
-                xwayland = {
-                    enabled = true;
-                };
+                xwayland = true;
 
                 output."*" = {
                     scale = 1.0;
-                    # Valid vrr options in Umbriel: "disabled", "always", "fullscreen", or "fullscreen_any"
                     vrr = "fullscreen";
                     layout.mode = "dwindle";
-
                     workspaces = "dynamic";
                     min_workspaces = 10;
                     workspace_axis = "vertical";
                 };
 
                 keybinds = {
-                    # Umbriel action names use snake_case and correct verbs
                     "Mod+R" = "spawn noctalia msg launcher-toggle";
                     "Mod+T" = "spawn kitty";
+                    # Use the actions that matched your local version or fallback to generic exec
                     "Mod+Q" = "close_window";
                     "Mod+F" = "fullscreen_window";
                     "Mod+Left" = "focus_window_left";
