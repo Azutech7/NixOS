@@ -1,9 +1,5 @@
 { inputs, config, pkgs, lib, host, ... }: {
 
-    imports = [
-        inputs.cosmic.nixosModules.default
-    ];
-
     options.modules.environment.cosmic = {
         enable = lib.mkEnableOption "environment.cosmic";
 

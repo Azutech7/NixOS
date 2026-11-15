@@ -1,9 +1,5 @@
 { inputs, config, pkgs, lib, host, ... }: {
 
-    imports = [
-        inputs.umbriel.nixosModules.default
-    ];
-
     options.modules.environment.umbriel = {
         enable = lib.mkEnableOption "environment.umbriel";
 

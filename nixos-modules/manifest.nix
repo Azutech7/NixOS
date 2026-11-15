@@ -1,5 +1,12 @@
 { ... }: {
     imports = [
+        # Flake
+        inputs.cosmic.nixosModules.default
+        inputs.hyprland.nixosModules.default
+        inputs.noctalia.nixosModules.default
+        inputs.umbriel.nixosModules.default
+
+        # Files
         ./common.audio.pipewire.nix
         ./common.boot.nix
         ./common.boot.plymouth.nix

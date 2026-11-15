@@ -1,9 +1,5 @@
 { inputs, config, lib, pkgs, ... }: {
 
-    imports = [
-        inputs.noctalia.homeModules.default
-    ];
-
     options.modules.environment.noctalia = {
         enable = lib.mkEnableOption "environment.noctalia";
 

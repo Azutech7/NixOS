@@ -1,5 +1,10 @@
 { ... }: {
     imports = [
+        # Flake
+        inputs.noctalia.homeModules.default
+        inputs.umbriel.homeModules.default
+
+        # Files
         ./bash.nix
         ./btop.nix
         ./cava.nix

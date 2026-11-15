@@ -1,9 +1,5 @@
 { inputs, config, lib, pkgs, ... }: {
 
-    imports = [
-        inputs.umbriel.homeModules.default
-    ];
-
     options.modules.environment.umbriel.enable = lib.mkEnableOption "environment.umbriel";
 
     config = lib.mkIf config.modules.environment.umbriel.enable {

@@ -1,9 +1,5 @@
 { inputs, config, pkgs, lib, host, ... }: {
 
-    imports = [
-        inputs.noctalia.nixosModules.default
-    ];
-
     options.modules.environment.noctalia = {
         enable = lib.mkEnableOption "environment.noctalia";
 
