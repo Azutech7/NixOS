@@ -65,26 +65,4 @@
         ./services.slskd.nix
         ./services.soularr.nix
     ];
-
-    nixpkgs.overlays = [
-  (final: prev: {
-    cosmic-edit = prev.cosmic-edit.overrideAttrs (old: {
-      src = prev.fetchFromGitHub {
-        owner = "pop-os";
-        repo = "cosmic-edit";
-        rev = "020342119d0ac4d362f7642a97eecade3d766177"; 
-        hash = "sha256-GN1Zts+v3ARcrkN+ZkMUSGNOAlIhXSYWRtWAyqUfUrY=";
-      };
-    });
-
-    cosmic-greeter = prev.cosmic-greeter.overrideAttrs (old: {
-      src = prev.fetchFromGitHub {
-        owner = "pop-os";
-        repo = "cosmic-greeter";
-        rev = "02479e0bfde486827f3ba9b1424c5208f23fcf69"; # match your input version tag or commit if needed, or use old.src.rev if it's correct
-        hash = "sha256-ERytoauws6FDJNXItflOE2MwjxwariiO8RXU1x1chkE=";
-      };
-    });
-  })
-];
 }
