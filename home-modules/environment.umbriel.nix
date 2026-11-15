@@ -67,10 +67,10 @@
                     "Mod+Shift+Down" = "window-move-down";
                     "Mod+Shift+Up" = "window-move-up";
                     "Mod+Shift+Right" = "window-move-right";
-                    "Mod+Shift+H" = "window-move-left";
-                    "Mod+Shift+J" = "window-move-down";
-                    "Mod+Shift+K" = "window-move-up";
-                    "Mod+Shift+L" = "window-move-right";
+                    # "Mod+Shift+H" = "window-move-left";
+                    # "Mod+Shift+J" = "window-move-down";
+                    # "Mod+Shift+K" = "window-move-up";
+                    # "Mod+Shift+L" = "window-move-right";
 
                     # --- Resize Windows ---
                     "Mod+Ctrl+Left" = "window-resize-width -5%";
