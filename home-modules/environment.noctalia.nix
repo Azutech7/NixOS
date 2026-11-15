@@ -16,7 +16,7 @@
 
     config = lib.mkIf config.modules.environment.noctalia.enable (
 
-        lib.mkMerge [2
+        lib.mkMerge [
             {
                 programs.noctalia.enable = true;
             }
