@@ -76,9 +76,8 @@
         engrampa
     ];
 
-    services.kdeconnect = {
-        enable = true;
-    };
+    programs.kdeconnect.enable = true;
+
 
     users.users.azutech = {
         isNormalUser = true;
