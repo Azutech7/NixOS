@@ -22,23 +22,27 @@
                     honor_restored_maximize = false;
                 };
 
-                output."*" = {
-                    scale = 1.0;
-                    vrr = "fullscreen";
-                    layout.mode = "dwindle";
-                    workspaces = "dynamic";
-                    min_workspaces = 10;
-                    workspace_axis = "vertical";
+                output = {
+                    "*" = {
+                        scale = 1.0;
+                        vrr = "fullscreen";
+                        workspaces = "dynamic";
+                        min_workspaces = 10;
+                        workspace_axis = "vertical";
+                        layout = {
+                            mode = "dwindle";
+                        };
+                    };
                 };
 
                 keybinds = {
                     "Mod+R" = "spawn noctalia msg launcher-toggle";
                     "Mod+T" = "spawn kitty";
-                    "Mod+Q" = "close_window";
-                    "Mod+F" = "fullscreen_window";
-                    "Mod+Left" = "focus_window_left";
-                    "Mod+Right" = "focus_window_right";
-                    "Mod+V" = "toggle_floating";
+                    "Mod+Q" = "window-close";
+                    "Mod+F" = "window-toggle-fullscreen";
+                    "Mod+Left" = "window-focus-left";
+                    "Mod+Right" = "window-focus-right";
+                    "Mod+V" = "window-toggle-floating";
                 };
             };
         };
