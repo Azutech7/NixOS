@@ -34,12 +34,6 @@
         slurp
     ];
 
-    services.kdeconnect = {
-        enable = true;
-        indicator = true;
-    };
-
-
     programs.git.enable = true;
 	programs.git.settings = {
 		user.name = "Azutech7";

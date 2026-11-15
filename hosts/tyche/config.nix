@@ -76,6 +76,10 @@
         engrampa
     ];
 
+    services.kdeconnect = {
+        enable = true;
+    };
+
     users.users.azutech = {
         isNormalUser = true;
         group = "azutech";
