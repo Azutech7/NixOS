@@ -65,4 +65,14 @@
         ./services.slskd.nix
         ./services.soularr.nix
     ];
+
+    nixpkgs.overlays = [
+        (final: prev: {
+            cosmic-edit = prev.cosmic-edit.overrideAttrs (old: {
+            src = old.src.override {
+                outputHash = "sha256-GN1Zts+v3ARcrkN+ZkMUSGNOAlIhXSYWRtWAyqUfUrY=";
+            };
+            });
+        })
+    ];
 }
