@@ -76,9 +76,6 @@
         engrampa
     ];
 
-    programs.kdeconnect.enable = true;
-    networking.firewall.checkReversePath = "loose";
-
     users.users.azutech = {
         isNormalUser = true;
         group = "azutech";
