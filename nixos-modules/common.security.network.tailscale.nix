@@ -16,6 +16,7 @@
         # 1. Base Tailscale service
         (lib.mkIf config.modules.common.security.network.tailscale.enable {
             services.tailscale.enable = true;
+            trustedInterfaces = [ "tailscale0" ];
         })
 
         # 2. Host-specific routing & firewall settings | Mandatorily enables modules.common.security.network.tailscale.enable
@@ -24,7 +25,6 @@
             modules.common.security.network.tailscale.enable = lib.mkForce true;
 
             networking.firewall = {
-                trustedInterfaces = [ "tailscale0" ];
                 allowedUDPPorts = [ 41641 ];
             };
 
