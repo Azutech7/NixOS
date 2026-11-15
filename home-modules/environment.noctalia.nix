@@ -55,6 +55,7 @@
 
                         customPalettes."managed-theme" = {
                             name = "managed-theme";
+                            version = 2;
                             dark = {
                                 primary = "#${config.modules.theme.color.primary}";
                                 on_primary = "#${config.modules.theme.color.background}";
