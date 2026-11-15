@@ -51,23 +51,23 @@
     "Mod+V" = "window-toggle-floating";
     "Mod+C" = "window-center";
 
-    # --- Focus Movement (Arrows only) ---
+    # --- Focus Movement ---
     "Mod+Left" = "window-focus-left";
     "Mod+Down" = "window-focus-down";
     "Mod+Up" = "window-focus-up";
     "Mod+Right" = "window-focus-right";
 
-    # --- Move / Swap Windows (Arrows only) ---
+    # --- Move / Swap Windows ---
     "Mod+Shift+Left" = "window-move-left";
     "Mod+Shift+Down" = "window-move-down";
     "Mod+Shift+Up" = "window-move-up";
     "Mod+Shift+Right" = "window-move-right";
 
     # --- Resize Windows ---
-    "Mod+Ctrl+Left" = "window-resize -50 0";
-    "Mod+Ctrl+Right" = "window-resize 50 0";
-    "Mod+Ctrl+Up" = "window-resize 0 -50";
-    "Mod+Ctrl+Down" = "window-resize 0 50";
+    "Mod+Ctrl+Left" = "window-resize-left -50";
+    "Mod+Ctrl+Right" = "window-resize-right 50";
+    "Mod+Ctrl+Up" = "window-resize-up -50";
+    "Mod+Ctrl+Down" = "window-resize-down 50";
 
     # --- Workspaces (Explicit 1-10) ---
     "Mod+1" = "workspace-switch 1";
@@ -94,8 +94,8 @@
     "Mod+Shift+0" = "window-move-to-workspace 10";
 
     # --- Cycle Workspaces & Monitors ---
-    "Mod+Page_Down" = "workspace-switch-next";
-    "Mod+Page_Up" = "workspace-switch-previous";
+    "Mod+Page_Down" = "workspace-next";
+    "Mod+Page_Up" = "workspace-previous";
     "Mod+Comma" = "output-focus-previous";
     "Mod+Period" = "output-focus-next";
     "Mod+Shift+Comma" = "window-move-to-output-previous";
