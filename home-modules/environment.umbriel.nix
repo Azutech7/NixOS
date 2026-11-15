@@ -23,7 +23,11 @@
                 };
 
                 input = {
-                    focus_follows_cursor = true;
+                    focus = {
+                        follows_mouse = true;
+                        follows_mouse_max_scroll = 0.0;
+                        hover_raises = false;
+                    };
                 };
 
                 layout = {
