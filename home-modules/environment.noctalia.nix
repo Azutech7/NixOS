@@ -52,6 +52,13 @@
                             custom_palette = "managed-theme";
                             sync_color_scheme = true;
                         };
+
+                        shell = {
+                            screenshot = {
+                                save_to_file = true;
+                                directory = config.xdg.userDirs.extraConfig.XDG_SCREENSHOTS_DIR;
+                            };
+                        };
                     };
 
                     customPalettes."managed-theme" = {
