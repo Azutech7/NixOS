@@ -136,8 +136,10 @@
                     "XF86KbdBrightnessDown" = "spawn brightnessctl --device='*::kbd_backlight' set 10%-";
 
                     # --- Screenshots ---
-                    "Mod+P" = "spawn sh -c 'grim -g \"$(slurp)\" | wl-copy'";
-                    "Mod+Shift+P" = "spawn sh -c 'grim | wl-copy'";
+                    # "Mod+P" = "spawn sh -c 'grim -g \"$(slurp)\" | wl-copy'";
+                    # "Mod+Shift+P" = "spawn sh -c 'grim | wl-copy'";
+                    "Mod+P" = "spawn noctalia msg screenshot-region --no-annotate";
+                    "Mod+Shift+P" = "spawn noctalia msg screenshot-region --annotate"
 
                     # --- Compositor Session ---
                     "Mod+Slash" = "cheatsheet-toggle";
