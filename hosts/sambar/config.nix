@@ -52,6 +52,9 @@
             greeter.enable = true;
         };
 
+        environment.noctalia.enable = true;
+        environment.umbriel.enable = true;
+
         programs.firefox.enable = true;
         programs.flatpak.enable = true;
         programs.java.enable = true;
