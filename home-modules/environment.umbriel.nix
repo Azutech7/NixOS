@@ -139,7 +139,7 @@
                     # "Mod+P" = "spawn sh -c 'grim -g \"$(slurp)\" | wl-copy'";
                     # "Mod+Shift+P" = "spawn sh -c 'grim | wl-copy'";
                     "Mod+P" = "spawn noctalia msg screenshot-region --no-annotate";
-                    "Mod+Shift+P" = "spawn noctalia msg screenshot-region --annotate"
+                    "Mod+Shift+P" = "spawn noctalia msg screenshot-region --annotate";
 
                     # --- Compositor Session ---
                     "Mod+Slash" = "cheatsheet-toggle";
