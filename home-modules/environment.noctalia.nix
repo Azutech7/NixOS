@@ -56,7 +56,7 @@
                         shell = {
                             screenshot = {
                                 save_to_file = true;
-                                directory = config.xdg.userDirs.extraConfig.XDG_SCREENSHOTS_DIR;
+                                directory = "${config.home.homeDirectory}/Pictures/Screenshots";
                             };
                         };
                     };
