@@ -6,7 +6,15 @@
 
         powerManagement.enable = true;
         services.thermald.enable = true;
-        #services.tlp.enable = true; <- fix this
+        
+        services.tlp = {
+            enable = true;
+            pd.enable = true;
+        };
+
+        services.power-profiles-daemon.enable = false;
+
+        services.upower.enable = true;
 
     };
 }
