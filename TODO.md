@@ -18,7 +18,7 @@
 - [ ] Add automatic theme management for 3rd party programs with noctalia
 - [ ] Have atlas host feishin web client
 
-# DOING SOON
+# DOING SOON:
 
 - [ ] VERY basic nvf
 - [ ] Declartivive user-level flatpak management
