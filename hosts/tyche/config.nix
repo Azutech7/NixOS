@@ -88,4 +88,6 @@
 
     system.stateVersion = "26.05";
 
+    config.modules.programs.firefox.disable-libadwaita-theming = true;
+
 }
