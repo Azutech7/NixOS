@@ -29,6 +29,7 @@
         umbriel.url = "github:noctalia-dev/umbriel";
         noctalia.url = "github:noctalia-dev/noctalia";
         nvf.url = "github:notashelf/nvf";
+        nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
         nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
         nix-vscode-extensions.inputs.nixpkgs.follows = "nixpkgs";
     };

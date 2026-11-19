@@ -4,6 +4,7 @@
         inputs.noctalia.homeModules.default
         inputs.umbriel.homeModules.default
         inputs.nvf.homeModules.default
+        inputs.homeModules.nix-flatpak
 
         # Files
         ./bash.nix
@@ -22,6 +23,10 @@
         ./kitty.nix
         ./mako.nix
         ./micro.nix
+        ./programs.flatpak.nix
+        ./programs.flatpak.sober.nix
+        ./programs.libreoffice.nix
+        ./programs.nvf.nix
         ./spotify-player.nix
         ./theme.nix
         ./vesktop.nix

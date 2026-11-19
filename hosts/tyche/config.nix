@@ -58,8 +58,6 @@
         programs.flatpak.enable = true;
         programs.java.enable = true;
         programs.steam.enable = true;
-
-        programs.firefox.disable-libadwaita-theming = false;
     };
 
     environment.systemPackages = with pkgs; [

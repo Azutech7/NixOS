@@ -1,8 +1,12 @@
-{ inputs, config, lib, pkgs, ... }:
+{ inputs, config, lib, pkgs, ... }: {
 
-{
+  options.modules.programs.nvf = {
+    enable = lib.mkEnableOption "programs.nvf";
+  };
 
-  programs.nvf = {
+  config = lib.mkIf config.modules.programs.nvf.enable {
+
+programs.nvf = {
     enable = true;
     enableManpages = true;
 
@@ -82,5 +86,7 @@
       };
       utility.diffview-nvim.enable = true;
     };
+  };
+
   };
 }

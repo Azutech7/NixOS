@@ -22,6 +22,12 @@
 
         environment.umbriel.enable = true;
         environment.noctalia.enable = true;
+
+        programs.nvf.enable = true;
+        programs.libreoffice.enable = true;
+
+        programs.flatpak.enable = true;
+        programs.flatpak.sober.enable = true;
     };
 
     home.packages = with pkgs; [
@@ -33,11 +39,6 @@
         grim
         slurp
     ];
-
-    programs.libreoffice = {
-        enable = true;
-    };
-
 
     programs.git.enable = true;
 	programs.git.settings = {

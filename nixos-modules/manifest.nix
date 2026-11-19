@@ -5,6 +5,7 @@
         inputs.noctalia.nixosModules.default
         inputs.umbriel.nixosModules.default
         inputs.nvf.nixosModules.default
+        inputs.nixosModules.nix-flatpak
 
         # Files
         ./common.accept-flake-config.nix
