@@ -17,6 +17,7 @@
 - [x] Make a system module for "nix.settings.accept-flake-config = true;"
 - [ ] Add automatic theme management for 3rd party programs with noctalia
 - [ ] Have atlas host feishin web client
+- [ ] Have atlas host a hydra instance for this repo
 
 # DOING SOON:
 
