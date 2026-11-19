@@ -16,3 +16,13 @@
 - [ ] Move some more host-level stuff like the system state version into the flake
 - [ ] Make a system module for "nix.settings.accept-flake-config = true;"
 - [ ] Add automatic theme management for 3rd party programs with noctalia
+- [ ] Have atlas host feishin web client
+
+# DOING SOON
+
+- [ ] VERY basic nvf
+- [ ] Declartivive user-level flatpak management
+    - [ ] Sober integration
+    - [ ] AIOStreams integration
+- [ ] Re-enable libadwaita stuff (mostly for Firefox)
+- [ ] Libre Office user-level module
