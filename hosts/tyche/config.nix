@@ -58,6 +58,8 @@
         programs.flatpak.enable = true;
         programs.java.enable = true;
         programs.steam.enable = true;
+
+        programs.firefox.disable-libadwaita-theming = true;
     };
 
     environment.systemPackages = with pkgs; [
@@ -87,7 +89,5 @@
     time.timeZone = "America/Los_Angeles";
 
     system.stateVersion = "26.05";
-
-    config.modules.programs.firefox.disable-libadwaita-theming = true;
 
 }
