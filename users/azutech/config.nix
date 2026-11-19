@@ -34,6 +34,11 @@
         slurp
     ];
 
+    programs.libreoffice = {
+        enable = true;
+    };
+
+
     programs.git.enable = true;
 	programs.git.settings = {
 		user.name = "Azutech7";
