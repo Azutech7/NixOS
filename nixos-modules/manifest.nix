@@ -4,6 +4,7 @@
         inputs.hyprland.nixosModules.default
         inputs.noctalia.nixosModules.default
         inputs.umbriel.nixosModules.default
+        inputs.nvf.nixosModules.default
 
         # Files
         ./common.accept-flake-config.nix

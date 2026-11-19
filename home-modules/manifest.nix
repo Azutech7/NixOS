@@ -3,6 +3,7 @@
         # Flake
         inputs.noctalia.homeModules.default
         inputs.umbriel.homeModules.default
+        inputs.nvf.homeModules.default
 
         # Files
         ./bash.nix
