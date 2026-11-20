@@ -27,3 +27,4 @@
     - [ ] AIOStreams integration <- find alt.
 - [x] Re-enable libadwaita stuff (mostly for Firefox)
 - [x] Libre Office user-level module
+- [ ] tailscale_auth and Caddy integration
