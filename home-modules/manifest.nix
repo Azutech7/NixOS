@@ -4,7 +4,7 @@
         inputs.noctalia.homeModules.default
         inputs.umbriel.homeModules.default
         inputs.nvf.homeModules.default
-        inputs.homeModules.nix-flatpak
+        inputs.nix-flatpak.homeModules.default
 
         # Files
         ./bash.nix
