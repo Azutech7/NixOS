@@ -42,7 +42,7 @@
 
     programs.git.enable = true;
 	programs.git.settings = {
-		user.name = "Azutech7";
+		user.name = "Mason Heuberger (Azutech, Azutech7)";
 		user.email = "masonheuberger@gmail.com";
 	};
 
