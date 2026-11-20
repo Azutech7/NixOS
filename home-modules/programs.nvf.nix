@@ -1,4 +1,19 @@
-{ inputs, config, lib, pkgs, ... }: {
+{ inputs, config, lib, pkgs, ... }: 
+
+let
+  selenized-official = pkgs.vimUtils.buildVimPlugin {
+    pname = "selenized-vim";
+    version = "unstable";
+    src = pkgs.fetchFromGitHub {
+      owner = "jan-warchol";
+      repo = "selenized";
+      rev = "master";
+      hash = "sha256-gS+LdNHGjai4EJXmJXORbWSY2vTxdL9w89HMR+sNldY=";
+    };
+    sourceRoot = "source/editors/vim";
+  };
+in
+{
 
   options.modules.programs.nvf = {
     enable = lib.mkEnableOption "programs.nvf";
@@ -7,10 +22,22 @@
   config = lib.mkIf config.modules.programs.nvf.enable {
 
 programs.nvf = {
+
     enable = true;
     enableManpages = true;
 
     settings.vim = {
+
+extraPlugins = {
+  selenized = {
+    package = selenized-official;
+    setup = ''
+      vim.o.background = "dark"
+      vim.cmd.colorscheme("selenized_bw")
+    '';
+  };
+};
+
       # Aliases
       viAlias = true;
       vimAlias = true;
@@ -39,8 +66,8 @@ programs.nvf = {
 
       # Theme
       theme = {
-        enable = true;
-        name = "catppuccin";
+        enable = false;
+        name = "catppuccin"; # FALLBACK ONLY
         style = "mocha";
       };
 
