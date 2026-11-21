@@ -8,6 +8,13 @@
             packages = [
                 "org.vinegarhq.Sober"
             ];
+
+            overrides.settings = {
+                "org.vinegarhq.Sober".Context.sockets = [
+                    "!wayland"
+                    "x11"
+                ];
+            };
         };
 
     };
