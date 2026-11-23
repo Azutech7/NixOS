@@ -28,3 +28,4 @@
 - [x] Re-enable libadwaita stuff (mostly for Firefox)
 - [x] Libre Office user-level module
 - [ ] tailscale_auth and Caddy integration (nvm, useless for this case)
+- [ ] switch from localhost (0.0.0.0) to more secure 127.0.0.1
