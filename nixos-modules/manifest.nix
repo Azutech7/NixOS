@@ -56,6 +56,7 @@
         ./services.aiostreams.nix
         ./services.caddy.nix
         ./services.docker.nix
+        ./services.feishin.nix
         ./services.flaresolverr.nix
         ./services.jellyfin.nix
         ./services.lidarr.nix

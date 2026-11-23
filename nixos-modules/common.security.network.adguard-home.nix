@@ -44,8 +44,10 @@
         services.caddy.virtualHosts = {
 
             "adguard.azutech.cc".extraConfig = ''
-                tls internal
-                reverse_proxy localhost:8080
+                tls {
+                    dns cloudflare {$CLOUDFLARE_API_TOKEN}
+                }
+                reverse_proxy http://localhost:8080
             '';
 
         };

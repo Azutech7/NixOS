@@ -50,6 +50,8 @@
         services.navidrome.enable = true;
         #services.soularr.enable = true;
         services.slskd.enable = true;
+
+        services.feishin.enable = true;
     };
 
     environment.systemPackages = with pkgs; [
